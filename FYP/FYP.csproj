@@ -5,11 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
     <Folder Include="NewFolder\" />
-    <Folder Include="Views\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
+
