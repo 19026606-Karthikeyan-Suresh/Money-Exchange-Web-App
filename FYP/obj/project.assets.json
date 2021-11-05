@@ -8,19 +8,19 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\19026606\\.nuget\\packages\\": {}
+    "C:\\Users\\19010398\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\repos\\Money-Exchange-Web-App-2\\FYP\\FYP.csproj",
+      "projectUniqueName": "C:\\Users\\19010398\\source\\repos\\New folder\\FYP\\FYP.csproj",
       "projectName": "FYP",
-      "projectPath": "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\repos\\Money-Exchange-Web-App-2\\FYP\\FYP.csproj",
-      "packagesPath": "C:\\Users\\19026606\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\repos\\Money-Exchange-Web-App-2\\FYP\\obj\\",
+      "projectPath": "C:\\Users\\19010398\\source\\repos\\New folder\\FYP\\FYP.csproj",
+      "packagesPath": "C:\\Users\\19010398\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\19010398\\source\\repos\\New folder\\FYP\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\19026606\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\19010398\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
