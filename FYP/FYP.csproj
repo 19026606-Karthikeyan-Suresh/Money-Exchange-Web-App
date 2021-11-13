@@ -9,5 +9,9 @@
 	  <Folder Include="Utils\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\source\repos\FYP_Database\FYP_DB.sqlproj" />
+  </ItemGroup>
+
 </Project>
 
