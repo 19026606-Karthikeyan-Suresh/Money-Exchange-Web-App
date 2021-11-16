@@ -9,8 +9,6 @@ namespace FYP.Controllers
 {
     public class SignupController : Controller
     {
-        
-
         public IActionResult Login()
         {
             return View();

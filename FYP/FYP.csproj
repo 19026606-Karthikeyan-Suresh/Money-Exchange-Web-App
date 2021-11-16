@@ -5,12 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <Folder Include="Models\" />
 	  <Folder Include="Utils\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\source\repos\FYP_Database\FYP_DB.sqlproj" />
+	  <Folder Include="Views\shared\" />
+	  <Folder Include="Views\Transaction\" />
   </ItemGroup>
 
 </Project>

@@ -34,3 +34,6 @@ C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\
 C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.pdb
 C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.genruntimeconfig.cache
 C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.csproj.CopyComplete
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\libman.json
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP_Database.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP_Database.pdb
