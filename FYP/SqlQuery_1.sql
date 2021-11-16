@@ -36,10 +36,11 @@ CREATE TABLE Enquiries(
 );
 
 CREATE TABLE Currency(
-	Currency_name  CHAR(3)  PRIMARY KEY
+	Currency_name  CHAR(3)  PRIMARY KEY,
+	Country VARCHAR(100) NOT NULL
 );
-INSERT INTO Currency(currency_name) VALUES
-('SGD'), ('MMK'), ('CNY'), ('MYR');
+INSERT INTO Currency(currency_name, Country) VALUES
+('SGD', 'Singapore'), ('MMK', 'Myanmar'), ('CNY', 'China'), ('MYR', 'Malaysia');
 
 
 CREATE TABLE ExchangeRates( 
