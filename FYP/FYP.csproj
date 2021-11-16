@@ -4,7 +4,11 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Folder Include="Views\shared\" />
 	  <Folder Include="Views\Transaction\" />
   </ItemGroup>
