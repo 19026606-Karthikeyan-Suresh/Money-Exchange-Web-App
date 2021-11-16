@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <Folder Include="Utils\" />
 	  <Folder Include="Views\shared\" />
 	  <Folder Include="Views\Transaction\" />
   </ItemGroup>
