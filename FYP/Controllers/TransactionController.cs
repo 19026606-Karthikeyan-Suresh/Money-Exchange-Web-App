@@ -12,10 +12,10 @@ namespace FYP.Controllers
     {
 
         #region "Transaction View ALl - Karthik";
-        public IActionResult Transaction()
+        public IActionResult AllTransactions()
         {
-            List<CurrencyExchange> curList = DBUtl.GetList<CurrencyExchange>("SELECT * FROM ExchangeRates");
-            return View(curList);
+            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions");
+            return View(tranList);
 
         }
         #endregion
