@@ -82,13 +82,14 @@ CREATE TABLE Stock(
 	Stock_id		INT         IDENTITY PRIMARY KEY,
 	Currency_name	VARCHAR(5)		NOT NULL,
 	Currency_stock	DECIMAL(9,2)	NOT NULL,
+	Average_Rate	DECIMAL(9,2)	NOT NULL,
 	CONSTRAINT FK6 FOREIGN KEY(Currency_name)	
       REFERENCES Currency(Currency_name) 
 );
 SET IDENTITY_INSERT Stock ON;
-INSERT INTO Stock(Stock_id, Currency_name, Currency_stock) VALUES
-(1, 'SGD', 100000.00),
-(2, 'MMK', 112345.00),
-(3, 'CNY', 12345.00),
-(4, 'MYR', 98760.00);
+INSERT INTO Stock(Stock_id, Currency_name, Currency_stock, Average_Rate) VALUES
+(1, 'SGD', 100000.00, 1.00),
+(2, 'MMK', 112345.00, 4.72),
+(3, 'CNY', 12345.00, 1307.11),
+(4, 'MYR', 98760.00, 3.08);
 SET IDENTITY_INSERT Stock OFF;
