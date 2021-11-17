@@ -36,7 +36,7 @@ CREATE TABLE Enquiries(
 );
 
 CREATE TABLE Currency(
-	Currency_name  CHAR(3)  PRIMARY KEY,
+	Currency_name  VARCHAR(5)  PRIMARY KEY,
 	Country VARCHAR(100) NOT NULL
 );
 INSERT INTO Currency(currency_name, Country) VALUES
@@ -44,8 +44,8 @@ INSERT INTO Currency(currency_name, Country) VALUES
 
 
 CREATE TABLE ExchangeRates( 
-		Source_currency CHAR(3)      NOT NULL,
-    	Target_currency CHAR(3)      NOT NULL,
+		Source_currency VARCHAR(5)      NOT NULL,
+    	Target_currency VARCHAR(5)      NOT NULL,
     	Exchange_rate   DECIMAL(9,2) NOT NULL,
 	CONSTRAINT FK2 FOREIGN KEY(Source_currency) 
       REFERENCES Currency(Currency_name),
@@ -59,9 +59,9 @@ INSERT INTO ExchangeRates(Source_currency, Target_currency, Exchange_rate) VALUE
 
 CREATE TABLE Transactions(
 	Transaction_id 	      INT 	    IDENTITY PRIMARY KEY,
-	Source_currency	      CHAR(3)       NOT NULL,
+	Source_currency	      VARCHAR(5)       NOT NULL,
 	Source_amount 	      DECIMAL(9,2)  NOT NULL,
-	Converted_currency    CHAR(3)	    NOT NULL,
+	Converted_currency    VARCHAR(5)	    NOT NULL,
 	Converted_amount      DECIMAL(9,2)  NOT NULL,
 	Exchange_rate		  DECIMAL(9,2)  NOT NULL,
 	Transaction_date      DATE 			NOT NULL,
@@ -80,7 +80,7 @@ SET IDENTITY_INSERT Transactions OFF
 
 CREATE TABLE Stock(
 	Stock_id		INT         IDENTITY PRIMARY KEY,
-	Currency_name	CHAR(3)		NOT NULL,
+	Currency_name	VARCHAR(5)		NOT NULL,
 	Currency_stock	DECIMAL(9,2)	NOT NULL,
 	CONSTRAINT FK6 FOREIGN KEY(Currency_name)	
       REFERENCES Currency(Currency_name) 
