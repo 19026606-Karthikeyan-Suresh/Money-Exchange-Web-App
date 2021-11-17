@@ -453,19 +453,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jasper\\.nuget\\packages\\": {}
+    "C:\\Users\\19026606\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jasper\\Desktop\\FYP\\FYP\\FYP.csproj",
+      "projectUniqueName": "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\FYP\\FYP\\FYP.csproj",
       "projectName": "FYP",
-      "projectPath": "C:\\Users\\Jasper\\Desktop\\FYP\\FYP\\FYP.csproj",
-      "packagesPath": "C:\\Users\\Jasper\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jasper\\Desktop\\FYP\\FYP\\obj\\",
+      "projectPath": "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\FYP\\FYP\\FYP.csproj",
+      "packagesPath": "C:\\Users\\19026606\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\FYP\\FYP\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Jasper\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\19026606\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

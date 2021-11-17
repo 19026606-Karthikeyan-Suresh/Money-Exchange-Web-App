@@ -8,9 +8,5 @@
 		<PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Views\Transaction\" />
-  </ItemGroup>
-
 </Project>
 

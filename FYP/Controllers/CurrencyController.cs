@@ -10,7 +10,7 @@ namespace FYP.Controllers
 {
     public class CurrencyController : Controller
     {
-        public IActionResult Index()
+        public IActionResult ExchangeRates()
         {
             List<CurrencyExchange> curList = DBUtl.GetList<CurrencyExchange>("SELECT * FROM ExchangeRates");
             return View(curList);

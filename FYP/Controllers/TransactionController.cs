@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
+using FYP.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace FYP.Controllers
 {
     public class TransactionController : Controller
     {
-        public IActionResult Index()
+
+        #region "Transaction View ALl - Karthik";
+        public IActionResult Transaction()
         {
-            return View();
+            List<CurrencyExchange> curList = DBUtl.GetList<CurrencyExchange>("SELECT * FROM ExchangeRates");
+            return View(curList);
+
         }
-
-        #region "Transaction - Karthik";
-
         #endregion
     }
 }

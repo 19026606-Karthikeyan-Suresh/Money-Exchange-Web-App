@@ -3,18 +3,19 @@
 
     <div class="container py-sm-5">
             <header class="text-center text-black">
-                <h1 class="display-4"><b>Exchange Rate</b></h1>
+                <h1 class="display-4"><b>Exchange Rates</b></h1>
             </header>
             <div class="row py-5">
-                <div class="col-sm-4 mx-auto">
+                <div class="col-sm-5 mx-auto">
                     <div class="card rounded shadow border-0">
-                        <div class="card-body p-sm-5 bg-white rounded">
+                        <div class="card-body p-sm-6 bg-white rounded">
                             <div class="table-responsive">
-                                <table class="table table-hover table-responsive" style="text-align:center">
+                                <table class="table table-hover table-responsive" style="text-align:left">
                                     <thead>
                                         <tr>
+                                            <th>Source Currency</th>
                                             <th>Target Currency</th>
-                                            <th>Rate (SGD$1)</th>
+                                            <th>Rate ($1)</th>
                                         </tr>
                                     </thead>
 
@@ -22,6 +23,7 @@
                                         @foreach (CurrencyExchange item in Model)
                                         {
                                             <tr>
+                                                <td>@item.Source_currency</td>
                                                 <td>@item.Target_currency</td>
                                                 <td>@item.Exchange_rate</td>
                                             </tr>
