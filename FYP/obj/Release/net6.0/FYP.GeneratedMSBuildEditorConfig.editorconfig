@@ -8,41 +8,81 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = FYP
 build_property.RootNamespace = FYP
-build_property.ProjectDir = C:\Users\19028252\Desktop\C300 - FYP\FYP project\FYP\
+build_property.ProjectDir = C:\Users\19010398\Source\Repos\Money-Exchange-Web-App-2\FYP\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\19028252\Desktop\C300 - FYP\FYP project\FYP
+build_property.MSBuildProjectDirectory = C:\Users\19010398\Source\Repos\Money-Exchange-Web-App-2\FYP
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/19028252/Desktop/C300 - FYP/FYP project/FYP/Views/Currency/ExchangeRates.cshtml]
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Currency/CurrencyAdd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY3lcQ3VycmVuY3lBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Currency/CurrencyDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY3lcQ3VycmVuY3lEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Currency/CurrencyList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY3lcQ3VycmVuY3lMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Currency/ExchangeRates.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY3lcRXhjaGFuZ2VSYXRlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/19028252/Desktop/C300 - FYP/FYP project/FYP/Views/Shared/_Layout.cshtml]
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/19028252/Desktop/C300 - FYP/FYP project/FYP/Views/Signup/Login.cshtml]
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/AddUserAccounts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXEFkZFVzZXJBY2NvdW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/DeleteUserAccounts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXERlbGV0ZVVzZXJBY2NvdW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/EditUserAccounts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXEVkaXRVc2VyQWNjb3VudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/GetUserAccounts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXEdldFVzZXJBY2NvdW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/19028252/Desktop/C300 - FYP/FYP project/FYP/Views/Signup/Logout.cshtml]
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXExvZ291dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/19028252/Desktop/C300 - FYP/FYP project/FYP/Views/Signup/Thanks.cshtml]
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/SuccessAddition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXFN1Y2Nlc3NBZGRpdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/SuccessDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXFN1Y2Nlc3NEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/SuccessUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXFN1Y2Nlc3NVcGRhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Signup/Thanks.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lnbnVwXFRoYW5rcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/19028252/Desktop/C300 - FYP/FYP project/FYP/Views/Transaction/AllTransactions.cshtml]
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/Transaction/AllTransactions.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cQWxsVHJhbnNhY3Rpb25zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/19028252/Desktop/C300 - FYP/FYP project/FYP/Views/_ViewImports.cshtml]
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/19028252/Desktop/C300 - FYP/FYP project/FYP/Views/_ViewStart.cshtml]
+[C:/Users/19010398/source/repos/Money-Exchange-Web-App-2/FYP/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

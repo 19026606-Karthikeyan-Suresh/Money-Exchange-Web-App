@@ -1,0 +1,36 @@
+﻿@using System.Data
+@{
+    DataTable dt = ViewData["dbtable"] as DataTable;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <title>GetTable (ViewData)</title>
+</head>
+<body>
+    <div>&nbsp;</div>
+
+    <div class="container">
+        <table class='table table-bordered table-hover table-striped'>
+            <tr>
+                @for (int col = 0; col < dt.Columns.Count; col++)
+                {
+                    <th>@dt.Columns[col]</th>
+                }
+            </tr>
+
+            @for (int row = 0; row < dt.Rows.Count; row++)
+            {
+                <tr>
+                    @for (int col = 0; col < dt.Columns.Count; col++)
+                    {
+                        <td>@dt.Rows[row][col]</td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
