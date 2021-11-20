@@ -1,0 +1,29 @@
+﻿html {
+   font-family: sans-serif;
+}
+
+div {
+   padding: 5px;
+}
+
+.control-label {
+   float: left;
+   width: 250px;
+   text-align: right;
+   margin-right: 10px;
+}
+
+#name, #email, #refer {
+   width: 300px;
+}
+
+#subscribe {
+   margin-left: 260px;
+}
+
+h2 {
+   margin-left: 260px;
+   color: blue;
+   font-size: 1.2em;
+   font-weight: bold;
+}

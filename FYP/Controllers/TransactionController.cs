@@ -23,7 +23,7 @@ namespace FYP.Controllers
         #region
         public IActionResult AddTransaction()
         {
-            Transaction transaction = DBUtl
+            return(null);
         }
         #endregion
     }
