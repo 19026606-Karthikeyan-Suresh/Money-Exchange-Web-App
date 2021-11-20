@@ -38,7 +38,10 @@
                                                 <td>
                                                     <a asp-controller="Transaction" asp-action="TransactionEdit">Edit </a>
                                                     |
-                                                    <a asp-controller="Transaction" asp-action="TransactionDelete"> Delete</a>
+                                                    <a asp-controller="Transaction" 
+                                                    asp-action="Delete"
+                                                    asp-route-id="@item.Transaction_id"
+                                                    onclick="return confirm('Delete Trip [@item.Transaction_id]')"> Delete</a>
                                                 </td>
                                             </tr>
                                         }
