@@ -19,5 +19,12 @@ namespace FYP.Controllers
 
         }
         #endregion
+
+        #region
+        public IActionResult AddTransaction()
+        {
+            Transaction transaction = DBUtl
+        }
+        #endregion
     }
 }
