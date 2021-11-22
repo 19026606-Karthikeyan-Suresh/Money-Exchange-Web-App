@@ -1,6 +1,13 @@
 ﻿@using MoneyExchangeWebApp.Models;
 @model List<Transaction>
 
+    @if (TempData["Message"] != null)
+{
+   <div class="alert alert-@TempData["MsgType"]">
+      @TempData["Message"]
+   </div>
+}
+
     <div class="container py-sm-5">
             <header class="text-center text-black">
                 <h1 class="display-2"><b>Transactions</b></h1>
@@ -41,7 +48,7 @@
                                                     <a asp-controller="Transaction" 
                                                     asp-action="Delete"
                                                     asp-route-id="@item.Transaction_id"
-                                                    onclick="return confirm('Delete Trip [@item.Transaction_id]')"> Delete</a>
+                                                    onclick="return confirm('Delete Trip [@item.Source_currency]')"> Delete</a>
                                                 </td>
                                             </tr>
                                         }

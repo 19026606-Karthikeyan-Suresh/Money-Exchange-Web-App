@@ -74,7 +74,7 @@ Converted_amount, exchange_rate, Transaction_date) VALUES('{0}', {1}, '{2}', {3}
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("DELETE FROM Transaction WHERE Transaction_id={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("DELETE FROM Transactions WHERE Transaction_id={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Transaction Record Deleted";
