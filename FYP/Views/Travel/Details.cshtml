@@ -1,0 +1,58 @@
+﻿@model Trip
+
+<div >
+
+   <div class="form-group row">
+      <div class="offset-sm-2"><h2>@Model.Title</h2></div>
+   </div>
+
+   <div class="form-group row">
+      <div class="offset-sm-2 col-sm-5">
+         <img id="ImgPhoto" src="/Photos/@Model.Picture" style="width:400px;" />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="City">City :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="City" class="form-control" readonly />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Date">Trip Date :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="TripDate" asp-format="{0:d MMM yyyy}" class="form-control" readonly />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Duration">Length (in Days) :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="Duration" class="form-control" readonly />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Cost">Total Cost :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="Spending" asp-format="{0:C}" class="form-control" readonly />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Story">Detailed Story :</label>
+      <div class="col-sm-5">
+         <textarea asp-for="Story" rows="8" cols="20" class="form-control" readonly></textarea>
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Story">Submitted By :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="SubmittedBy" class="form-control" readonly />
+      </div>
+   </div>
+
+</div>
+

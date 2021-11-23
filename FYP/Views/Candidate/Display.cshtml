@@ -1,0 +1,23 @@
+﻿@{
+   Layout = "_Candidate";
+}
+
+@model Candidate
+<h1>@Model.CName</h1>
+<img src="~/candidates/@Model.PicFile">
+
+<dl class="dl-horizontal">
+   <dt>RegNo : </dt>
+   <dd>@Model.RegNo</dd>
+   <dt>Gender : </dt>
+   <dd>@Model.Gender</dd>
+   <dt>Height : </dt>
+   <dd>@Model.Height </dd>
+   <dt>Birthdate : </dt>
+   <dd>@String.Format("{0:yyyy-MM-dd}", Model.BirthDate)</dd>
+   <dt>Race : </dt>
+   <dd>@Model.Race </dd>
+   <dt>Clearance : </dt>
+   <dd>@Model.Clearance </dd>
+</dl>
+

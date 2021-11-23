@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using System.Data;
 
 namespace FYP.Controllers
 {
@@ -39,6 +40,11 @@ namespace FYP.Controllers
 
         public IActionResult AddUserAccounts()
         {
+            return View();
+        }
+
+        public IActionResult AddUserAccountsPost()
+        {
             IFormCollection form = HttpContext.Request.Form;
             string accountID = form["account_id"].ToString().Trim();
             string userName = form["username"].ToString().Trim();
@@ -54,15 +60,23 @@ namespace FYP.Controllers
                 return View("AddUserAccounts");
             }
 
-            string insert = String.Format(@"INSERT INTO Accounts(account_id, username, password, name, role, dob)
-              VALUES('{0}','{1}', '{2}', '{3}','{4}', '{5}')", accountID, userName, passWord, namE, rolE, doB);
+            if (!accountID.IsInteger())
+            {
+                ViewData["Message"] = "Account ID must be an integer";
+                ViewData["MsgType"] = "warning";
+            }
+
+            string sql = @"INSERT INTO Accounts(account_id, username, password, name, role, dob)
+              VALUES({0},'{1}', '{2}', '{3}','{4}', '{5}')";
+
+            string insert = String.Format(sql, accountID, userName, passWord, namE, rolE, doB);
 
             int count = DBUtl.ExecSQL(insert);
             if (count == 1)
             {
                 TempData["Message"] = "User Successfully Added.";
                 TempData["MsgType"] = "success";
-                return RedirectToAction("");
+                return RedirectToAction("GetUserAccounts");
             }
             else
             {
@@ -70,35 +84,102 @@ namespace FYP.Controllers
                 ViewData["MsgType"] = "danger";
                 return View("AddUserAccounts");
             }
-
+            
         }
 
         public IActionResult EditUserAccounts()
         {
+            return View("EditUserAccounts");
+        }
 
+        public IActionResult NewForm()
+        {
             return View();
+        }
+        public IActionResult EditUserAccountsPost()
+        {
+            IFormCollection form = HttpContext.Request.Form;
+
+            string userName = form["username"].ToString().Trim();
+            string passWord = form["password"].ToString().Trim();
+            string namE = form["name"].ToString().Trim();
+            string rolE = form["role"].ToString().Trim();
+            string doB = form["dob"].ToString().Trim();
+
+            if (ValidUtl.CheckIfEmpty(userName, passWord, namE, rolE, doB))
+            {
+                ViewData["Message"] = "Please enter all fields";
+                ViewData["MsgType"] = "warning";
+                return View("NewForm");
+            }
+
+            string sql = @"UPDATE Accounts SET (username = '{0}', password = '{1}', name = '{2}', role = '{3}', dob = '{4}')";
+            string update = String.Format(sql, userName, passWord, namE, rolE, doB);
+
+            int count = DBUtl.ExecSQL(update);
+            if (count == 1)
+            {
+                TempData["Message"] = "User has been successfully updated.";
+                TempData["MsgType"] = "success";
+                return RedirectToAction("GetUserAccounts");
+            }
+            else
+            {
+                ViewData["Message"] = DBUtl.DB_Message;
+                ViewData["MsgType"] = "danger";
+                return View("NewForm");
+            }
         }
 
         public IActionResult DeleteUserAccounts()
         {
-
-            return View();
+            return View("DeleteUserAccounts");
         }
 
-        public IActionResult SuccessAddition()
+        public IActionResult DeleteUserAccountsPost()
         {
-            return View();
+            IFormCollection form = HttpContext.Request.Form;
+            string accountID = form["account_id"].ToString().Trim();
+
+            if (!accountID.IsInteger())
+            {
+                ViewData["Message"] = "Account ID must be an integer";
+                ViewData["MsgType"] = "warning";
+                return View("DeleteUserAccounts");
+            }
+
+            string sql = @"SELECT * FROM Accounts WHERE account_id={0}";
+            string select = String.Format(sql, accountID);
+            DataTable dt = DBUtl.GetTable(select);
+
+            if (dt.Rows.Count == 0)
+            {
+                ViewData["Message"] = "Account ID not found";
+                ViewData["MsgType"] = "warning";
+                return View("DeleteUserAccouns");
+            }
+
+            sql = @"DELETE Accounts WHERE account_id={0}";
+            string delete = String.Format(sql, accountID);
+
+            int count = DBUtl.ExecSQL(delete);
+            if (count == 1)
+            {
+                ViewData["Message"] = "User deleted";
+                ViewData["MsgType"] = "success";
+            }
+            else
+            {
+                ViewData["Message"] = DBUtl.DB_Message;
+                ViewData["MsgType"] = "danger";
+            }
+
+            return View("DeleteUserAccounts");
+   
         }
 
-        public IActionResult SuccessDelete()
-        {
-            return View();
-        }
+        
 
-        public IActionResult SuccessUpdate()
-        {
-            return View();
-        }
 
     }
 }

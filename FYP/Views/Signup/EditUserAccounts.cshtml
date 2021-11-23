@@ -10,7 +10,7 @@
 
     <div class="container">
 
-        <form id="feedback" method="post" action="/Signup/SuccessUpdate" >
+        <form id="feedback" method="post" action="/Signup/NewForm" >
         
         <h2>Update Users</h2>
         <div class="form-group">
@@ -19,8 +19,14 @@
         </div>
         
         <div class="form-group">
-            <input type="submit" id="submit" value="Edit" />
+            <input type="submit" id="submit" value="Proceed" />
         </div>
+
+         @if (ViewData["Message"] != null)
+        {
+            <hr />
+            @ViewData["Message"]
+        }
     </form>
     </div>
 </body>
