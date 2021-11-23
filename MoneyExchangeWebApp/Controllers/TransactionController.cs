@@ -12,10 +12,10 @@ namespace MoneyExchangeWebApp.Controllers
     public class TransactionController : Controller
     {
 
-        #region "Transaction View ALl - Karthik";
+        #region "Transaction View ALL: - Karthik
         public IActionResult AllTransactions()
         {
-            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions");
+            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions ORDER BY Transaction_date DESC");
             return View(tranList);
 
         }

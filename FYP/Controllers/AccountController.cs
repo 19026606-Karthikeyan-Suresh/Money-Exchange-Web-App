@@ -87,7 +87,7 @@ namespace FYP.Controllers
         #endregion
 
         #region "Display User Accounts" - Teng Yik
-        [Authorize(Roles = "admin")]
+        [Authorize]
         public IActionResult GetUserAccounts()
         {
             ViewData["dbtable"] = DBUtl.GetTable("SELECT * FROM Accounts");
@@ -148,7 +148,7 @@ namespace FYP.Controllers
         #endregion
 
         #region "Edit User Accounts" - Teng Yik
-        [Authorize(Roles = "admin")]
+        [Authorize]
         public IActionResult EditUserAccounts()
         {
             return View("EditUserAccounts");
@@ -195,7 +195,7 @@ namespace FYP.Controllers
         #endregion
 
         #region "Delete user Accounts" - Teng Yik
-        [Authorize(Roles = "admin")]
+        [Authorize]
         public IActionResult DeleteUserAccounts()
         {
             return View("DeleteUserAccounts");

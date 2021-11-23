@@ -7,38 +7,50 @@
    <button class="navbar-toggler" type="button"
            data-toggle="collapse" data-target="#navbarSupportedContent"
            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+           <span class="navbar-toggler-icon"></span>
    </button>
 
    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
           <li class="nav-item">
                 <a class="nav-link" asp-controller="Currency" asp-action="ExchangeRates"><i class="fas fa-home"></i> Home</a>
-            </li>
+          </li>
             <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
+                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <i class="fas fa-money-bill-alt"> Stock</i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyList">Currency List</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyAdd">Add Currency</a>
+                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyDelete">Delete Currency</a>
+                </div>
+            </li>
+
+         <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
-               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <i class="fas fa-money-bill-alt"> Stock</i>
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-file-invoice-dollar">Transaction</i> 
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-               <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyList">Currency List</a>
-               <div class="dropdown-divider"></div>
-               <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyAdd">Add Currency</a>
-               <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyDelete">Delete Currency</a>
+                <a class="nav-item nav-link" asp-controller="Transaction" asp-action="Index">Transaction List</a>
+                <a class="nav-item nav-link" asp-controller="Transaction" asp-action="CreateTransaction">Create Transaction</a>
             </div>
          </li>
          <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
-                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-file-invoice-dollar">Transaction</i> 
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="nav-link" asp-controller="Transaction" asp-action="Index">Transaction List</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="nav-item nav-link" asp-controller="Transaction" asp-action="Create">Create Transaction</a>
-                    </div>
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
+               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <i class="fas fa-money-bill-alt"> Accounts</i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+               <a class="nav-item nav-link" asp-controller="Account" asp-action="GetUserAccounts">View all Accounts</a>
+               <a class="nav-item nav-link" asp-controller="Account" asp-action="AddUserAccounts">Add User</a>
+               <a class="nav-item nav-link" asp-controller="Account" asp-action="EditUserAccounts">Edit User</a>
+               <a class="nav-item nav-link" asp-controller="Account" asp-action="DeleteUserAccounts">Delete User</a>
+            </div>
          </li>
-      </ul>
+     </ul>
       <ul class="nav navbar-nav ml-auto">
          <li>
             <p class="navbar-text">

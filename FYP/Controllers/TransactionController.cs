@@ -7,31 +7,30 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using System.Data;
 
-namespace MoneyExchangeWebApp.Controllers
+namespace FYP.Controllers
 {
     public class TransactionController : Controller
     {
-        #region "Transaction View ALl" - Karthik
-        [Authorize(Roles = "admin")]
+
+        #region "Transaction View All" - Karthik
+        [Authorize]
         public IActionResult Index()
         {
-            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions");
+            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions ORDER BY Transaction_date DESC");
             return View(tranList);
 
         }
-
         #endregion
-        
+
         #region "Transaction Create" - Karthik
         [Authorize]
-        public IActionResult Create()
+        public IActionResult CreateTransaction()
         {
             return View();
         }
-
         [Authorize]
         [HttpPost]
-        public IActionResult CreatePost(Transaction TR)
+        public IActionResult CreateTransaction(Transaction TR)
         {
             if (!ModelState.IsValid)
             {
@@ -44,18 +43,18 @@ namespace MoneyExchangeWebApp.Controllers
                 string sql = @"INSERT INTO Transactions(Source_currency, Source_amount, Converted_currency, 
 Converted_amount, exchange_rate, Transaction_date) VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd}')";
 
-                string insert = String.Format(sql, TR.Source_currency.EscQuote(),TR.Source_amount, 
+                string insert = String.Format(sql, TR.Source_currency.EscQuote(), TR.Source_amount,
                     TR.Converted_currency.EscQuote(), TR.Converted_amount, TR.Exchange_rate, TR.Transaction_date);
 
                 if (DBUtl.ExecSQL(insert) == 1)
                 {
                     TempData["Message"] = "Transaction Successfully Added.";
                     TempData["MsgType"] = "success";
-                    return RedirectToAction("AllTransactions");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    ViewData["Message"] = "Stated currency does not exist in the database";
+                    ViewData["Message"] = DBUtl.DB_Message;
                     ViewData["MsgType"] = "danger";
                     return View("CreateTransaction");
                 }
@@ -91,12 +90,8 @@ Converted_amount, exchange_rate, Transaction_date) VALUES('{0}', {1}, '{2}', {3}
                     TempData["MsgType"] = "danger";
                 }
             }
-            return RedirectToAction("AllTransactions");
+            return RedirectToAction("Index");
         }
-        #endregion
-
-        #region "Transaction Edit" - Karthik
-
         #endregion
     }
 }
