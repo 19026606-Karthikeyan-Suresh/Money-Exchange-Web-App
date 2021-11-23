@@ -49,9 +49,17 @@
                <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyDelete">Delete Currency</a>
             </div>
          </li>
-         <li class="nav-item">
-                <a class="nav-link" asp-controller="Transaction" asp-action="AllTransactions"><i class="fas fa-file-invoice-dollar"></i> Transaction</a>
-            </li>
+         <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-file-invoice-dollar">Transaction</i> 
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link" asp-controller="Transaction" asp-action="AllTransactions">Transaction List</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="nav-item nav-link" asp-controller="Transaction" asp-action="CreateTransaction">Create Transaction</a>
+                    </div>
+         </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
         <li class="nav-item dropdown">

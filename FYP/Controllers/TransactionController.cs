@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using MoneyExchangeWebApp.Models;
+using FYP.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
@@ -11,23 +11,26 @@ namespace MoneyExchangeWebApp.Controllers
 {
     public class TransactionController : Controller
     {
-
+        [Authorize(Roles = "admin")]
         #region "Transaction View ALl - Karthik";
-        public IActionResult AllTransactions()
+        public IActionResult Index()
         {
             List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions");
             return View(tranList);
 
         }
-        #endregion
 
+        #endregion
+        [Authorize]
         #region "Transaction Create - Karthik"
-        public IActionResult CreateTransaction()
+        public IActionResult Create()
         {
             return View();
         }
+
+        [Authorize]
         [HttpPost]
-        public IActionResult CreateTransaction(Transaction TR)
+        public IActionResult CreatePost(Transaction TR)
         {
             if (!ModelState.IsValid)
             {
@@ -51,7 +54,7 @@ Converted_amount, exchange_rate, Transaction_date) VALUES('{0}', {1}, '{2}', {3}
                 }
                 else
                 {
-                    ViewData["Message"] = DBUtl.DB_Message;
+                    ViewData["Message"] = "Stated currency does not exist in the database";
                     ViewData["MsgType"] = "danger";
                     return View("CreateTransaction");
                 }
@@ -60,6 +63,7 @@ Converted_amount, exchange_rate, Transaction_date) VALUES('{0}', {1}, '{2}', {3}
         #endregion
 
         #region "Transaction Delete - Karthik"
+        [Authorize]
         public IActionResult Delete(int id)
         {
             string sql = @"SELECT * FROM Transactions 

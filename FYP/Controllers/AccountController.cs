@@ -17,7 +17,7 @@ namespace FYP.Controllers
          HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
          if (Url.IsLocalUrl(returnUrl))
             return Redirect(returnUrl);
-         return RedirectToAction("Index", "Travel");
+         return RedirectToAction("ExchangeRates", "Currency");
       }
 
       [AllowAnonymous]
@@ -50,7 +50,7 @@ namespace FYP.Controllers
                   return Redirect(returnUrl);
             }
 
-            return RedirectToAction("Index", "Travel");
+            return RedirectToAction("ExchangeRates", "Currency");
          }
       }
 
@@ -58,9 +58,8 @@ namespace FYP.Controllers
                                     out ClaimsPrincipal principal)
       {
          principal = null;
-
          // TODO L08 Task 1 - Provide Login SELECT Statement
-         string sql = @"SELECT * FROM TravelUser WHERE UserId = '{0}' AND UserPw = HASHBYTES('SHA1', '{1}') ";
+         string sql = @"SELECT * FROM Accounts WHERE username = '{0}' AND password = HASHBYTES('SHA1', '{1}') ";
 
          string select = String.Format(sql, uid, pw);
          DataTable ds = DBUtl.GetTable(select);
@@ -71,7 +70,7 @@ namespace FYP.Controllers
                   new ClaimsIdentity(
                      new Claim[] {
                         new Claim(ClaimTypes.NameIdentifier, uid),
-                        new Claim(ClaimTypes.Name, ds.Rows[0]["FullName"].ToString())
+                        new Claim(ClaimTypes.Name, ds.Rows[0]["name"].ToString()),
                      },
                      CookieAuthenticationDefaults.AuthenticationScheme));
             return true;
