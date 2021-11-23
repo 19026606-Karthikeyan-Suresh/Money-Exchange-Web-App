@@ -11,8 +11,8 @@ namespace MoneyExchangeWebApp.Controllers
 {
     public class TransactionController : Controller
     {
+        #region "Transaction View ALl" - Karthik
         [Authorize(Roles = "admin")]
-        #region "Transaction View ALl - Karthik";
         public IActionResult Index()
         {
             List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions");
@@ -21,8 +21,9 @@ namespace MoneyExchangeWebApp.Controllers
         }
 
         #endregion
+        
+        #region "Transaction Create" - Karthik
         [Authorize]
-        #region "Transaction Create - Karthik"
         public IActionResult Create()
         {
             return View();
@@ -62,7 +63,7 @@ Converted_amount, exchange_rate, Transaction_date) VALUES('{0}', {1}, '{2}', {3}
         }
         #endregion
 
-        #region "Transaction Delete - Karthik"
+        #region "Transaction Delete" - Karthik
         [Authorize]
         public IActionResult Delete(int id)
         {
@@ -92,6 +93,10 @@ Converted_amount, exchange_rate, Transaction_date) VALUES('{0}', {1}, '{2}', {3}
             }
             return RedirectToAction("AllTransactions");
         }
+        #endregion
+
+        #region "Transaction Edit" - Karthik
+
         #endregion
     }
 }
