@@ -31,7 +31,7 @@ namespace FYP.Controllers
             return View(dt);
         }
 
-        #region "CurrencyAdd"
+/*        #region "CurrencyAdd"
         public IActionResult CurrencyAdd()
         {
             return View();
@@ -138,7 +138,7 @@ namespace FYP.Controllers
             }
             return RedirectToAction("Stock");
         }
-        #endregion
+        #endregion*/
     }
 }
 
