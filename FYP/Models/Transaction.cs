@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,13 +8,20 @@ namespace FYP.Models
 {
     public class Transaction
     {
-        public int transaction_id { get; set; }
-        public char Source_currency { get; set; }
+        [Required]
+        public int Transaction_id { get; set; }
+        [Required]
+        public string Source_currency { get; set; }
+        [Required]
         public decimal Source_amount { get; set; }
-        public char Converted_currency { get; set; }
+        [Required]
+        public string Converted_currency { get; set; }
+        [Required]
+        public decimal Exchange_rate { get; set; }
+        [Required]
         public decimal Converted_amount { get; set; }
+        [Required]
         public DateTime Transaction_date { get; set; }
-        public string Comments { get; set; }
 
     }
 }

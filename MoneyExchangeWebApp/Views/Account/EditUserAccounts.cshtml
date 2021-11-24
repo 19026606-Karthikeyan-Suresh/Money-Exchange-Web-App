@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Edit Users</title>
+</head>
+<body>
+    <div>&nbsp;</div>
+
+    <div class="container">
+        s
+        <form id="feedback" method="post" action="/Account/NewForm" >
+        
+        <h2>Update Users</h2>
+        <div class="form-group">
+            <label for="account_id" class="control-label">Account ID: </label>
+            <input type="text" id="account_id" name="AccountID" />
+        </div>
+        
+        <div class="form-group">
+            <input type="submit" id="submit" value="Proceed" />
+        </div>
+
+         @if (ViewData["Message"] != null)
+        {
+            <hr />
+            @ViewData["Message"]
+        }
+    </form>
+    </div>
+</body>
+</html>

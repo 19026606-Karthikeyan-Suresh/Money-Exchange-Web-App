@@ -1,0 +1,78 @@
+﻿@model Transaction
+
+<form method="post"
+      asp-controller="Transaction"
+      asp-action ="CreateTransaction"
+      enctype="multipart/form-data">
+
+   <div class="form-group row">
+      <div class="offset-sm-3 col-sm-6">
+         <h2>Create a Transaction</h2>
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="Source_currency">Source :</label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="Source_currency" class="form-control" />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="Source_amount">Amount :</label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="Source_amount" class="form-control" />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="Converted_currency">To: </label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="Converted_currency" class="form-control" />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="Exchange_rate">Exchange Rate: </label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="Exchange_rate" class="form-control" />
+      </div>
+   </div>
+
+      <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="Converted_amount">Converted Value: </label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="Converted_amount" class="form-control" />
+      </div>
+   </div>
+
+  <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="Transaction_date">Transaction Date: </label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="Transaction_date" class="form-control" placeholder="YYYY-MM-DD" />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <div class="offset-sm-3 col-sm-6">
+         <input type="submit" value="Create" class="btn btn-primary" />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <div class="offset-sm-2 col-sm-6">
+         <div asp-validation-summary="All" class="text-danger"></div>
+      </div>
+   </div>
+
+   @if (ViewData["Message"] != null)
+   {
+      <div class="form-group row">
+         <div class="offset-sm-2 col-sm-6">
+            <div class="alert alert-@ViewData["MsgType"]">
+               <text>@ViewData["Message"]</text>
+            </div>
+         </div>
+      </div>
+   }
+</form>

@@ -1,0 +1,64 @@
+﻿@using FYP.Models;
+@model List<Transaction>
+
+    @if (TempData["Message"] != null)
+{
+   <div class="alert alert-@TempData["MsgType"]">
+      @TempData["Message"]
+   </div>
+}
+
+    <div class="container py-sm-5">
+            <header class="text-center text-black">
+                <h1 class="display-2"><b>Transactions</b></h1>
+            </header>
+            <div class="row py-5">
+                <div class="col-sm-12 mx-auto">
+                    <div class="card rounded shadow border-0">
+                        <div class="card-body p-sm-6 bg-white rounded">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-responsive" style="text-align:center">
+                                    <thead>
+                                        <tr>
+                                            <th>Transaction ID</th>
+                                            <th>Source</th>
+                                            <th>Source Amount</th>
+                                            <th>Converted Currency</th>
+                                            <th>Converted Amount</th>
+                                            <th>Exchange Rate</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (Transaction item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Transaction_id</td>
+                                                <td>@item.Source_currency</td>
+                                                <td>@item.Source_amount</td>
+                                                <td>@item.Converted_currency</td>
+                                                <td>@item.Converted_amount</td>
+                                                <td>@item.Exchange_rate</td>
+                                                <td>@item.Transaction_date.ToShortDateString()</td>
+                                                <td>
+                                                    <a asp-controller="Transaction" 
+                                                    asp-action="TransactionEdit" 
+                                                    asp-route-id="@item.Transaction_id"><i class="fas fa-pencil-alt"></i> </a>
+                                                    |
+                                                    <a asp-controller="Transaction" 
+                                                    asp-action="Delete"
+                                                    asp-route-id="@item.Transaction_id"
+                                                    onclick="return confirm('Delete Transaction [@item.Source_currency]')"> <i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
