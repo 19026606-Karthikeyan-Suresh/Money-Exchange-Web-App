@@ -42,8 +42,8 @@ namespace FYP.Controllers
             IFormCollection form = HttpContext.Request.Form;
             string CN = form["Currency_name"].ToString().Trim();
             string C = form["Country"].ToString().Trim();
-            decimal A = form["Currency_Stock"];
-            decimal AR = form["Average_Rate"];
+            string A = form["Currency_Stock"].ToString().Trim();
+            string AR = form["Average_Rate"].ToString().Trim();
 
             if (ValidUtl.CheckIfEmpty(CN, C, A, AR))
             {
@@ -59,19 +59,19 @@ namespace FYP.Controllers
                 return View("CurrencyAdd");
             }
 
-            if (!A.IsDecimal())
-            {
-                ViewData["Message"] = "Amount must be an Decimal";
-                ViewData["MsgType"] = "warning";
-                return View("CurrencyAdd");
-            }
+                 if (!A.IsNumeric())
+         {
+            ViewData["Message"] = "Amount must be an Decimal";
+            ViewData["MsgType"] = "warning";
+            return View("CurrencyAdd");
+         }
 
-            if (!AR.IsDecimal())
-            {
-                ViewData["Message"] = "Average Rate must be an Decimal";
-                ViewData["MsgType"] = "warning";
-                return View("CurrencyAdd");
-            }
+                 if (!AR.IsNumeric())
+         {
+            ViewData["Message"] = "Average Rate must be an Decimal";
+            ViewData["MsgType"] = "warning";
+            return View("CurrencyAdd");
+         }
 
             string insert_currency = String.Format(@"INSERT INTO Currency(Currency_name, Country)
               VALUES('{0}','{1}')", CN, C);
@@ -87,7 +87,7 @@ namespace FYP.Controllers
                 TempData["Message"] = "Currency Successfully Added.";
                 TempData["MsgType"] = "success";
                 return RedirectToAction("CurrencyList");
-
+                
             }
             else
             {
