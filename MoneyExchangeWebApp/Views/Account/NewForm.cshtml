@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Accounts - Update Users</title>
+</head>
+<body>
+    <div>&nbsp;</div>
+
+    <div class="container">
+
+        <form id="feedback" method="post" action="/Account/EditUserAccountsPost" >
+        <div>
+            <h2>Update Users</h2>
+        </div>
+        <div class="form-group row">
+            <label for="username" class="control-label col-sm-2">Username: </label>
+            <div>
+                 <input type="text" id="username" name="Username" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="account_id" class="control-label col-sm-2">Password: </label>
+            <div>
+                <input type="text" id="password" name="Password" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="account_id" class="control-label col-sm-2">Name: </label>
+            <div>
+                <input type="text" id="name" name="Name" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="account_id" class="control-label col-sm-2">Role: </label>
+            <div>
+                <input type="text" id="role" name="Role" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="account_id" class="control-label col-sm-2">DOB: </label>
+            <div>
+                <input type="text" id="dob" name="DOB" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+                <div class="offset-sm-2 col-sm-5">
+                     <input type="submit" id="submit" value="Update" class="btn btn-primary"/>
+                </div>
+        </div>
+
+        @if (ViewData["Message"] != null)
+            {
+                <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-5">
+                        <div class="alert alert-@ViewData["MsgType"]">
+                            @ViewData["Message"]
+                        </div>
+                    </div>
+                </div>
+            }
+    </form>
+    </div>
+</body>
+</html>

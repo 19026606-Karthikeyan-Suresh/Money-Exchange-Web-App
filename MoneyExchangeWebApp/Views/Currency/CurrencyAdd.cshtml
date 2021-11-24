@@ -1,39 +1,53 @@
 ﻿
-    <div class="container">
-        <form method="post" action="/Currency/CurrencyAddPost">
-            <div class="offset-sm-2 col-sm-10">
-                <h3>Add New Currency</h3>
-            </div>
+<div class="container">
+    <form method="post" action="/Currency/CurrencyAddPost">
+        <div class="offset-sm-2 col-sm-10">
+            <h3>Add New Currency</h3>
+        </div>
 
-            <div class="form-group row">
-                <label for="currency_name" class="control-label col-sm-2">Currency Name :</label>
-                <div class="col-sm-5">
-                    <input type="text" id="currency_name" name="currency_name" class="form-control" />
-                </div>
+        <div class="form-group row">
+            <label for="currency_name" class="control-label col-sm-2">Currency Name :</label>
+            <div class="col-sm-5">
+                <input type="text" id="currency_name" name="currency_name" class="form-control" />
             </div>
+        </div>
 
-            <div class="form-group row">
-                <label for="country" class="control-label col-sm-2">Country :</label>
-                <div class="col-sm-5">
-                    <input type="text" id="country" name="country" class="form-control" />
-                </div>
+        <div class="form-group row">
+            <label for="country" class="control-label col-sm-2">Country :</label>
+            <div class="col-sm-5">
+                <input type="text" id="country" name="country" class="form-control" />
             </div>
+        </div>
 
-            <div class="form-group row">
-                <div class="offset-sm-2 col-sm-5">
-                    <input type="submit" value="Add Currency" class="btn btn-primary" />
-                </div>
+        <div class="form-group row">
+            <label for="country" class="control-label col-sm-2">Amount :</label>
+            <div class="col-sm-5">
+                <input type="text" id="currency_stock" name="amount" class="form-control" />
             </div>
+        </div>
 
-            @if (ViewData["Message"] != null)
+        <div class="form-group row">
+            <label for="country" class="control-label col-sm-2">Average Rate :</label>
+            <div class="col-sm-5">
+                <input type="text" id="Average_Rate" name="average_rate" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-5">
+                <input type="submit" value="Add Currency" class="btn btn-primary" />
+            </div>
+        </div>
+
+        @if (ViewData["Message"] != null)
             {
-                <div class="form-group row">
-                    <div class="offset-sm-2 col-sm-5">
-                        <div class="alert alert-@ViewData["MsgType"]">
-                            @ViewData["Message"]
-                        </div>
-                    </div>
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-5">
+                <div class="alert alert-@ViewData["MsgType"]">
+                    @ViewData["Message"]
                 </div>
+            </div>
+        </div>
             }
-        </form>
-    </div>
+    </form>
+</div>

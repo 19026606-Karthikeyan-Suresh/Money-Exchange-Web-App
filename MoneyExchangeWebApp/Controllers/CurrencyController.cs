@@ -22,14 +22,16 @@ namespace MoneyExchangeWebApp.Controllers
         public IActionResult CurrencyList()
         {
             string select =
-               @"SELECT Currency_name AS [Currency name],
-                     Country AS [Country]
-                FROM Currency";
+               @"SELECT Stock_id AS [Stock id],
+                     Currency_name AS [Currency name],
+                     Currency_stock AS [stock],
+                     Average_Rate AS [Average rate]
+                FROM Stock";
             DataTable dt = DBUtl.GetTable(select);
             return View(dt);
         }
 
-        #region "CurrencyAdd"
+      /*  #region "CurrencyAdd"
         public IActionResult CurrencyAdd()
         {
             return View();
@@ -40,8 +42,10 @@ namespace MoneyExchangeWebApp.Controllers
             IFormCollection form = HttpContext.Request.Form;
             string CN = form["Currency_name"].ToString().Trim();
             string C = form["Country"].ToString().Trim();
+            decimal A = form["Currency_Stock"];
+            decimal AR = form["Average_Rate"];
 
-            if (ValidUtl.CheckIfEmpty(CN, C))
+            if (ValidUtl.CheckIfEmpty(CN, C, A, AR))
             {
                 ViewData["Message"] = "Please enter all fields";
                 ViewData["MsgType"] = "warning";
@@ -55,15 +59,35 @@ namespace MoneyExchangeWebApp.Controllers
                 return View("CurrencyAdd");
             }
 
-            string insert = String.Format(@"INSERT INTO Currency(Currency_name, Country)
+                 if (!A.IsDecimal())
+         {
+            ViewData["Message"] = "Amount must be an Decimal";
+            ViewData["MsgType"] = "warning";
+            return View("CurrencyAdd");
+         }
+
+                 if (!AR.IsDecimal())
+         {
+            ViewData["Message"] = "Average Rate must be an Decimal";
+            ViewData["MsgType"] = "warning";
+            return View("CurrencyAdd");
+         }
+
+            string insert_currency = String.Format(@"INSERT INTO Currency(Currency_name, Country)
               VALUES('{0}','{1}')", CN, C);
 
-            int count = DBUtl.ExecSQL(insert);
-            if (count == 1)
+            string insert_stock = String.Format(@"INSERT INTO Stock(Currency_name, Currency_Stock, Average_Rate)
+              VALUES('{1}', {2}, {3})", CN, A, AR);
+
+            int count = DBUtl.ExecSQL(insert_currency);
+            int count1 = DBUtl.ExecSQL(insert_stock);
+
+            if (count == 1 && count == 1)
             {
                 TempData["Message"] = "Currency Successfully Added.";
                 TempData["MsgType"] = "success";
-                return RedirectToAction("Currency");
+                return RedirectToAction("CurrencyList");
+                
             }
             else
             {
@@ -83,7 +107,7 @@ namespace MoneyExchangeWebApp.Controllers
         public IActionResult CurrencyDeletePost()
         {
             IFormCollection form = HttpContext.Request.Form;
-            string CN = form["Currency_name"].ToString().Trim();
+            string CN = form["Stock_id"].ToString().Trim();
 
             if (!CN.Length.Equals(3))
             {
@@ -92,16 +116,16 @@ namespace MoneyExchangeWebApp.Controllers
                 return View("CurrencyDelete");
             }
 
-            string select = String.Format(@"SELECT * FROM Currency WHERE Currency_name='{0}'", CN);
+            string select = String.Format(@"SELECT * FROM Stock WHERE Stock_id='{0}'", CN);
             DataTable dt = DBUtl.GetTable(select);
             if (dt.Rows.Count == 0)
             {
-                ViewData["Message"] = "Currency name Not Found";
+                ViewData["Message"] = "Stock id Not Found";
                 ViewData["MsgType"] = "warning";
                 return View("CurrencyDelete");
             }
 
-            int count = DBUtl.ExecSQL(String.Format(@"DELETE Currency WHERE Currency_name='{0}'", CN));
+            int count = DBUtl.ExecSQL(String.Format(@"DELETE Stock WHERE Stock_id='{0}'", CN));
             if (count == 1)
             {
                 TempData["Message"] = "Currency Deleted";
@@ -112,8 +136,9 @@ namespace MoneyExchangeWebApp.Controllers
                 ViewData["Message"] = DBUtl.DB_Message;
                 ViewData["MsgType"] = "danger";
             }
-            return RedirectToAction("Currency");
+            return RedirectToAction("Stock");
         }
-        #endregion
+        #endregion*/
     }
 }
+

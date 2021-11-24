@@ -1,0 +1,93 @@
+﻿@model MoneyExchangeWebApp.Models.Transaction
+
+<form method="post" 
+      asp-controller="Transaction"
+      asp-action="TransactionEdit" 
+      >
+
+   <div class="form-group row">
+      <div class="offset-sm-2 col-sm-5" >
+         <h2>Update Transaction</h2>
+      </div>
+   </div>
+
+   <input type="text" asp-for="Transaction_id" hidden />
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Source_currency">Source Currency :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="Source_currency" class="form-control" />
+      </div>
+      <div class="col-sm-4">
+         <span asp-validation-for="Source_currency" class="text-danger"></span>
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Source_amount">Source Amount :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="Source_amount" class="form-control" />
+      </div>
+      <div class="col-sm-4">
+         <span asp-validation-for="Source_amount" class="text-danger"></span>
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Converted_currency">Converted currency :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="Converted_currency" class="form-control" />
+      </div>
+      <div class="col-sm-4">
+         <span asp-validation-for="Converted_currency" class="text-danger"></span>
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Exchange_rate">Exchange Rate :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="Exchange_rate" class="form-control" />
+      </div>
+      <div class="col-sm-4">
+         <span asp-validation-for="Exchange_rate" class="text-danger"></span>
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Converted_amount">Converted Amount :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="Converted_amount" class="form-control" />
+      </div>
+      <div class="col-sm-4">
+         <span asp-validation-for="Converted_amount" class="text-danger"></span>
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label col-sm-2" for="Transaction_date">Transaction date :</label>
+      <div class="col-sm-5">
+         <input type="text" asp-for="Transaction_date" asp-format="{0:yyyy-MM-dd}"
+                class="form-control" placeholder="YYYY-MM-DD" />
+      </div>
+      <div class="col-sm-4">
+         <span asp-validation-for="Transaction_date" class="text-danger"></span>
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <div class="offset-sm-2 col-sm-5">
+         <input type="submit" value="Edit" class="btn btn-primary" /><br />
+      </div>
+   </div>
+
+   @if (ViewData["Message"] != null)
+    {
+      <div class="form-group row">
+         <div class="offset-sm-2 col-sm-5">
+            <div class="alert alert-@ViewData["MsgType"]">
+               <text>@ViewData["Message"]</text>
+            </div>
+         </div>
+      </div>
+   }
+</form>

@@ -43,12 +43,14 @@
                                                 <td>@item.Exchange_rate</td>
                                                 <td>@item.Transaction_date.ToShortDateString()</td>
                                                 <td>
-                                                    <a asp-controller="Transaction" asp-action="TransactionEdit">Edit </a>
+                                                    <a asp-controller="Transaction" 
+                                                    asp-action="TransactionEdit" 
+                                                    asp-route-id="@item.Transaction_id"><i class="fas fa-pencil-alt"></i> </a>
                                                     |
                                                     <a asp-controller="Transaction" 
                                                     asp-action="Delete"
                                                     asp-route-id="@item.Transaction_id"
-                                                    onclick="return confirm('Delete Trip [@item.Source_currency]')"> Delete</a>
+                                                    onclick="return confirm('Delete Transaction [@item.Source_currency]')"> <i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
                                         }
