@@ -31,7 +31,7 @@ namespace FYP.Controllers
             return View(dt);
         }
 
-/*        #region "CurrencyAdd"
+        #region "CurrencyAdd"
         public IActionResult CurrencyAdd()
         {
             return View();
@@ -59,19 +59,19 @@ namespace FYP.Controllers
                 return View("CurrencyAdd");
             }
 
-                 if (!A.IsDecimal())
-         {
-            ViewData["Message"] = "Amount must be an Decimal";
-            ViewData["MsgType"] = "warning";
-            return View("CurrencyAdd");
-         }
+            if (!A.IsDecimal())
+            {
+                ViewData["Message"] = "Amount must be an Decimal";
+                ViewData["MsgType"] = "warning";
+                return View("CurrencyAdd");
+            }
 
-                 if (!AR.IsDecimal())
-         {
-            ViewData["Message"] = "Average Rate must be an Decimal";
-            ViewData["MsgType"] = "warning";
-            return View("CurrencyAdd");
-         }
+            if (!AR.IsDecimal())
+            {
+                ViewData["Message"] = "Average Rate must be an Decimal";
+                ViewData["MsgType"] = "warning";
+                return View("CurrencyAdd");
+            }
 
             string insert_currency = String.Format(@"INSERT INTO Currency(Currency_name, Country)
               VALUES('{0}','{1}')", CN, C);
@@ -87,7 +87,7 @@ namespace FYP.Controllers
                 TempData["Message"] = "Currency Successfully Added.";
                 TempData["MsgType"] = "success";
                 return RedirectToAction("CurrencyList");
-                
+
             }
             else
             {
@@ -138,7 +138,7 @@ namespace FYP.Controllers
             }
             return RedirectToAction("Stock");
         }
-        #endregion*/
+        #endregion
     }
 }
 
