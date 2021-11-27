@@ -1,0 +1,63 @@
+﻿@using FYP.Models;
+@model List<Account>
+
+    @if (TempData["Message"] != null)
+{
+   <div class="alert alert-@TempData["MsgType"]">
+      @TempData["Message"]
+   </div>
+}
+
+    <div class="container py-sm-5">
+            <header class="text-center text-black">
+                <h1 class="display-2"><b>Account</b></h1>
+            </header>
+            <div class="row py-5">
+                <div class="col-sm-12 mx-auto">
+                    <div class="card rounded shadow border-0">
+                        <div class="card-body p-sm-6 bg-white rounded">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-responsive" style="text-align:center">
+                                    <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Password</th>
+                                            <th>Name</th>
+                                            <th>Role</th>
+                                            <th>Date of Birth</th>
+                                            <th>Deleted</th>
+                                            <th>Deleted By</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (Account item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.username</td>
+                                                <td>@item.password</td>
+                                                <td>@item.name</td>
+                                                <td>@item.role</td>
+                                                <td>@item.dob.ToShortDateString</td>
+                                                <td>@item.deleted</td>
+                                                <td>@item.deleted_by</td>
+                                                <td>
+                                                    <a asp-controller="Account" 
+                                                    asp-action="EditUser" 
+                                                    asp-route-id="@item.username"><i class="fas fa-pencil-alt"></i> </a>
+                                                    |
+                                                    <a asp-controller="Account" 
+                                                    asp-action="DeleteUser"
+                                                    asp-route-id="@item.username"
+                                                    onclick="return confirm('Delete Transaction [@item.username]')"> <i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
