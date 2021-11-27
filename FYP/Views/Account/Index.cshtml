@@ -12,10 +12,10 @@
             <header class="text-center text-black">
                 <h1 class="display-2"><b>Account</b></h1>
             </header>
-            <div class="row py-5">
-                <div class="col-sm-12 mx-auto">
+            <div class="row py-4">
+                <div class="col-sm-10 mx-auto">
                     <div class="card rounded shadow border-0">
-                        <div class="card-body p-sm-6 bg-white rounded">
+                        <div class="card-body p-sm-5 bg-white rounded">
                             <div class="table-responsive">
                                 <table class="table table-hover table-responsive" style="text-align:center">
                                     <thead>
@@ -27,6 +27,7 @@
                                             <th>Date of Birth</th>
                                             <th>Deleted</th>
                                             <th>Deleted By</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
 
@@ -38,18 +39,18 @@
                                                 <td>@item.password</td>
                                                 <td>@item.name</td>
                                                 <td>@item.role</td>
-                                                <td>@item.dob.ToShortDateString</td>
+                                                <td>@item.dob.ToShortDateString()</td>
                                                 <td>@item.deleted</td>
                                                 <td>@item.deleted_by</td>
                                                 <td>
                                                     <a asp-controller="Account" 
-                                                    asp-action="EditUser" 
+                                                    asp-action="EditUsers" 
                                                     asp-route-id="@item.username"><i class="fas fa-pencil-alt"></i> </a>
                                                     |
                                                     <a asp-controller="Account" 
-                                                    asp-action="DeleteUser"
+                                                    asp-action="Delete"
                                                     asp-route-id="@item.username"
-                                                    onclick="return confirm('Delete Transaction [@item.username]')"> <i class="fas fa-trash-alt"></i></a>
+                                                    onclick="return confirm('Delete Account [@item.name]')"> <i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
                                         }
