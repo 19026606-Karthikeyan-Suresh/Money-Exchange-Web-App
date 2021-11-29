@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FYP.Models
 {
-   public class Account
-   {
+    public class Account
+    {
+        [Required]
+        public string account_id {get; set;}
         [Required]
         public string username { get; set; }
         [Required]

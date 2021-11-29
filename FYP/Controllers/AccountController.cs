@@ -140,7 +140,7 @@ using System.Security.Claims;
         [Authorize]
         public IActionResult EditUsers(string username)
         {
-            string sql = @"SELECT * FROM Accounts WHERE username='{0}'";
+            string sql = @"SELECT * FROM Accounts WHERE account_id='{0}'";
 
             string select = String.Format(sql, username.EscQuote());
             List<Account> Alist = DBUtl.GetList<Account>(select);
@@ -171,8 +171,8 @@ using System.Security.Claims;
             {
                 string sql = @"UPDATE Accounts  
                               SET password='{1}', name='{2}', role='{3}', dob='{4:yyyy-MM-dd}' 
-                            WHERE username='{0}'";
-                string update = String.Format(sql, A.password.EscQuote(), A.name.EscQuote(), A.role.EscQuote(), A.dob);
+                            WHERE account_id={0}";
+                string update = String.Format(sql, A.account_id, A.password.EscQuote(), A.name.EscQuote(), A.role.EscQuote(), A.dob);
 
                 if (DBUtl.ExecSQL(update) == 1)
                 {
@@ -191,10 +191,10 @@ using System.Security.Claims;
 
         #region "Delete user Accounts" - Teng Yik
         [Authorize]
-        public IActionResult Delete(String username)
+        public IActionResult Delete(int id)
         {
             string sql = @"SELECT * FROM Accounts WHERE username='{0}'";
-            string select = String.Format(sql, username);
+            string select = String.Format(sql, id);
             DataTable dt = DBUtl.GetTable(select);
             if (dt.Rows.Count != 1)
             {
@@ -203,7 +203,7 @@ using System.Security.Claims;
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("DELETE FROM Accounts WHERE username='{0}'", username));
+                int res = DBUtl.ExecSQL(String.Format("DELETE FROM Accounts WHERE account_id={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Account has been deleted";
