@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FYP.Models
+namespace MoneyExchangeWebApp.Models
 {
     public class Account
     {

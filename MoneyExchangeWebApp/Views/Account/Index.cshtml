@@ -1,4 +1,4 @@
-﻿@using FYP.Models;
+﻿@using MoneyExchangeWebApp.Models;
 @model List<Account>
 
     @if (TempData["Message"] != null)
@@ -46,9 +46,13 @@
                                                 <td>@item.deleted_by</td>
                                                 <td>
                                                     <a asp-controller="Account" 
-                                                    asp-action="RecoverAccount"
+                                                    asp-action="EditUsers" 
+                                                    asp-route-id="@item.account_id"><i class="fas fa-pencil-alt"></i> </a>
+                                                    |
+                                                    <a asp-controller="Account" 
+                                                    asp-action="Delete"
                                                     asp-route-id="@item.account_id"
-                                                    onclick="return confirm('Recover Account [@item.name]')"> <i class="fas fa-user-plus"></i></a>
+                                                    onclick="return confirm('Delete Account [@item.name]')"> <i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
                                         }

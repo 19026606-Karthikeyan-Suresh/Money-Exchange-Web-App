@@ -36,6 +36,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="nav-item nav-link" asp-controller="Transaction" asp-action="Index">Transaction List</a>
                 <a class="nav-item nav-link" asp-controller="Transaction" asp-action="CreateTransaction">Create Transaction</a>
+                <a class="nav-item nav-link" asp-controller="Transaction" asp-action="DeletedTransactions">Deleted Transactions</a>
             </div>
          </li>
          <li class="nav-item dropdown">
@@ -44,23 +45,22 @@
                <i class="fas fa-money-bill-alt"> Accounts</i>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-               <a class="nav-item nav-link" asp-controller="Account" asp-action="GetUserAccounts">View all Accounts</a>
-               <a class="nav-item nav-link" asp-controller="Account" asp-action="AddUserAccounts">Add User</a>
-               <a class="nav-item nav-link" asp-controller="Account" asp-action="EditUserAccounts">Edit User</a>
-               <a class="nav-item nav-link" asp-controller="Account" asp-action="DeleteUserAccounts">Delete User</a>
+               <a class="nav-item nav-link" asp-controller="Account" asp-action="Index">View all Accounts</a>
+               <a class="nav-item nav-link" asp-controller="Account" asp-action="DeletedAccounts">Deleted Account</a>
+               <a class="nav-item nav-link" asp-controller="Account" asp-action="AddUsers">Add User</a>
             </div>
          </li>
      </ul>
       <ul class="nav navbar-nav ml-auto">
          <li>
             <p class="navbar-text">
-               Welcome @User.Identity.Name<br />
+               Welcome @User.Identity.Name  <br />
             </p>
          </li>
          <li>
             <a class="nav-link" asp-controller="Account" asp-action="Logoff">
-               <i class="fa fa-sign-out"></i>
-               Logout
+                Logout
+               <i class="fas fa-sign-out-alt"></i>
             </a>
          </li>
          <li>

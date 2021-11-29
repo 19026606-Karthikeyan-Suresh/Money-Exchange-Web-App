@@ -77,7 +77,7 @@ using System.Security.Claims;
                         new Claim(ClaimTypes.Name, ds.Rows[0]["name"].ToString())
                      },
                      CookieAuthenticationDefaults.AuthenticationScheme));
-            return true;
+                return true;
          }
          return false;
       }
@@ -92,6 +92,7 @@ using System.Security.Claims;
         }
 
         #endregion
+
         #region "Display Deleted Accounts" - Teng Yik
         [Authorize]
         public IActionResult DeletedAccounts()
@@ -120,11 +121,11 @@ using System.Security.Claims;
             } else
             {
                 string sql =
-              @"INSERT INTO Accounts(username, password, name, role, dob, deleted, deleted_by)
+              @"INSERT INTO Accounts(username, password, name, role, date_created, deleted, deleted_by)
               VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4:yyyy-MM-dd}', {5}, '{6}')";
 
                 string insert = String.Format(sql, AC.username.EscQuote(), AC.password.EscQuote(), AC.name.EscQuote(), AC.role.EscQuote(), 
-                    AC.dob, 0, null);
+                    AC.date_created, 0, null);
 
                 int count = DBUtl.ExecSQL(insert);
                 if (count == 1)
@@ -178,9 +179,9 @@ using System.Security.Claims;
             else
             {
                 string sql = @"UPDATE Accounts  
-                              SET password= HASHBYTES('SHA1','{1}'), name='{2}', role='{3}', dob='{4:yyyy-MM-dd}' 
+                              SET password= HASHBYTES('SHA1','{1}'), name='{2}', role='{3}', date_created='{4:yyyy-MM-dd}' 
                             WHERE account_id={0}";
-                string update = String.Format(sql, A.account_id, A.password.EscQuote(), A.name.EscQuote(), A.role.EscQuote(), A.dob);
+                string update = String.Format(sql, A.account_id, A.password.EscQuote(), A.name.EscQuote(), A.role.EscQuote(), A.date_created);
 
                 if (DBUtl.ExecSQL(update) == 1)
                 {
@@ -212,7 +213,7 @@ using System.Security.Claims;
             else
             {
                 string sql1 = @"UPDATE Accounts  
-                              SET deleted={1}, deleted_by='{2}' WHERE account_id={0}";
+                              SET deleted='True', deleted_by='{1}' WHERE account_id={0}";
 
                 string userid = User.Identity.Name;
 
@@ -232,28 +233,27 @@ using System.Security.Claims;
         }
 
         #endregion
-        public IActionResult RecoverAccount()
+
+        #region "Recover Deleted Account" - Teng Yik
+        [Authorize]
+        public IActionResult RecoverAccount(int id)
         {
-            string sql = @"SELECT * FROM Accounts WHERE account_id={0}";
-            return View();
-        }
-        public IActionResult RecoverAccount(Account A)
-        {
-            if (!ModelState.IsValid)
+            string sql = @"SELECT * FROM Accounts 
+                         WHERE account_id={0}";
+
+            string select = String.Format(sql, id);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count != 1)
             {
-                ViewData["Message"] = "Invalid Input";
-                ViewData["MsgType"] = "danger";
-                return View("DeletedAccounts", A);
+                TempData["Message"] = "Account does not exist";
+                TempData["MsgType"] = "warning";
             }
             else
             {
-                string sql = @"UPDATE Accounts  
-                              SET deleted={1}, deleted_by='{2}' WHERE account_id={0}";
-                string update = String.Format(sql, A.account_id, 0, null);
-
-                if (DBUtl.ExecSQL(update) == 1)
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Accounts SET deleted='False', deleted_by=null WHERE account_id={0}", id));
+                if (res == 1)
                 {
-                    TempData["Message"] = "Accounts Updated";
+                    TempData["Message"] = "Account Recovered";
                     TempData["MsgType"] = "success";
                 }
                 else
@@ -261,8 +261,8 @@ using System.Security.Claims;
                     TempData["Message"] = DBUtl.DB_Message;
                     TempData["MsgType"] = "danger";
                 }
-                return RedirectToAction("DeletedAccounts");
             }
+            return RedirectToAction("DeletedAccounts");
         }
-    }
+        #endregion
 }

@@ -1,17 +1,15 @@
+using MoneyExchangeWebApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MoneyExchangeWebApp.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Security.Claims;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
-namespace MoneyExchangeWebApp.Controllers
+  namespace MoneyExchangeWebApp.Controllers
 {
    public class AccountController : Controller
    {
@@ -65,7 +63,6 @@ namespace MoneyExchangeWebApp.Controllers
                                     out ClaimsPrincipal principal)
       {
          principal = null;
-         // TODO L08 Task 1 - Provide Login SELECT Statement
          string sql = @"SELECT * FROM Accounts WHERE username = '{0}' AND password = HASHBYTES('SHA1', '{1}') ";
 
          string select = String.Format(sql, uid, pw);
@@ -80,7 +77,7 @@ namespace MoneyExchangeWebApp.Controllers
                         new Claim(ClaimTypes.Name, ds.Rows[0]["name"].ToString())
                      },
                      CookieAuthenticationDefaults.AuthenticationScheme));
-            return true;
+                return true;
          }
          return false;
       }
@@ -88,159 +85,184 @@ namespace MoneyExchangeWebApp.Controllers
 
         #region "Display User Accounts" - Teng Yik
         [Authorize]
-        public IActionResult GetUserAccounts()
+        public IActionResult Index()
         {
-            ViewData["dbtable"] = DBUtl.GetTable("SELECT * FROM Accounts");
-            return View();
+            List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE deleted='false'");
+            return View(accountList);
+        }
+
+        #endregion
+
+        #region "Display Deleted Accounts" - Teng Yik
+        [Authorize]
+        public IActionResult DeletedAccounts()
+        {
+            List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE deleted='true'");
+            return View(accountList);
         }
         #endregion
 
         #region "Add User Accounts" - Teng Yik
         [Authorize]
-        public IActionResult AddUserAccounts()
+        public IActionResult AddUsers()
         {
             return View();
         }
 
-        public IActionResult AddUserAccountsPost()
+        [HttpPost]
+        public IActionResult AddUsers(Account AC)
         {
-            IFormCollection form = HttpContext.Request.Form;
-            string accountID = form["account_id"].ToString().Trim();
-            string userName = form["username"].ToString().Trim();
-            string passWord = form["password"].ToString().Trim();
-            string namE = form["name"].ToString().Trim();
-            string rolE = form["role"].ToString().Trim();
-            string doB = form["dob"].ToString().Trim();
-
-            if (ValidUtl.CheckIfEmpty(accountID, userName, passWord, namE, rolE, doB))
+            if (!ModelState.IsValid)
             {
-                ViewData["Message"] = "Please enter all fields";
+                ViewData["Message"] = "Invalid Input";
                 ViewData["MsgType"] = "warning";
-                return View("AddUserAccounts");
-            }
+                return View("AddUsers");
 
-            if (!accountID.IsInteger())
+            } else
             {
-                ViewData["Message"] = "Account ID must be an integer";
-                ViewData["MsgType"] = "warning";
+                string sql =
+              @"INSERT INTO Accounts(username, password, name, role, dob, deleted, deleted_by)
+              VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4:yyyy-MM-dd}', {5}, '{6}')";
+
+                string insert = String.Format(sql, AC.username.EscQuote(), AC.password.EscQuote(), AC.name.EscQuote(), AC.role.EscQuote(), 
+                    AC.dob, 0, null);
+
+                int count = DBUtl.ExecSQL(insert);
+                if (count == 1)
+                {
+                    TempData["Message"] = "User Successfully Added.";
+                    TempData["MsgType"] = "success";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewData["Message"] = DBUtl.DB_Message;
+                    ViewData["MsgType"] = "danger";
+                    return View("AddUsers");
+                }
             }
-
-            string sql = @"INSERT INTO Accounts(account_id, username, password, name, role, dob)
-              VALUES({0},'{1}', HASHBYTES('SHA1', '{2}'), '{3}','{4}', '{5}')";
-
-            string insert = String.Format(sql, accountID, userName, passWord, namE, rolE, doB);
-
-            int count = DBUtl.ExecSQL(insert);
-            if (count == 1)
-            {
-                TempData["Message"] = "User Successfully Added.";
-                TempData["MsgType"] = "success";
-                return RedirectToAction("GetUserAccounts");
-            }
-            else
-            {
-                ViewData["Message"] = DBUtl.DB_Message;
-                ViewData["MsgType"] = "danger";
-                return View("AddUserAccounts");
-            }
-
         }
+
         #endregion
 
         #region "Edit User Accounts" - Teng Yik
         [Authorize]
-        public IActionResult EditUserAccounts()
+        public IActionResult EditUsers(int id)
         {
-            return View("EditUserAccounts");
-        }
+            string sql = @"SELECT * FROM Accounts WHERE account_id={0}";
 
-        public IActionResult NewForm()
-        {
-            return View();
-        }
-        public IActionResult EditUserAccountsPost()
-        {
-            IFormCollection form = HttpContext.Request.Form;
-
-            string userName = form["username"].ToString().Trim();
-            string passWord = form["password"].ToString().Trim();
-            string namE = form["name"].ToString().Trim();
-            string rolE = form["role"].ToString().Trim();
-            string doB = form["dob"].ToString().Trim();
-
-            if (ValidUtl.CheckIfEmpty(userName, passWord, namE, rolE, doB))
+            string select = String.Format(sql, id);
+            List<Account> Alist = DBUtl.GetList<Account>(select);
+            if (Alist.Count == 1)
             {
-                ViewData["Message"] = "Please enter all fields";
-                ViewData["MsgType"] = "warning";
-                return View("NewForm");
-            }
-
-            string sql = @"UPDATE Accounts SET (username = '{0}', password = '{1}', name = '{2}', role = '{3}', dob = '{4}')";
-            string update = String.Format(sql, userName, passWord, namE, rolE, doB);
-
-            int count = DBUtl.ExecSQL(update);
-            if (count == 1)
-            {
-                TempData["Message"] = "User has been successfully updated.";
-                TempData["MsgType"] = "success";
-                return RedirectToAction("GetUserAccounts");
+                Account A = Alist[0];
+                return View(A);
             }
             else
             {
-                ViewData["Message"] = DBUtl.DB_Message;
+                TempData["Message"] = "Account does not exist";
+                TempData["MsgType"] = "warning";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult EditUsers(Account A)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Message"] = "Invalid Input";
                 ViewData["MsgType"] = "danger";
-                return View("NewForm");
+                return View("EditUsers", A);
+            }
+            else
+            {
+                string sql = @"UPDATE Accounts  
+                              SET password= HASHBYTES('SHA1','{1}'), name='{2}', role='{3}', dob='{4:yyyy-MM-dd}' 
+                            WHERE account_id={0}";
+                string update = String.Format(sql, A.account_id, A.password.EscQuote(), A.name.EscQuote(), A.role.EscQuote(), A.dob);
+
+                if (DBUtl.ExecSQL(update) == 1)
+                {
+                    TempData["Message"] = "Accounts Updated";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
+                return RedirectToAction("Index");
             }
         }
         #endregion
 
         #region "Delete user Accounts" - Teng Yik
         [Authorize]
-        public IActionResult DeleteUserAccounts()
+        public IActionResult Delete(int id)
         {
-            return View("DeleteUserAccounts");
-        }
-
-        public IActionResult DeleteUserAccountsPost()
-        {
-            IFormCollection form = HttpContext.Request.Form;
-            string accountID = form["account_id"].ToString().Trim();
-
-            if (!accountID.IsInteger())
-            {
-                ViewData["Message"] = "Account ID must be an integer";
-                ViewData["MsgType"] = "warning";
-                return View("DeleteUserAccounts");
-            }
-
             string sql = @"SELECT * FROM Accounts WHERE account_id={0}";
-            string select = String.Format(sql, accountID);
+            string select = String.Format(sql, id);
             DataTable dt = DBUtl.GetTable(select);
-
-            if (dt.Rows.Count == 0)
+            if (dt.Rows.Count != 1)
             {
-                ViewData["Message"] = "Account ID not found";
+                ViewData["Message"] = "The user account you are trying to delete, does not exist";
                 ViewData["MsgType"] = "warning";
-                return View("DeleteUserAccouns");
-            }
-
-            sql = @"DELETE Accounts WHERE account_id={0}";
-            string delete = String.Format(sql, accountID);
-
-            int count = DBUtl.ExecSQL(delete);
-            if (count == 1)
-            {
-                ViewData["Message"] = "User deleted";
-                ViewData["MsgType"] = "success";
             }
             else
             {
-                ViewData["Message"] = DBUtl.DB_Message;
-                ViewData["MsgType"] = "danger";
+                string sql1 = @"UPDATE Accounts  
+                              SET deleted='True', deleted_by='{1}' WHERE account_id={0}";
+
+                string userid = User.Identity.Name;
+
+                int res = DBUtl.ExecSQL(String.Format(sql1, id, userid));
+                if (res == 1)
+                {
+                    TempData["Message"] = "Account has been deleted";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
             }
+            return RedirectToAction("Index");
+        }
 
-            return View("DeleteUserAccounts");
+        #endregion
 
+        #region "Recover Deleted Account" - Teng Yik
+        [Authorize]
+        public IActionResult RecoverAccount(int id)
+        {
+            string sql = @"SELECT * FROM Accounts 
+                         WHERE account_id={0}";
+
+            string select = String.Format(sql, id);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count != 1)
+            {
+                TempData["Message"] = "Account does not exist";
+                TempData["MsgType"] = "warning";
+            }
+            else
+            {
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Accounts SET deleted='False', deleted_by=null WHERE account_id={0}", id));
+                if (res == 1)
+                {
+                    TempData["Message"] = "Account Recovered";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
+            }
+            return RedirectToAction("DeletedAccounts");
         }
         #endregion
 
