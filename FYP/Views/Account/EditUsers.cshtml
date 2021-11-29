@@ -10,7 +10,17 @@
       </div>
    </div>
 
-   <input type="text" asp-for="username" hidden />
+   <input type="text" asp-for="account_id" hidden />
+
+    <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="username">Username :</label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="username" class="form-control" />
+      </div>
+      <div class="col-sm-4">
+         <span asp-validation-for="username" class="text-danger"></span>
+      </div>
+   </div>
 
    <div class="form-group row">
       <label class="control-label offset-sm-1 col-sm-2" asp-for="password">Password :</label>
