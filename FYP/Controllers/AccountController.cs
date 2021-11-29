@@ -11,76 +11,76 @@ using System.Security.Claims;
 
   namespace FYP.Controllers
 {
-   public class AccountController : Controller
-   {
+    public class AccountController : Controller
+    {
         #region "Login/Logout" - Teng Yik
         [Authorize]
         public IActionResult Logoff(string returnUrl = null)
-      {
-         HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-         if (Url.IsLocalUrl(returnUrl))
-            return Redirect(returnUrl);
-         return RedirectToAction("ExchangeRates", "Currency");
-      }
-
-      [AllowAnonymous]
-      public IActionResult Login(string returnUrl = null)
-      {
-         TempData["ReturnUrl"] = returnUrl;
-         return View();
-      }
-
-      [AllowAnonymous]
-      [HttpPost]
-      public IActionResult Login(UserLogin user)
-      {
-         if (!AuthenticateUser(user.UserID, user.Password,
-                               out ClaimsPrincipal principal))
-         {
-            ViewData["Message"] = "Incorrect User ID or Password";
-            return View();
-         }
-         else
-         {
-            HttpContext.SignInAsync(
-               CookieAuthenticationDefaults.AuthenticationScheme,
-               principal);
-
-            if (TempData["returnUrl"] != null)
-            {
-               string returnUrl = TempData["returnUrl"].ToString();
-               if (Url.IsLocalUrl(returnUrl))
-                  return Redirect(returnUrl);
-            }
-
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            if (Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
             return RedirectToAction("ExchangeRates", "Currency");
-         }
-      }
+        }
+
+        [AllowAnonymous]
+        public IActionResult Login(string returnUrl = null)
+        {
+            TempData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Login(UserLogin user)
+        {
+            if (!AuthenticateUser(user.UserID, user.Password,
+                                  out ClaimsPrincipal principal))
+            {
+                ViewData["Message"] = "Incorrect User ID or Password";
+                return View();
+            }
+            else
+            {
+                HttpContext.SignInAsync(
+                   CookieAuthenticationDefaults.AuthenticationScheme,
+                   principal);
+
+                if (TempData["returnUrl"] != null)
+                {
+                    string returnUrl = TempData["returnUrl"].ToString();
+                    if (Url.IsLocalUrl(returnUrl))
+                        return Redirect(returnUrl);
+                }
+
+                return RedirectToAction("ExchangeRates", "Currency");
+            }
+        }
         #endregion
 
         #region "Authenticate User" - Teng Yik
         private bool AuthenticateUser(string uid, string pw,
                                     out ClaimsPrincipal principal)
-      {
-         principal = null;
-         string sql = @"SELECT * FROM Accounts WHERE username = '{0}' AND password = HASHBYTES('SHA1', '{1}') ";
+        {
+            principal = null;
+            string sql = @"SELECT * FROM Accounts WHERE username = '{0}' AND password = HASHBYTES('SHA1', '{1}') ";
 
-         string select = String.Format(sql, uid, pw);
-         DataTable ds = DBUtl.GetTable(select);
-         if (ds.Rows.Count == 1)
-         {
-            principal =
-               new ClaimsPrincipal(
-                  new ClaimsIdentity(
-                     new Claim[] {
+            string select = String.Format(sql, uid, pw);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count == 1)
+            {
+                principal =
+                   new ClaimsPrincipal(
+                      new ClaimsIdentity(
+                         new Claim[] {
                         new Claim(ClaimTypes.NameIdentifier, uid),
                         new Claim(ClaimTypes.Name, ds.Rows[0]["name"].ToString())
-                     },
-                     CookieAuthenticationDefaults.AuthenticationScheme));
+                         },
+                         CookieAuthenticationDefaults.AuthenticationScheme));
                 return true;
-         }
-         return false;
-      }
+            }
+            return false;
+        }
         #endregion
 
         #region "Display User Accounts" - Teng Yik
@@ -118,13 +118,14 @@ using System.Security.Claims;
                 ViewData["MsgType"] = "warning";
                 return View("AddUsers");
 
-            } else
+            }
+            else
             {
                 string sql =
               @"INSERT INTO Accounts(username, password, name, role, date_created, deleted, deleted_by)
               VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4:yyyy-MM-dd}', {5}, '{6}')";
 
-                string insert = String.Format(sql, AC.username.EscQuote(), AC.password.EscQuote(), AC.name.EscQuote(), AC.role.EscQuote(), 
+                string insert = String.Format(sql, AC.username.EscQuote(), AC.password.EscQuote(), AC.name.EscQuote(), AC.role.EscQuote(),
                     AC.date_created, 0, null);
 
                 int count = DBUtl.ExecSQL(insert);
@@ -265,4 +266,5 @@ using System.Security.Claims;
             return RedirectToAction("DeletedAccounts");
         }
         #endregion
+    }
 }

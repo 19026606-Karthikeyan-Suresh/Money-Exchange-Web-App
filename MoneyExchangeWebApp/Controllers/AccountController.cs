@@ -121,11 +121,11 @@ using System.Security.Claims;
             } else
             {
                 string sql =
-              @"INSERT INTO Accounts(username, password, name, role, dob, deleted, deleted_by)
+              @"INSERT INTO Accounts(username, password, name, role, date_created, deleted, deleted_by)
               VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4:yyyy-MM-dd}', {5}, '{6}')";
 
                 string insert = String.Format(sql, AC.username.EscQuote(), AC.password.EscQuote(), AC.name.EscQuote(), AC.role.EscQuote(), 
-                    AC.dob, 0, null);
+                    AC.date_created, 0, null);
 
                 int count = DBUtl.ExecSQL(insert);
                 if (count == 1)
@@ -179,9 +179,9 @@ using System.Security.Claims;
             else
             {
                 string sql = @"UPDATE Accounts  
-                              SET password= HASHBYTES('SHA1','{1}'), name='{2}', role='{3}', dob='{4:yyyy-MM-dd}' 
+                              SET password= HASHBYTES('SHA1','{1}'), name='{2}', role='{3}', date_created='{4:yyyy-MM-dd}' 
                             WHERE account_id={0}";
-                string update = String.Format(sql, A.account_id, A.password.EscQuote(), A.name.EscQuote(), A.role.EscQuote(), A.dob);
+                string update = String.Format(sql, A.account_id, A.password.EscQuote(), A.name.EscQuote(), A.role.EscQuote(), A.date_created);
 
                 if (DBUtl.ExecSQL(update) == 1)
                 {
