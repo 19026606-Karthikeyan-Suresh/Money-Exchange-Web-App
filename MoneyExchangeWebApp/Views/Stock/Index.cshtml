@@ -1,0 +1,61 @@
+﻿@using MoneyExchangeWebApp.Models;
+@model List<Stock>
+
+    @if (TempData["Message"] != null)
+{
+   <div class="alert alert-@TempData["MsgType"]">
+      @TempData["Message"]
+   </div>
+}
+
+    <div class="container py-sm-5">
+            <header class="text-center text-black">
+                <h1 class="display-2"><b>Stocks List</b></h1>
+            </header>
+            <div class="row py-5">
+                <div class="col-sm-15 mx-auto">
+                    <div class="card rounded shadow border-0">
+                        <div class="card-body p-sm-10 bg-white rounded">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-responsive" style="text-align:center">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Country</th>
+                                            <th>Average Rate</th>
+                                            <th>Created By</th>
+                                            <th>Created Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (Stock item in Model)
+                                        {
+
+                                            <tr>
+                                                <td></td>
+                                                <td>@item.Stock_id</td>
+                                                <td>@item.Stock_name</td>
+                                                <td>@item.Stock_amount</td>
+                                                <td>@item.Average_rate</td>
+                                                <td>@item.Created_date.ToShortDateString()</td>
+                                                <td>
+                                                    <a asp-controller="Stock" 
+                                                    asp-action="StockEdit" 
+                                                    asp-route-id="@item.Stock_id"><i class="fas fa-pencil-alt"></i> </a>
+                                                    |
+                                                    <a asp-controller="Currency" 
+                                                    asp-action="SoftDelete"
+                                                    asp-route-id="@item.Stock_id"> <i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

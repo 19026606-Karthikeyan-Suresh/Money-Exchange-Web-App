@@ -8,13 +8,21 @@ namespace MoneyExchangeWebApp.Models
 {
     public class Stock
     {
+        [Required]
+        public string Stock_id { get; set; }
+        [Required]
+        public string  Stock_name { get; set; }
+        [Required]
+        public decimal Stock_amount { get; set; }
+        [Required]
+        public decimal Average_rate { get; set; }
+        [Required]
+        public int Deleted { get; set; }
+        [Required]
+        public DateTime Created_date { get; set; }
+        public string Deleted_by { get; set; }
 
-        public string StockID { get; set; }
-        public string  CurrenctName { get; set; }
-        [Required(ErrorMessage = "Currency Stock must be decimal")]
-        public decimal CurrencyStock { get; set; }
-        [Required( ErrorMessage = "Average Rate must be decimal")]
-        public decimal AverageRate { get; set; }
+
 
     }
 }

@@ -14,21 +14,16 @@ namespace MoneyExchangeWebApp.Controllers
     {
         public IActionResult ExchangeRates()
         {
-            List<CurrencyExchange> curList = DBUtl.GetList<CurrencyExchange>("SELECT * FROM ExchangeRates");
-            return View(curList);
+            List<CurrencyExchange> curExList = DBUtl.GetList<CurrencyExchange>("SELECT * FROM ExchangeRates");
+            return View(curExList);
             
         }
 
-        public IActionResult CurrencyList()
+        public IActionResult Index()
         {
-            string select =
-               @"SELECT Stock_id AS [Stock id],
-                     Currency_name AS [Currency name],
-                     Currency_stock AS [stock],
-                     Average_Rate AS [Average rate]
-                FROM Stock";
-            DataTable dt = DBUtl.GetTable(select);
-            return View(dt);
+            List<Currency> curList = DBUtl.GetList<Currency>("SELECT * FROM Currency");
+            return View(curList);
+
         }
 
       /*  #region "CurrencyAdd"
