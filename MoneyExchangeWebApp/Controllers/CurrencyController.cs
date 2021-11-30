@@ -14,37 +14,41 @@ namespace MoneyExchangeWebApp.Controllers
     {
         public IActionResult ExchangeRates()
         {
-            List<CurrencyExchange> curExList = DBUtl.GetList<CurrencyExchange>("SELECT * FROM ExchangeRates");
-            return View(curExList);
-            
-        }
-
-        public IActionResult Index()
-        {
-            List<Currency> curList = DBUtl.GetList<Currency>("SELECT * FROM Currency");
+            List<CurrencyExchange> curList = DBUtl.GetList<CurrencyExchange>("SELECT * FROM ExchangeRates");
             return View(curList);
 
         }
 
-      /*  #region "CurrencyAdd"
-        public IActionResult CurrencyAdd()
+        public IActionResult Index()
+        {
+            string select =
+               @"SELECT Currency_name AS [Currency name],
+                     Country AS [Country],
+                     Average_Rate AS [Average rate],
+                     Created_by AS [Created_by]
+                FROM Currency";
+            DataTable dt = DBUtl.GetTable(select);
+            return View(dt);
+        }
+
+        #region "CurrencyEdit"
+        public IActionResult CurrencyEdit ()
         {
             return View();
         }
 
-        public IActionResult CurrencyAddPost()
+        public IActionResult CurrencyEditPost()
         {
             IFormCollection form = HttpContext.Request.Form;
             string CN = form["Currency_name"].ToString().Trim();
             string C = form["Country"].ToString().Trim();
-            decimal A = form["Currency_Stock"];
-            decimal AR = form["Average_Rate"];
+            string AR = form["Average_Rate"].ToString().Trim();
 
-            if (ValidUtl.CheckIfEmpty(CN, C, A, AR))
+            if (ValidUtl.CheckIfEmpty(CN, C, AR))
             {
                 ViewData["Message"] = "Please enter all fields";
                 ViewData["MsgType"] = "warning";
-                return View("CurrencyAdd");
+                return View("CurrencyEdit");
             }
 
             if (!CN.Length.Equals(3))
@@ -54,41 +58,30 @@ namespace MoneyExchangeWebApp.Controllers
                 return View("CurrencyAdd");
             }
 
-                 if (!A.IsDecimal())
-         {
-            ViewData["Message"] = "Amount must be an Decimal";
-            ViewData["MsgType"] = "warning";
-            return View("CurrencyAdd");
-         }
-
-                 if (!AR.IsDecimal())
-         {
-            ViewData["Message"] = "Average Rate must be an Decimal";
-            ViewData["MsgType"] = "warning";
-            return View("CurrencyAdd");
-         }
+            if (!AR.IsNumeric())
+            {
+                ViewData["Message"] = "Average Rate must be an Decimal";
+                ViewData["MsgType"] = "warning";
+                return View("CurrencyEdit");
+            }
 
             string insert_currency = String.Format(@"INSERT INTO Currency(Currency_name, Country)
-              VALUES('{0}','{1}')", CN, C);
-
-            string insert_stock = String.Format(@"INSERT INTO Stock(Currency_name, Currency_Stock, Average_Rate)
-              VALUES('{1}', {2}, {3})", CN, A, AR);
+              VALUES('{0}','{1}','{2}')", CN, C, AR);
 
             int count = DBUtl.ExecSQL(insert_currency);
-            int count1 = DBUtl.ExecSQL(insert_stock);
 
-            if (count == 1 && count == 1)
+            if (count == 1)
             {
-                TempData["Message"] = "Currency Successfully Added.";
+                TempData["Message"] = "Currency Successfully Edited.";
                 TempData["MsgType"] = "success";
-                return RedirectToAction("CurrencyList");
-                
+                return RedirectToAction("Index");
+
             }
             else
             {
                 ViewData["Message"] = DBUtl.DB_Message;
                 ViewData["MsgType"] = "danger";
-                return View("CurrencyAdd");
+                return View("CurrencyEdit");
             }
         }
         #endregion
@@ -119,6 +112,10 @@ namespace MoneyExchangeWebApp.Controllers
                 ViewData["MsgType"] = "warning";
                 return View("CurrencyDelete");
             }
+            else
+            {
+
+            }
 
             int count = DBUtl.ExecSQL(String.Format(@"DELETE Stock WHERE Stock_id='{0}'", CN));
             if (count == 1)
@@ -133,7 +130,6 @@ namespace MoneyExchangeWebApp.Controllers
             }
             return RedirectToAction("Stock");
         }
-        #endregion*/
+        #endregion
     }
 }
-
