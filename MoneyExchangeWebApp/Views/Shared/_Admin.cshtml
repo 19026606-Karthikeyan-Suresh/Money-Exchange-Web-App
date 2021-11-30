@@ -18,35 +18,51 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   <i class="fas fa-money-bill-alt"> Stock</i>
+                   <i class="fas fa-coins"> Currency</i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="Index">Currency List</a>
+                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyIndex">Currency List</a>
                    <div class="dropdown-divider"></div>
-                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyAdd">Add Currency</a>
-                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyDelete">Delete Currency</a>
+                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CreateCurrency">Create Currency</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="DeletedCurrencies">Deleted Currencies</a>
                 </div>
             </li>
 
-         <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-file-invoice-dollar">Transaction</i> 
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="nav-item nav-link" asp-controller="Transaction" asp-action="Index">Transaction List</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="nav-item nav-link" asp-controller="Transaction" asp-action="TransactionIndex">Transaction List</a>
+                <div class="dropdown-divider"></div>
                 <a class="nav-item nav-link" asp-controller="Transaction" asp-action="CreateTransaction">Create Transaction</a>
+                <div class="dropdown-divider"></div>
                 <a class="nav-item nav-link" asp-controller="Transaction" asp-action="DeletedTransactions">Deleted Transactions</a>
+                </div>
+         </li>      
+
+         <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-money-check">Stocks</i> 
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="nav-item nav-link" asp-controller="Stock" asp-action="StockIndex">Stock List</a>
             </div>
          </li>
+
          <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <i class="fas fa-money-bill-alt"> Accounts</i>
+               <i class="fas fa-users"> Accounts</i>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-               <a class="nav-item nav-link" asp-controller="Account" asp-action="Index">View all Accounts</a>
+               <a class="nav-item nav-link" asp-controller="Account" asp-action="AccountIndex">View all Accounts</a>
+               <div class="dropdown-divider"></div>
                <a class="nav-item nav-link" asp-controller="Account" asp-action="DeletedAccounts">Deleted Accounts</a>
+               <div class="dropdown-divider"></div>
                <a class="nav-item nav-link" asp-controller="Account" asp-action="AddUsers">Add User</a>
             </div>
          </li>

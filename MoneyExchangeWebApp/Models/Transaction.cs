@@ -22,10 +22,10 @@ namespace MoneyExchangeWebApp.Models
         public decimal Converted_amount { get; set; }
         [Required]
         public DateTime Transaction_date { get; set; }
-        public string created_by { get; set; }
+        public string Created_by { get; set; }
         [Required]
-        public int deleted { get; set; }
-        public string deleted_by { get; set;}
+        public int Deleted { get; set; }
+        public string Deleted_by { get; set;}
 
     }
 }

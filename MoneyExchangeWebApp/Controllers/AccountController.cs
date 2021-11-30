@@ -63,7 +63,7 @@ using System.Security.Claims;
                                     out ClaimsPrincipal principal)
       {
          principal = null;
-         string sql = @"SELECT * FROM Accounts WHERE username = '{0}' AND password = HASHBYTES('SHA1', '{1}') ";
+         string sql = @"SELECT * FROM Accounts WHERE Username = '{0}' AND Password = HASHBYTES('SHA1', '{1}') ";
 
          string select = String.Format(sql, uid, pw);
          DataTable ds = DBUtl.GetTable(select);
@@ -74,7 +74,7 @@ using System.Security.Claims;
                   new ClaimsIdentity(
                      new Claim[] {
                         new Claim(ClaimTypes.NameIdentifier, uid),
-                        new Claim(ClaimTypes.Name, ds.Rows[0]["name"].ToString())
+                        new Claim(ClaimTypes.Name, ds.Rows[0]["Name"].ToString())
                      },
                      CookieAuthenticationDefaults.AuthenticationScheme));
                 return true;
@@ -85,9 +85,9 @@ using System.Security.Claims;
 
         #region "Display User Accounts" - Teng Yik
         [Authorize]
-        public IActionResult Index()
+        public IActionResult AccountIndex()
         {
-            List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE deleted='false'");
+            List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE Deleted='false'");
             return View(accountList);
         }
 
@@ -121,18 +121,18 @@ using System.Security.Claims;
             } else
             {
                 string sql =
-              @"INSERT INTO Accounts(username, password, name, role, date_created, deleted, deleted_by)
+              @"INSERT INTO Accounts(Username, Password, Name, Role, Date_created, Deleted, Deleted_by)
               VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4:yyyy-MM-dd}', {5}, '{6}')";
 
-                string insert = String.Format(sql, AC.username.EscQuote(), AC.password.EscQuote(), AC.name.EscQuote(), AC.role.EscQuote(), 
-                    AC.date_created, 0, null);
+                string insert = String.Format(sql, AC.Username.EscQuote(), AC.Password.EscQuote(), AC.Name.EscQuote(), AC.Role.EscQuote(), 
+                    AC.Date_created, 0, null);
 
                 int count = DBUtl.ExecSQL(insert);
                 if (count == 1)
                 {
                     TempData["Message"] = "User Successfully Added.";
                     TempData["MsgType"] = "success";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("AccountIndex");
                 }
                 else
                 {
@@ -149,7 +149,7 @@ using System.Security.Claims;
         [Authorize]
         public IActionResult EditUsers(int id)
         {
-            string sql = @"SELECT * FROM Accounts WHERE account_id={0}";
+            string sql = @"SELECT * FROM Accounts WHERE Account_id={0}";
 
             string select = String.Format(sql, id);
             List<Account> Alist = DBUtl.GetList<Account>(select);
@@ -162,7 +162,7 @@ using System.Security.Claims;
             {
                 TempData["Message"] = "Account does not exist";
                 TempData["MsgType"] = "warning";
-                return RedirectToAction("Index");
+                return RedirectToAction("AccountIndex");
             }
         }
 
@@ -179,9 +179,9 @@ using System.Security.Claims;
             else
             {
                 string sql = @"UPDATE Accounts  
-                              SET password= HASHBYTES('SHA1','{1}'), name='{2}', role='{3}', date_created='{4:yyyy-MM-dd}' 
-                            WHERE account_id={0}";
-                string update = String.Format(sql, A.account_id, A.password.EscQuote(), A.name.EscQuote(), A.role.EscQuote(), A.date_created);
+                              SET Password= HASHBYTES('SHA1','{1}'), Name='{2}', Role='{3}', Date_created='{4:yyyy-MM-dd}' 
+                            WHERE Account_id={0}";
+                string update = String.Format(sql, A.Account_id, A.Password.EscQuote(), A.Name.EscQuote(), A.Role.EscQuote(), A.Date_created);
 
                 if (DBUtl.ExecSQL(update) == 1)
                 {
@@ -193,7 +193,7 @@ using System.Security.Claims;
                     TempData["Message"] = DBUtl.DB_Message;
                     TempData["MsgType"] = "danger";
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("AccountIndex");
             }
         }
         #endregion
@@ -202,7 +202,7 @@ using System.Security.Claims;
         [Authorize]
         public IActionResult Delete(int id)
         {
-            string sql = @"SELECT * FROM Accounts WHERE account_id={0}";
+            string sql = @"SELECT * FROM Accounts WHERE Account_id={0}";
             string select = String.Format(sql, id);
             DataTable dt = DBUtl.GetTable(select);
             if (dt.Rows.Count != 1)
@@ -213,7 +213,7 @@ using System.Security.Claims;
             else
             {
                 string sql1 = @"UPDATE Accounts  
-                              SET deleted='True', deleted_by='{1}' WHERE account_id={0}";
+                              SET Deleted='True', Deleted_by='{1}' WHERE Account_id={0}";
 
                 string userid = User.Identity.Name;
 
@@ -229,7 +229,7 @@ using System.Security.Claims;
                     TempData["MsgType"] = "danger";
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("AccountIndex");
         }
 
         #endregion
@@ -239,7 +239,7 @@ using System.Security.Claims;
         public IActionResult RecoverAccount(int id)
         {
             string sql = @"SELECT * FROM Accounts 
-                         WHERE account_id={0}";
+                         WHERE Account_id={0}";
 
             string select = String.Format(sql, id);
             DataTable ds = DBUtl.GetTable(select);
@@ -250,7 +250,7 @@ using System.Security.Claims;
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE Accounts SET deleted='False', deleted_by=null WHERE account_id={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Accounts SET Deleted='False', Deleted_by=null WHERE Account_id={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Account Recovered";

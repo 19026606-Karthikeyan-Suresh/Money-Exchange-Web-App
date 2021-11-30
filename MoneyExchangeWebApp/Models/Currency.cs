@@ -9,12 +9,13 @@ namespace MoneyExchangeWebApp.Models
     public class Currency
     {
         [Required]
+        public int Currency_id { get; set; }
+        [Required]
         public string  Currency_name { get; set; }
         [Required]
         public string Country { get; set; }
         [Required]
         public decimal Average_rate { get; set; }
-        [Required]
         public string Created_by { get; set; }
         [Required]
         public DateTime Created_date { get; set; }

@@ -35,18 +35,18 @@
                                         @foreach (Account item in Model)
                                         {
                                             <tr>
-                                                <td>@item.account_id</td>
-                                                <td>@item.username</td>
-                                                <td>@item.password</td>
-                                                <td>@item.name</td>
-                                                <td>@item.role</td>
-                                                <td>@item.date_created.ToShortDateString()</td>
-                                                <td>@item.deleted_by</td>
+                                                <td>@item.Account_id</td>
+                                                <td>@item.Username</td>
+                                                <td>@item.Password</td>
+                                                <td>@item.Name</td>
+                                                <td>@item.Role</td>
+                                                <td>@item.Date_created.ToShortDateString()</td>
+                                                <td>@item.Deleted_by</td>
                                                 <td>
                                                     <a asp-controller="Account" 
                                                     asp-action="RecoverAccount"
-                                                    asp-route-id="@item.account_id"
-                                                    onclick="return confirm('Recover Account [@item.name]')"> <i class="fas fa-user-plus"></i></a>
+                                                    asp-route-id="@item.Account_id"
+                                                    onclick="return confirm('Recover Account [@item.Name]')"> <i class="fas fa-user-plus"></i></a>
                                                 </td>
                                             </tr>
                                         }

@@ -7,20 +7,20 @@ namespace MoneyExchangeWebApp.Models
     public class Account
     {
         [Required]
-        public int account_id {get; set;}
+        public int Account_id {get; set;}
         [Required]
-        public string username { get; set; }
+        public string Username { get; set; }
         [Required]
-        public string password { get; set; }
+        public string Password { get; set; }
         [Required]
-        public string name { get; set; }
+        public string Name { get; set; }
         [Required]
-        public string role { get; set; }
+        public string Role { get; set; }
         [Required]
-        public DateTime date_created { get; set; }
+        public DateTime Date_created { get; set; }
         [Required]
-        public int deleted { get; set; }
-        public string deleted_by { get; set; }
+        public int Deleted { get; set; }
+        public string Deleted_by { get; set; }
     }
 }
 

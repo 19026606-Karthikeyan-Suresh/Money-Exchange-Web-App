@@ -12,123 +12,219 @@ namespace MoneyExchangeWebApp.Controllers
 {
     public class CurrencyController : Controller
     {
+        #region "Display ExchangeRates" - Jasper
         public IActionResult ExchangeRates()
         {
-            List<CurrencyExchange> curList = DBUtl.GetList<CurrencyExchange>("SELECT * FROM ExchangeRates");
-            return View(curList);
+            List<CurrencyExchange> curExList = DBUtl.GetList<CurrencyExchange>("SELECT * FROM ExchangeRates");
+            return View(curExList);
 
         }
+        #endregion
 
-        public IActionResult Index()
+        #region "View Currencies" - Kaiwen
+        [Authorize]
+        public IActionResult CurrencyIndex()
         {
-            string select =
-               @"SELECT Currency_name AS [Currency name],
-                     Country AS [Country],
-                     Average_Rate AS [Average rate],
-                     Created_by AS [Created_by]
-                FROM Currency";
-            DataTable dt = DBUtl.GetTable(select);
-            return View(dt);
+            List<Currency> curList = DBUtl.GetList<Currency>("SELECT * FROM Currency WHERE Deleted='False'");
+            return View(curList);
         }
+        #endregion
 
-        #region "CurrencyEdit"
-        public IActionResult CurrencyEdit ()
+        #region "View Deleted Currencies" - Kaiwen
+        public IActionResult DeletedCurrencies()
+        {
+            List<Currency> curList = DBUtl.GetList<Currency>("SELECT * FROM Currency WHERE Deleted='True'");
+            return View(curList);
+        }
+        #endregion
+
+        #region "Create a Currency" - Kaiwen
+        [Authorize]
+        public IActionResult CurrencyCreate()
         {
             return View();
         }
 
-        public IActionResult CurrencyEditPost()
+        [Authorize]
+        [HttpPost]
+        public IActionResult CurrencyCreate(Currency C)
         {
-            IFormCollection form = HttpContext.Request.Form;
-            string CN = form["Currency_name"].ToString().Trim();
-            string C = form["Country"].ToString().Trim();
-            string AR = form["Average_Rate"].ToString().Trim();
-
-            if (ValidUtl.CheckIfEmpty(CN, C, AR))
+            if (!ModelState.IsValid)
             {
-                ViewData["Message"] = "Please enter all fields";
+                ViewData["Message"] = "Invalid Input";
                 ViewData["MsgType"] = "warning";
-                return View("CurrencyEdit");
-            }
-
-            if (!CN.Length.Equals(3))
-            {
-                ViewData["Message"] = "Currency name can only be 3 letters";
-                ViewData["MsgType"] = "warning";
-                return View("CurrencyAdd");
-            }
-
-            if (!AR.IsNumeric())
-            {
-                ViewData["Message"] = "Average Rate must be an Decimal";
-                ViewData["MsgType"] = "warning";
-                return View("CurrencyEdit");
-            }
-
-            string insert_currency = String.Format(@"INSERT INTO Currency(Currency_name, Country)
-              VALUES('{0}','{1}','{2}')", CN, C, AR);
-
-            int count = DBUtl.ExecSQL(insert_currency);
-
-            if (count == 1)
-            {
-                TempData["Message"] = "Currency Successfully Edited.";
-                TempData["MsgType"] = "success";
-                return RedirectToAction("Index");
-
+                return View("CurrencyCreate");
             }
             else
             {
-                ViewData["Message"] = DBUtl.DB_Message;
-                ViewData["MsgType"] = "danger";
-                return View("CurrencyEdit");
+                string user = User.Identity.Name;
+                string sql = @"INSERT INTO Currency(Currency_name, Country, Average_rate, 
+                Created_by, Created_date, Deleted, Deleted_by) 
+                VALUES('{0}', '{1}', {2}, '{3}', '{4:yyyy-MM-dd}', {5}, '{6}')";
+
+                string insert = String.Format(sql, C.Currency_name.EscQuote(), C.Country.EscQuote(),
+                    C.Average_rate, user, C.Created_date ,0, null);
+
+                if (DBUtl.ExecSQL(insert) == 1)
+                {
+                    TempData["Message"] = "Currency Successfully Added.";
+                    TempData["MsgType"] = "success";
+                    return RedirectToAction("CurrencyIndex");
+                }
+                else
+                {
+                    ViewData["Message"] = DBUtl.DB_Message;
+                    ViewData["MsgType"] = "danger";
+                    return View("CurrencyCreate");
+                }
             }
         }
         #endregion
 
-        #region "CurrencyDelete"
-        public IActionResult CurrencyDelete()
+        #region "Edit Currency" - Kaiwen
+        [Authorize]
+        public IActionResult CurrencyEdit(int id)
         {
-            return View();
+            string sql = @"SELECT * FROM Currency WHERE Currency_id={0}";
+
+            string select = String.Format(sql, id);
+            List<Currency> Clist = DBUtl.GetList<Currency>(select);
+            if (Clist.Count == 1)
+            {
+                Currency C = Clist[0];
+                return View(C);
+            }
+            else
+            {
+                TempData["Message"] = "Currency does not exist";
+                TempData["MsgType"] = "warning";
+                return RedirectToAction("CurrencyIndex");
+            }
         }
 
-        public IActionResult CurrencyDeletePost()
+        [Authorize]
+        [HttpPost]
+        public IActionResult CurrencyEdit(Currency C)
         {
-            IFormCollection form = HttpContext.Request.Form;
-            string CN = form["Stock_id"].ToString().Trim();
-
-            if (!CN.Length.Equals(3))
+            if (!ModelState.IsValid)
             {
-                ViewData["Message"] = "Currency Name must be 3 letters only";
-                ViewData["MsgType"] = "warning";
-                return View("CurrencyDelete");
-            }
-
-            string select = String.Format(@"SELECT * FROM Stock WHERE Stock_id='{0}'", CN);
-            DataTable dt = DBUtl.GetTable(select);
-            if (dt.Rows.Count == 0)
-            {
-                ViewData["Message"] = "Stock id Not Found";
-                ViewData["MsgType"] = "warning";
-                return View("CurrencyDelete");
-            }
-            else
-            {
-
-            }
-
-            int count = DBUtl.ExecSQL(String.Format(@"DELETE Stock WHERE Stock_id='{0}'", CN));
-            if (count == 1)
-            {
-                TempData["Message"] = "Currency Deleted";
-                TempData["MsgType"] = "success";
-            }
-            else
-            {
-                ViewData["Message"] = DBUtl.DB_Message;
+                ViewData["Message"] = "Invalid Input";
                 ViewData["MsgType"] = "danger";
+                return View("CurrencyEdit", C);
             }
-            return RedirectToAction("Stock");
+            else
+            {
+                string sql = @"UPDATE Currency SET Currency_name='{1}', Country='{2}', Average_rate={3} WHERE Currency_id={0}";
+                string update = String.Format(sql, C.Currency_id,C.Currency_name.EscQuote(), C.Country.EscQuote(), C.Average_rate);
+
+                if (DBUtl.ExecSQL(update) == 1)
+                {
+                    TempData["Message"] = "Currency Updated";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
+                return RedirectToAction("CurrencyIndex");
+            }
+        }
+        #endregion
+
+        #region "Soft Delete Currency" - Kaiwen
+        [Authorize]
+        public IActionResult SoftDelete(int id)
+        {
+            string sql = @"SELECT * FROM Currency 
+                         WHERE Currency_id={0}";
+
+            string select = String.Format(sql, id);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count != 1)
+            {
+                TempData["Message"] = "Currency does not exist";
+                TempData["MsgType"] = "warning";
+            }
+            else
+            {
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Currency SET Deleted='True',Deleted_by='{1}' WHERE Currency_id={0}", id, User.Identity.Name.EscQuote()));
+                if (res == 1)
+                {
+                    TempData["Message"] = "Currency Deleted";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
+            }
+            return RedirectToAction("CurrencyIndex");
+        }
+        #endregion
+
+        #region "Permanent Delete Currency" - Kaiwen
+        [Authorize]
+        public IActionResult PermanentDelete(int id)
+        {
+            string sql = @"SELECT * FROM Currency 
+                         WHERE Currency_id={0}";
+
+            string select = String.Format(sql, id);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count != 1)
+            {
+                TempData["Message"] = "Currency Record does not exist";
+                TempData["MsgType"] = "warning";
+            }
+            else
+            {
+                int res = DBUtl.ExecSQL(String.Format("DELETE FROM Currency WHERE Currency_id={0}", id));
+                if (res == 1)
+                {
+                    TempData["Message"] = "Currency Deleted Permanently";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
+            }
+            return RedirectToAction("DeletedCurrencies");
+        }
+        #endregion
+
+        #region "Recover Deleted Currency" - Kaiwen
+        [Authorize]
+        public IActionResult RecoverCurrency(int id)
+        {
+            string sql = @"SELECT * FROM Currency 
+                         WHERE Currency_id={0}";
+
+            string select = String.Format(sql, id);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count != 1)
+            {
+                TempData["Message"] = "Currency does not exist";
+                TempData["MsgType"] = "warning";
+            }
+            else
+            {
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Currency SET Deleted='False', Deleted_by='null' WHERE Currency_id={0}", id));
+                if (res == 1)
+                {
+                    TempData["Message"] = "Currency Recovered";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
+            }
+            return RedirectToAction("DeletedCurrencies");
         }
         #endregion
     }

@@ -11,12 +11,11 @@ namespace MoneyExchangeWebApp.Controllers
 {
     public class TransactionController : Controller
     {
-
         #region "View All Transactions" - Karthik
         [Authorize]
-        public IActionResult Index()
+        public IActionResult TransactionIndex()
         {
-            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE deleted='False' ORDER BY Transaction_date DESC");
+            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE Deleted='False' ORDER BY Transaction_date DESC");
             return View(tranList);
 
         }
@@ -26,7 +25,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize]
         public IActionResult DeletedTransactions()
         {
-            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE deleted='True' ORDER BY Transaction_date DESC");
+            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE Deleted='True' ORDER BY Transaction_date DESC");
             return View(tranList);
 
         }
@@ -38,6 +37,7 @@ namespace MoneyExchangeWebApp.Controllers
         {
             return View();
         }
+
         [Authorize]
         [HttpPost]
         public IActionResult CreateTransaction(Transaction TR)
@@ -52,7 +52,8 @@ namespace MoneyExchangeWebApp.Controllers
             {
                 string user = User.Identity.Name;
                 string sql = @"INSERT INTO Transactions(Source_currency, Source_amount, Converted_currency, 
-Converted_amount, Exchange_rate, Transaction_date, created_by, deleted, deleted_by) VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd}', '{6}', {7}, '{8}')";
+                Converted_amount, Exchange_rate, Transaction_date, Created_by, Deleted, Deleted_by) 
+                VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd}', '{6}', {7}, '{8}')";
 
                 string insert = String.Format(sql, TR.Source_currency.EscQuote(), TR.Source_amount,
                     TR.Converted_currency.EscQuote(), TR.Converted_amount, TR.Exchange_rate, TR.Transaction_date, user, 0, null);
@@ -61,7 +62,7 @@ Converted_amount, Exchange_rate, Transaction_date, created_by, deleted, deleted_
                 {
                     TempData["Message"] = "Transaction Successfully Added.";
                     TempData["MsgType"] = "success";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("TransactionIndex");
                 }
                 else
                 {
@@ -90,7 +91,7 @@ Converted_amount, Exchange_rate, Transaction_date, created_by, deleted, deleted_
             {
                 TempData["Message"] = "Transaction Record does not exist";
                 TempData["MsgType"] = "warning";
-                return RedirectToAction("Index");
+                return RedirectToAction("TransactionIndex");
             }
         }
 
@@ -123,7 +124,7 @@ Converted_amount, Exchange_rate, Transaction_date, created_by, deleted, deleted_
                     TempData["Message"] = DBUtl.DB_Message;
                     TempData["MsgType"] = "danger";
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("TransactionIndex");
             }
         }
         #endregion
@@ -144,7 +145,7 @@ Converted_amount, Exchange_rate, Transaction_date, created_by, deleted, deleted_
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET deleted='True',deleted_by='{1}' WHERE Transaction_id={0}", id, User.Identity.Name.EscQuote()));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET Deleted='True',Deleted_by='{1}' WHERE Transaction_id={0}", id, User.Identity.Name.EscQuote()));
                 if (res == 1)
                 {
                     TempData["Message"] = "Transaction Record Deleted";
@@ -156,7 +157,7 @@ Converted_amount, Exchange_rate, Transaction_date, created_by, deleted, deleted_
                     TempData["MsgType"] = "danger";
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("TransactionIndex");
         }
         #endregion
 
@@ -208,7 +209,7 @@ Converted_amount, Exchange_rate, Transaction_date, created_by, deleted, deleted_
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET deleted='False' WHERE Transaction_id={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET Deleted='False', Deleted_by='null' WHERE Transaction_id={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Transaction Record Recovered";
