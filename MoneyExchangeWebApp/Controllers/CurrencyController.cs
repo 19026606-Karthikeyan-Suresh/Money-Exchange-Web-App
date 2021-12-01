@@ -31,6 +31,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "View Deleted Currencies" - Kaiwen
+        [Authorize]
         public IActionResult DeletedCurrencies()
         {
             List<Currency> curList = DBUtl.GetList<Currency>("SELECT * FROM Currency WHERE Deleted='True'");

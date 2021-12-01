@@ -13,7 +13,7 @@ namespace MoneyExchangeWebApp.Controllers
 {
     public class StockController : Controller
     {
-        #region "View List of stock"
+        #region "View List of stock" - Karthik
         [Authorize]
         public IActionResult StockIndex()
         {
