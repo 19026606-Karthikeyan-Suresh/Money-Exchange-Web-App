@@ -1,4 +1,4 @@
-﻿<nav class="navbar navbar-expand-sm navbar-light" style="background-color: #A5FFFF;">
+﻿<nav class="navbar navbar-expand-sm navbar-light" style="background-color: #639999;">
    <a class="navbar-brand" asp-controller="Currency" asp-action="ExchangeRates">
       Money Exchanger <i class="fas fa-money-bill-wave"></i>
    </a>
@@ -23,7 +23,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                    <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyIndex">Currency List</a>
                    <div class="dropdown-divider"></div>
-                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CreateCurrency">Create Currency</a>
+                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyCreate">Create Currency</a>
                    <div class="dropdown-divider"></div>
                    <a class="nav-item nav-link" asp-controller="Currency" asp-action="DeletedCurrencies">Deleted Currencies</a>
                 </div>
@@ -32,7 +32,7 @@
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-file-invoice-dollar">Transaction</i> 
+                <i class="fas fa-file-invoice-dollar"> Transaction</i> 
             </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="nav-item nav-link" asp-controller="Transaction" asp-action="TransactionIndex">Transaction List</a>
@@ -46,7 +46,7 @@
          <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-money-check">Stocks</i> 
+                <i class="fas fa-money-check"> Stocks</i> 
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="nav-item nav-link" asp-controller="Stock" asp-action="StockIndex">Stock List</a>
