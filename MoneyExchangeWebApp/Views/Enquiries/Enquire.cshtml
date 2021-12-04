@@ -1,0 +1,49 @@
+﻿@using FYP.Models;
+@model Enquiry
+<br />
+<h2 style="text-align: center;">Have a Question? Feel free to enquire us about it!</h2>
+<br />
+
+<form asp-controller="Enquiries"
+      asp-action="Enquire"
+      method="post">
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="visitor_email_address">Email :</label>
+        <div class="col-sm-4">
+            <input asp-for="visitor_email_address" class="form-control" type="email"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="description">Enquiry :</label>
+        <div class="col-sm-5">
+            <input asp-for="description" class="form-control" />
+        </div>
+    </div>
+
+    <input asp-for="enquiry_date" value=@DateTime.Now hidden />
+    <input asp-for="status" hidden value=0 />
+    <input asp-for="answered_by" value=@null hidden />
+    <input asp-for="deleted" value=0 hidden />
+    <input asp-for="deleted_by" value=@null hidden />
+
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </div>
+
+    @if (ViewData["Message"] != null)
+    {
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-6">
+                <div class="alert alert-@ViewData["MsgType"]">
+                    <text>@ViewData["Message"]</text>
+                </div>
+            </div>
+            @ViewData["sql"]
+        </div>
+    }
+</form>>
