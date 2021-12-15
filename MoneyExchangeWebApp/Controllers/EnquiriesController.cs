@@ -3,9 +3,9 @@ using System.Data;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FYP.Models;
+using MoneyExchangeWebApp.Models;
 
-namespace FYP.Controllers
+namespace MoneyExchangeWebApp.Controllers
 {
     public class EnquiriesController : Controller
     {
@@ -58,6 +58,17 @@ namespace FYP.Controllers
                 }
             }
             return View();
+        }
+        public IActionResult AllEnquiries()
+        {
+            List<Enquiry> faqList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
+            return View(faqList);
+        }
+
+        public IActionResult AllEnquiry()
+        {
+            List<Enquiry> enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
+            return View(enquiryList);
         }
     }
 }

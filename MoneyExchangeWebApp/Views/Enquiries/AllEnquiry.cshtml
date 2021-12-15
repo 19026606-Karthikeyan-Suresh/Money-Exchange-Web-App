@@ -1,0 +1,39 @@
+﻿@using MoneyExchangeWebApp.Models;
+@model List<Enquiry>
+
+
+    <header class="text-center text-black">
+        <h1 class="display-4"><b>Exchange Rates</b></h1>
+    </header>
+    <div class="row py-5">
+        <div class="col-sm-11 mx-auto">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-responsive" style="text-align:left">
+                            <thead>
+                                <tr>
+                                    <th>Guest Email</th>
+                                    <th>Enquiry</th>
+                                    <th>Date Submitted</th>
+                                    <th>Status</th>
+                                    <th>Answered By</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (Enquiry item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.visitor_email_address</td>
+                                        <td>@item.description</td>
+                                        <td>@item.enquiry_date</td>
+                                        <td>@item.status</td>
+                                        <td>@item.answered_by</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>

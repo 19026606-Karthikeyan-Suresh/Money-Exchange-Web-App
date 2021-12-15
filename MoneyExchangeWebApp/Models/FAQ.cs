@@ -1,4 +1,4 @@
-﻿namespace FYP.Models
+﻿namespace MoneyExchangeWebApp.Models
 {
     public class FAQ
     {
