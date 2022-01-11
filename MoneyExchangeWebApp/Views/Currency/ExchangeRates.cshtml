@@ -1,38 +1,65 @@
 ﻿@using MoneyExchangeWebApp.Models;
-@model List<CurrencyExchange>
+@model List<ExchangeRates>;
 
-    <div class="container py-sm-5">
-            <header class="text-center text-black">
-                <h1 class="display-4"><b>Exchange Rates</b></h1>
-            </header>
-            <div class="row py-5">
-                <div class="col-sm-5 mx-auto">
-                    <div class="card rounded shadow border-0">
-                        <div class="card-body p-sm-6 bg-white rounded">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-responsive" style="text-align:left">
-                                    <thead>
-                                        <tr>
-                                            <th>Source Currency</th>
-                                            <th>Target Currency</th>
-                                            <th>Rate ($1)</th>
-                                        </tr>
-                                    </thead>
+<div class="container py-sm-5">
+    <header class="text-center text-black">
+        <h1 class="display-4"><b>Exchange Rates (in SGD)</b></h1>
+        @if (ViewData["DatabaseUpdateError"] != null)
+        {
+            <div class="alert alert-danger">
+                <text>@ViewData["DatabaseUpdateError"]</text>
+            </div>
+        }
+    </header>
+    <div class="row py-5">
+        <div class="col-sm-5 mx-auto">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-sm-6 bg-white rounded">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-responsive" style="text-align:left">
+                            <thead>
+                                <tr>
+                                    <th>Source Currency</th>
+                                    <th>Target Currency</th>
+                                    <th>Rate (SGD$1)</th>
+                                </tr>
+                            </thead>
+                            
+                            @*DO NOT DELETE
+                                <tbody>
+                                @for (int i = 0; i < Model.Count(); i++)
+                                {
+                                string[] list = Model[i].Split(":");
+                                <tr>
+                                <td>SGD</td>
+                                <td>@list[0].Replace("\"", "")</td>
+                                <td>@list[1]</td>
+                                </tr>
+                                }
+                                </tbody>*@
+                            <tbody>
+                                @foreach (ExchangeRates a in Model)
+                                {
+                                    <tr>
+                                        <td>SGD</td>
+                                        <td>@a.Target_currency</td>
+                                        <td>@a.Exchange_rate</td>
+                                    </tr>
+                                }
+                            </tbody>
 
-                                    <tbody>
-                                        @foreach (CurrencyExchange item in Model)
-                                        {
-                                            <tr>
-                                                <td>@item.Source_currency</td>
-                                                <td>@item.Target_currency</td>
-                                                <td>@item.Exchange_rate</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div>
+    @if (ViewData["Currencies"] != null)
+    {
+        <p>@ViewData["Currencies"]</p>
+        <h5>@ViewData["DT"]</h5>
+    }
+</div>
+
