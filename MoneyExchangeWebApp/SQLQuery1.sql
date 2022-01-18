@@ -4,7 +4,6 @@
 DROP TABLE IF EXISTS Transactions;
 DROP TABLE IF EXISTS Enquiries;
 DROP TABLE IF EXISTS Accounts;
-DROP TABLE IF EXISTS Currency;
 DROP TABLE IF EXISTS ExchangeRates;
 DROP TABLE IF EXISTS FAQ;
 DROP TABLE IF EXISTS Stock;
@@ -60,32 +59,11 @@ CREATE TABLE FAQ(
 	('How many currencies do you have?', 'We hold a variety of currencies with their respective exchange rates. Most are from ASEAN countries only. We apologise for any inconvenience', 'John Wick', 1, 'John Wick'),
 	('Do you have an exchange rate fee?', 'Yes! It is only 3% per transaction', 'John Wick', 0, null);
 
-     
-CREATE TABLE Currency(
-	Currency_id		INT				IDENTITY PRIMARY KEY,
-    Currency_name 	VARCHAR(5) 		NOT NULL,
-    Country 		VARCHAR(100) 	NOT NULL,
-	Average_rate	DECIMAL(9,2)	NOT NULL,
-    Created_by		VARCHAR(32)  	NOT NULL,
-	Created_date	DATE			NOT NULL,
-    Deleted 		BIT 			NOT NULL,
-	Deleted_by		VARCHAR(32)		NULL
-);
-INSERT INTO Currency(Currency_name, Country, Average_rate, Created_by, Created_date, Deleted, Deleted_by) VALUES
-('SGD', 'Singapore', 1.0 , 'John Wick', '2012-08-12', 0, null),
-('MMK', 'Myanmar', 1315.5, 'John Wick', '2012-08-12', 0, null),
-('CNY', 'China', 4.66, 'John Wick', '2012-08-12', 0, null),
-('MYR', 'Malaysia', 0.33, 'John Wick', '2012-08-12',0, null);
-
 CREATE TABLE ExchangeRates( 
 		Source_currency 	VARCHAR(5)      NOT NULL,
     	Target_currency 	VARCHAR(5)      NOT NULL,
-    	Exchange_rate   	DECIMAL(9,2) 	NOT NULL
+    	Exchange_rate   	Float 	NOT NULL
 );
-INSERT INTO ExchangeRates(Source_currency, Target_currency, Exchange_rate) VALUES
-('SGD', 'MYR', 3.08), 
-('SGD', 'CNY', 4.72), 
-('SGD', 'MMK', 1307.11); 
 
 CREATE TABLE Transactions(
 	Transaction_id 	      INT 	    	IDENTITY PRIMARY KEY,
@@ -110,7 +88,7 @@ CREATE TABLE Stock(
 	Stock_id		INT         	IDENTITY PRIMARY KEY,
 	Stock_name		VARCHAR(5)		NOT NULL,
 	Stock_amount	DECIMAL(9,2)	NOT NULL,
-	Average_rate	DECIMAL(9,2)	NOT NULL
+	Average_rate	Float	NOT NULL
 );
 INSERT INTO Stock(Stock_name, Stock_amount, Average_rate) VALUES
 ('SGD', 100000.00, 1.0),
