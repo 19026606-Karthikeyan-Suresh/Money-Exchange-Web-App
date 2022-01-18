@@ -1,7 +1,8 @@
-﻿<nav class="navbar navbar-expand-sm navbar-light" style="background-color: #A5FFFF;">
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" asp-controller="Currency" asp-action="ExchangeRates">
-        Money Exchanger <i class="fas fa-money-bill-wave"></i>
+        Kaching<i class="bi bi-currency-exchange"></i>
     </a>
+
     <button class="navbar-toggler" type="button"
             data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,6 +15,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link navStyle" asp-controller="Enquiries" asp-action="Enquire"><i class="fas fa-question"></i> Enquire Us</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link navStyle" asp-controller="Transaction" asp-action="TransactionHistory"><i class="fas fa-file-alt"></i> Transaction History</a>
         </li>
     </ul>
 
