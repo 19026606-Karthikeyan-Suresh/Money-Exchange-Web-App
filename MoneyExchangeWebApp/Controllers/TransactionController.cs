@@ -21,6 +21,13 @@ namespace MoneyExchangeWebApp.Controllers
         }
         #endregion
 
+        public IActionResult TransactionHistory()
+        {
+            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE Deleted='False' ORDER BY Transaction_date DESC");
+            return View(tranList);
+
+        }
+
         #region "View Deleted Transactions" - Karthik
         [Authorize]
         public IActionResult DeletedTransactions()

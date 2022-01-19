@@ -5,10 +5,10 @@ namespace MoneyExchangeWebApp.Models
 {
    public class UserLogin
    {
-      [Required(ErrorMessage = "Please enter User ID")]
+      [Required(ErrorMessage = "Username cannot be empty!")]
       public string UserID { get; set; }
 
-      [Required(ErrorMessage = "Please enter Password")]
+      [Required(ErrorMessage = "Password cannot be empty!")]
       public string Password { get; set; }
    }
 }

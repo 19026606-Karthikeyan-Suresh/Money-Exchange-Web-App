@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,8 +9,9 @@ namespace MoneyExchangeWebApp.Models
 {
     public class Transaction
     {
-        [Required]
+        [Key]
         public int Transaction_id { get; set; }
+
         [Required]
         public string Source_currency { get; set; }
         [Required]
