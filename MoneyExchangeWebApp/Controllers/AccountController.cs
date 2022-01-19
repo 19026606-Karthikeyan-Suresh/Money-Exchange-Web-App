@@ -37,7 +37,7 @@ using System.Security.Claims;
          if (!AuthenticateUser(user.UserID, user.Password,
                                out ClaimsPrincipal principal))
          {
-            ViewData["Message"] = "Incorrect User ID or Password";
+            TempData["Message"] = "Incorrect User ID or Password";
             return View();
          }
          else
@@ -74,9 +74,10 @@ using System.Security.Claims;
                   new ClaimsIdentity(
                      new Claim[] {
                         new Claim(ClaimTypes.NameIdentifier, uid),
-                        new Claim(ClaimTypes.Name, ds.Rows[0]["Name"].ToString())
+                        new Claim(ClaimTypes.Name, ds.Rows[0]["Name"].ToString()),
+                        new Claim(ClaimTypes.Role, ds.Rows[0]["Role"].ToString())
                      },
-                     CookieAuthenticationDefaults.AuthenticationScheme));
+                     CookieAuthenticationDefaults.AuthenticationScheme));;
                 return true;
          }
          return false;
@@ -264,6 +265,12 @@ using System.Security.Claims;
             }
             return RedirectToAction("DeletedAccounts");
         }
+        #endregion
+
+        #region "Forgot Password" - Karthik
+        #endregion
+
+        #region "Forgot Username" - Karthik
         #endregion
 
     }
