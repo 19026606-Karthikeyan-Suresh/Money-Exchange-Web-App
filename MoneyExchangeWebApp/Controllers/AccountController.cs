@@ -273,5 +273,45 @@ using System.Security.Claims;
         #region "Forgot Username" - Karthik
         #endregion
 
-    }
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        public IActionResult SendEmail(IFormCollection form)
+        {
+            //Update database by removing old password and replacing it with new password
+
+            string password = @"SELECT Password FROM Accounts";     
+            string accountId = @"SELECT Account_id FROM Accounts";
+
+            string sql = @"UPDATE Accounts SET Password = '{0}' WHERE Account_id = {1}";
+            string update = String.Format(sql, "C236", accountId);    //need to generate a random password but for now use this as PW
+
+            DBUtl.ExecSQL(update);
+
+
+            // Old Method of reading values from Forms
+ 
+            string email = form["Email"].ToString().Trim();
+            
+            string template = @"Hi, your new password is {0}";
+
+            string body = String.Format(template, "c236fyp");
+
+            if (EmailUtl.SendEmail(email, body, out result))
+            {
+                ViewData["Message"] = "Email Successfully Sent";
+                ViewData["MsgType"] = "success";
+            }
+            else
+            {
+                ViewData["Message"] = result;
+                ViewData["MsgType"] = "warning";
+            }
+
+            return View();
+
+        }    
+   }
 }
