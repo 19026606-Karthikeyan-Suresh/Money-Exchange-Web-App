@@ -7,6 +7,7 @@ using MoneyExchangeWebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
+
 //using Newtonsoft.Json;
 
 namespace MoneyExchangeWebApp.Controllers
@@ -28,7 +29,8 @@ namespace MoneyExchangeWebApp.Controllers
 
             DBUtl.ExecSQL("DELETE FROM ExchangeRates");
 
-            for (int i = 0; i < list.Length; i++) {
+            for (int i = 0; i < list.Length; i++)
+            {
                 string[] currNRate = list[i].Split(":");
 
                 //DO NOT DELETE THESE COMMENTED CODES FIRST
@@ -53,7 +55,7 @@ namespace MoneyExchangeWebApp.Controllers
                 //            ViewData["DatabaseUpdateError"] = "There was an error updating the database. Please contact the Administrator if you see this message";                  
                 //    }
                 string sql = @"INSERT INTO ExchangeRates VALUES ('SGD', '{0}', {1})";
-                if(DBUtl.ExecSQL(sql, currNRate[0].Replace("\"", "").Trim(), Convert.ToDouble(currNRate[1])) != 1)
+                if (DBUtl.ExecSQL(sql, currNRate[0].Replace("\"", "").Trim(), Convert.ToDouble(currNRate[1])) != 1)
                 {
                     ViewData["DatabaseUpdateError"] = DBUtl.DB_Message;
                 }
@@ -77,5 +79,74 @@ namespace MoneyExchangeWebApp.Controllers
         }
         #endregion
 
+        #region Top5Currencies - Teng Yik
+        public IActionResult Top5Currencies()
+        {
+            return View();
+        }
+
+        // [HttpPost]
+        // public IActionResult Top5Currencies()
+        //{
+        /*if (!ModelState.IsValid)
+        {
+            ViewData["Message"] = "Invalid choice.";
+            ViewData["MsgType"] = "warning";
+        } 
+        else
+        {*/
+        /*string sql = @"SELECT DISTINCT Source_currency AS [ISO], COUNT(DISTINCT Source_currency) AS [ISO count]
+                       FROM Transactions 
+                       WHERE MONTH(Transaction_date) = 1";*/
+        /*AND Deleted = 'False' 
+        ORDER BY 'ISO count' '{0}'";*/
+
+        // string count = "";
+
+        /*if (tp5c.BestOrWorst.Equals("Best"))
+        {
+            count = String.Format(sql, tp5c.Month, "DESC");
+        }
+        if (tp5c.BestOrWorst.Equals("Worst"))
+        {
+            count = String.Format(sql, tp5c.Month, "ASC");
+        }*/
+
+        // DataTable dt = DBUtl.GetTable(sql);
+
+
+
+        //return RedirectToAction("DisplayResults", dt);
+        // }
+        //return View("Top5Currencies");
+        // }
+        #endregion
+
+        public IActionResult DisplayResults()
+        {
+            /*if(dt.Columns.Count == 0)
+            {
+                return RedirectToAction("Top5Currencies");
+            } 
+            else
+            {
+                return View(dt);
+            }*/
+
+            string sql = @"SELECT COUNT(Source_currency) AS 'ISO'
+                           FROM Transactions
+                           ORDER BY Source_currency DESC ";
+                              // WHERE MONTH(Transaction_date) = 1";
+
+            DataTable dt = DBUtl.GetTable(sql);
+
+            return View(dt);
+
+
+
+
+
+
+        }
     }
 }
