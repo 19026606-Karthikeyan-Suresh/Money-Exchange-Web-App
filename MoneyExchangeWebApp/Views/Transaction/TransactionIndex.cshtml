@@ -9,57 +9,70 @@
 }
 
     <div class="container py-sm-5">
-            <header class="text-center text-black">
-                <h1 class="display-2"><b>Transactions</b></h1>
-            </header>
-            <div class="row py-5">
-                <div class="col-sm-15 mx-auto">
-                    <div class="card rounded shadow border-0">
-                        <div class="card-body p-sm-10 bg-white rounded">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-responsive" style="text-align:center">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Source</th>
-                                            <th>Source Amount</th>
-                                            <th>Converted Currency</th>
-                                            <th>Converted Amount</th>
-                                            <th>Exchange Rate</th>
-                                            <th>Date</th>
-                                            <th>Created By</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
 
-                                    <tbody>
-                                        @foreach (Transaction item in Model)
-                                        {
-                                            <tr>
-                                                <td>@item.Transaction_id</td>
-                                                <td>@item.Source_currency</td>
-                                                <td>@item.Source_amount</td>
-                                                <td>@item.Converted_currency</td>
-                                                <td>@item.Converted_amount</td>
-                                                <td>@item.Exchange_rate</td>
-                                                <td>@item.Transaction_date.ToShortDateString()</td>
-                                                <td>@item.Created_by</td>
-                                                <td>
-                                                    <a asp-controller="Transaction" 
-                                                    asp-action="TransactionEdit" 
-                                                    asp-route-id="@item.Transaction_id"><i class="fas fa-pencil-alt"></i> </a>
-                                                    |
-                                                    <a asp-controller="Transaction" 
-                                                    asp-action="SoftDelete"
-                                                    asp-route-id="@item.Transaction_id"> <i class="fas fa-trash-alt"></i></a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+        <div class="row pt-4">
+            <form class="col-sm-4 text-start">
+               <input type="search" class="" style="width: 150px; height: 37px" />
+                <button class="btn btn-secondary" type="submit">Search</button>
+            </form>
+            <div class="col-sm-4 text-center">
+                <h1 class="text-primary">Transactions</h1>
+            </div>
+            <div class="col-sm-4 text-end">
+                <a asp-controller="Transaction" asp-action="CreateTransaction" class="btn btn-primary">
+                    <i class="bi bi-plus-circle">&nbsp; Create New Transaction</i>
+                </a>
+            </div>
+        </div>  
+
+        <div class="row py-5">
+            <div class="col-sm-15 mx-auto">
+                <div class="card rounded shadow border-0">
+                    <div class="card-body p-sm-10 bg-white rounded">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-responsive" style="text-align:center">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Source</th>
+                                        <th>Source Amount</th>
+                                        <th>Converted Currency</th>
+                                        <th>Converted Amount</th>
+                                        <th>Exchange Rate</th>
+                                        <th>Date</th>
+                                        <th>Created By</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (Transaction item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Transaction_id</td>
+                                            <td>@item.Source_currency</td>
+                                            <td>@item.Source_amount</td>
+                                            <td>@item.Converted_currency</td>
+                                            <td>@item.Converted_amount</td>
+                                            <td>@item.Exchange_rate</td>
+                                            <td>@item.Transaction_date.ToShortDateString()</td>
+                                            <td>@item.Created_by</td>
+                                            <td>
+                                                <a asp-controller="Transaction" 
+                                                asp-action="TransactionEdit" 
+                                                asp-route-id="@item.Transaction_id"><i class="fas fa-pencil-alt"></i> </a>
+                                                |
+                                                <a asp-controller="Transaction" 
+                                                asp-action="SoftDelete"
+                                                asp-route-id="@item.Transaction_id"> <i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>

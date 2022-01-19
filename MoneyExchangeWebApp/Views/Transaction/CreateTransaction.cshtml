@@ -3,7 +3,7 @@
 <form method="post"
       asp-controller="Transaction"
       asp-action ="CreateTransaction"
-      enctype="multipart/form-data">
+      class="form-floating">
 
    <div class="form-group row">
       <div class="offset-sm-3 col-sm-6">
@@ -14,7 +14,8 @@
    <div class="form-group row">
       <label class="control-label offset-sm-1 col-sm-2" asp-for="Source_currency">Source :</label>
       <div class="col-sm-6">
-         <input type="text" asp-for="Source_currency" class="form-control" />
+         <input type="text" class="form-control" id="floatingInputValue" placeholder="ISO" value="SGD">
+         <label for="floatingInputValue">Source Currency</label>
       </div>
    </div>
 
