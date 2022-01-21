@@ -40,9 +40,10 @@ CREATE TABLE Enquiries(
 );
 INSERT INTO Enquiries(Visitor_email_address, Description, Enquiry_date, Status, Answered_by, Deleted, Deleted_by) VALUES
 ('thunderblades48@gmail.com' ,'How much money can I convert in one transaction?', '2020-11-16', 'Replied', 'jam123', 1, 'john123'),
-('K.artixc@gmail.com' ,'Are the exchange rates updated regularly', '2020-11-18', 'Replied', 'john123', 0, null),
-('K.artixc@gmail.com' ,'How many currencies do you offer for conversion', '2021-01-15', 'Pending', null, 0, null),
-('karthikeyansuresh7@gmail.com' ,'What is the currency exchange rate between SGD and MMK', '2021-11-18', 'Pending', null, 0, null);
+('k.artixc@gmail.com' ,'Are the exchange rates updated regularly', '2020-11-18', 'Replied', 'john123', 0, null),
+('k.artixc@gmail.com' ,'How many currencies do you offer for conversion', '2021-01-15', 'Pending', null, 0, null),
+('karthikeyansuresh7@gmail.com' ,'What is the currency exchange rate between SGD and MMK', '2021-11-18', 'Pending', null, 0, null),
+('kaiwen4399@gmail.com','Sending Test', '2022-01-03', 'Pending', null, 0, null);
 
 
 CREATE TABLE FAQ(

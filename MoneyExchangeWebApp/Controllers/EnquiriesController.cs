@@ -60,6 +60,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             return View();
         }
+
         public IActionResult AllFaqs()
         {
             List<FAQ> faqList = DBUtl.GetList<FAQ>("SELECT * FROM FAQ");
@@ -72,10 +73,9 @@ namespace MoneyExchangeWebApp.Controllers
             return View(enquiryList);
         }
 
-        [Authorize]
         public IActionResult ReplyToEnquiry(int Enquiry_id)
         {
-            string sql = @"SELECT * FROM Enquiries WHERE Enquiry_id = {0}";
+            string sql = @"SELECT * FROM Enquiries WHERE Enquiry_id={0}";
             string select = String.Format(sql, Enquiry_id);
             List<Enquiry> EnquiryList = DBUtl.GetList<Enquiry>(select);
             if (EnquiryList.Count == 1)
@@ -89,6 +89,12 @@ namespace MoneyExchangeWebApp.Controllers
                 TempData["MsgType"] = "warning";
             }
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult ReplyToEnquiry()
+        {
+            return RedirectToAction("AllEnquiries");
         }
     }
 }
