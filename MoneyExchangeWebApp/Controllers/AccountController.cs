@@ -278,40 +278,75 @@ using System.Security.Claims;
         #endregion
 
 
-        /*public IActionResult SendEmail(IFormCollection form)
+        [HttpPost]
+        public IActionResult ForgotPassword(IFormCollection form)
         {
-            //Update database by removing old password and replacing it with new password
-
-            string password = @"SELECT Password FROM Accounts";     
-            string accountId = @"SELECT Account_id FROM Accounts";
-
-            string sql = @"UPDATE Accounts SET Password = '{0}' WHERE Account_id = {1}";
-            string update = String.Format(sql, "C236", accountId);    //need to generate a random password but for now use this as PW
-
-            DBUtl.ExecSQL(update);
-
-
-            // Old Method of reading values from Forms
- 
             string email = form["Email"].ToString().Trim();
-            
-            string template = @"Hi, your new password is {0}";
+            string sql = @"SELECT * FROM Accounts WHERE Username = '{0}'";
+            string select = String.Format(sql, email);
+            List<Account> AccList = DBUtl.GetList<Account>(select);
+            int id = AccList[0].Account_id;
 
-            string body = String.Format(template, "c236fyp");
-
-            if (EmailUtl.SendEmail(email, body, out result))
+            if (AccList.Count != 1)
             {
-                ViewData["Message"] = "Email Successfully Sent";
-                ViewData["MsgType"] = "success";
+                ViewData["Message"] = "Email does not exist in the database.";
+                ViewData["MsgType"] = "danger";
+                return View();
             }
             else
             {
-                ViewData["Message"] = result;
-                ViewData["MsgType"] = "warning";
+                ViewData["Message"] = "An email has been sent to you to reset your " +
+                                      "password";
+                ViewData["MsgType"] = "success";
+
+                string title = "reset password";
+                string template = @"Hi, '{0}', here's the link to reset your password.
+                                 <a href='http://localhost:5165/Account/ResetPassword/'{1}''> 
+                                 Reset password </a>";
+
+                string body = String.Format(template, AccList[0].Name.EscQuote(), id);
+                string result;
+                if (EmailUtl.SendEmail(email, title, body, out result))
+                {
+                    ViewData["Message"] = "Email Successfully Sent";
+                    ViewData["MsgType"] = "success";
+                }
+                else
+                {
+                    ViewData["Message"] = result;
+                    ViewData["MsgType"] = "warning";
+                }
+
+                return View();
             }
 
-            return View();
+        }    
 
-        }    */
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword(ResetPassword rs)
+        {
+            if (ModelState.IsValid)
+            {
+                string sql = @"UPDATE Accounts SET Password = '{0}' WHERE Username = '{1}'";
+                string update = String.Format(sql, rs.Password.EscQuote(), rs.Email.EscQuote());
+                
+                if (DBUtl.ExecSQL(update) == 1)
+                {
+                    TempData["Message"] = "Password successfully changed.";
+                    TempData["MsgType"] = "success";
+                } else
+                {
+                    TempData["Message"] = "Password not changed";
+                    TempData["MsgType"] = "warning";
+                }
+            }
+            return View();
+        }
    }
+
 }
