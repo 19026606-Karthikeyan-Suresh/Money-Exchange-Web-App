@@ -29,21 +29,23 @@ INSERT INTO Accounts(Username, Password, Name, Role, Date_created, Deleted, Dele
 ('Kanye123', HASHBYTES('SHA1', 'password3'), 'Kanye West', 'staff', '2019-05-04', 1, 'John Wick');
 
 CREATE TABLE Enquiries(
-	Enquiry_id 				INT 			IDENTITY PRIMARY KEY,
-	Visitor_email_address	VARCHAR(100) 	NOT NULL,
-	Description 			VARCHAR(100) 	NOT NULL,
-	Enquiry_date 			DATE 			NOT NULL,
+	EnquiryId 				INT 			IDENTITY PRIMARY KEY,
+	EmailAddress			VARCHAR(100) 	NOT NULL,
+	Subject					VARCHAR(100)	NOT NULL,
+	Question	 			VARCHAR(100) 	NOT NULL,
+	EnquiryDate 			DATE 			NOT NULL,
 	Status 					VARCHAR(20)		NOT NULL,
-	Answered_by				VARCHAR(32)  	NULL,
-	Deleted					BIT				NOT NULL,
-    Deleted_by				VARCHAR(32)		NULL
+	Answer					VARCHAR(100)	NULL,
+	AnsweredBy				VARCHAR(32)  	NULL,
+	AnswerDate				DATE			NULL
 );
-INSERT INTO Enquiries(Visitor_email_address, Description, Enquiry_date, Status, Answered_by, Deleted, Deleted_by) VALUES
-('thunderblades48@gmail.com' ,'How much money can I convert in one transaction?', '2020-11-16', 'Replied', 'jam123', 1, 'john123'),
-('k.artixc@gmail.com' ,'Are the exchange rates updated regularly', '2020-11-18', 'Replied', 'john123', 0, null),
-('k.artixc@gmail.com' ,'How many currencies do you offer for conversion', '2021-01-15', 'Pending', null, 0, null),
-('karthikeyansuresh7@gmail.com' ,'What is the currency exchange rate between SGD and MMK', '2021-11-18', 'Pending', null, 0, null),
-('kaiwen4399@gmail.com','Sending Test', '2022-01-03', 'Pending', null, 0, null);
+INSERT INTO Enquiries(EmailAddress, Subject, Question, EnquiryDate, Status, Answer ,AnsweredBy, AnswerDate) VALUES
+('thunderblades48@gmail.com', 'Transactions' ,'How much money can I convert in one transaction?', '2020-11-16', 'Replied', 'No Answer', 'jam123'),
+('k.artixc@gmail.com','Currency' ,'Are the exchange rates updated regularly?', '2020-11-18', 'Replied', 'Lazy to type answer','john123'),
+('k.artixc@gmail.com','Currency' ,'How many currencies do you offer for conversion?', '2021-01-15', 'Pending', null, null),
+('karthikeyansuresh7@gmail.com', 'Currency' ,'What is the currency exchange rate between SGD and MMK?', '2021-11-18', 'Pending', null, null),
+('k.artixc@gmail.com','Wallet' ,'Can I hold different currencies in my wallet?', '2021-01-15', 'Pending', null, null),
+('kaiwen4399@gmail.com','Other','Sending Test', '2022-01-03', 'Pending', null, null);
 
 
 CREATE TABLE FAQ(
