@@ -3,7 +3,7 @@
 
 
     <header class="text-center text-black">
-        <h1 class="display-4"><b>Exchange Rates</b></h1>
+        <h1 class="display-2"><b>All Enquiries</b></h1>
     </header>
     <div class="row py-5">
         <div class="col-sm-11 mx-auto">
@@ -24,11 +24,11 @@
                                 @foreach (Enquiry item in Model)
                                 {
                                     <tr>
-                                        <td>@item.visitor_email_address</td>
-                                        <td>@item.description</td>
-                                        <td>@item.enquiry_date</td>
-                                        <td>@item.status</td>
-                                        <td>@item.answered_by</td>
+                                        <td>@item.Visitor_email_address</td>
+                                        <td>@item.Description</td>
+                                        <td>@item.Enquiry_date.ToShortDateString()</td>
+                                        <td>@item.Status</td>
+                                        <td>@item.Answered_by</td>
 
                                     </tr>
                                 }

@@ -85,7 +85,7 @@ using System.Security.Claims;
         #endregion
 
         #region "Display User Accounts" - Teng Yik
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult AccountIndex()
         {
             List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE Deleted='false'");
@@ -95,7 +95,7 @@ using System.Security.Claims;
         #endregion
 
         #region "Display Deleted Accounts" - Teng Yik
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeletedAccounts()
         {
             List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE deleted='true'");
@@ -104,7 +104,7 @@ using System.Security.Claims;
         #endregion
 
         #region "Add User Accounts" - Teng Yik
-        [Authorize]
+        [Authorize (Roles = "Admin")]
         public IActionResult AddUsers()
         {
             return View();
@@ -122,11 +122,11 @@ using System.Security.Claims;
             } else
             {
                 string sql =
-              @"INSERT INTO Accounts(Username, Password, Name, Role, Date_created, Deleted, Deleted_by)
-              VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4:yyyy-MM-dd}', {5}, '{6}')";
+              @"INSERT INTO Accounts(Username, Password, Name, Role, Date_created, Deleted)
+              VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4:yyyy-MM-dd}', {5})";
 
                 string insert = String.Format(sql, AC.Username.EscQuote(), AC.Password.EscQuote(), AC.Name.EscQuote(), AC.Role.EscQuote(), 
-                    AC.Date_created, 0, null);
+                    AC.Date_created, 0);
 
                 int count = DBUtl.ExecSQL(insert);
                 if (count == 1)
@@ -200,7 +200,7 @@ using System.Security.Claims;
         #endregion
 
         #region "Delete user Accounts" - Teng Yik
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             string sql = @"SELECT * FROM Accounts WHERE Account_id={0}";
@@ -236,7 +236,7 @@ using System.Security.Claims;
         #endregion
 
         #region "Recover Deleted Account" - Teng Yik
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult RecoverAccount(int id)
         {
             string sql = @"SELECT * FROM Accounts 
@@ -267,18 +267,18 @@ using System.Security.Claims;
         }
         #endregion
 
-        #region "Forgot Password" - Karthik
-        #endregion
-
-        #region "Forgot Username" - Karthik
-        #endregion
-
+        #region "Forgot Password" - Teng Yik
         public IActionResult ForgotPassword()
         {
             return View();
         }
+        #endregion
 
-        public IActionResult SendEmail(IFormCollection form)
+        #region "Forgot Username" - Teng Yik
+        #endregion
+
+
+        /*public IActionResult SendEmail(IFormCollection form)
         {
             //Update database by removing old password and replacing it with new password
 
@@ -312,6 +312,6 @@ using System.Security.Claims;
 
             return View();
 
-        }    
+        }    */
    }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyExchangeWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MoneyExchangeWebApp.Controllers
 {
@@ -40,10 +41,10 @@ namespace MoneyExchangeWebApp.Controllers
                    @"INSERT INTO Enquiries(visitor_email_address, description, enquiry_date, status, answered_by, deleted, deleted_by) 
                  VALUES('{0}', '{1}', '{2:dd/MM/yyyy}', {3}, '{4}', {5}, '{6}')";
                 string final = String.Format(@"INSERT INTO Enquiries(visitor_email_address, description, enquiry_date, status, answered_by, deleted, deleted_by) 
-                 VALUES('{0}', '{1}', '{2:dd/MM/yyyy}', {3}, '{4}', {5}, '{6}')", newEnquiry.visitor_email_address, newEnquiry.description, newEnquiry.enquiry_date
-                    , newEnquiry.status, newEnquiry.answered_by, newEnquiry.deleted, newEnquiry.deleted_by);
-                int result = DBUtl.ExecSQL(insert, newEnquiry.visitor_email_address, newEnquiry.description, newEnquiry.enquiry_date
-                    , newEnquiry.status, newEnquiry.answered_by, newEnquiry.deleted, newEnquiry.deleted_by);
+                 VALUES('{0}', '{1}', '{2:dd/MM/yyyy}', {3}, '{4}', {5}, '{6}')", newEnquiry.Visitor_email_address, newEnquiry.Description, newEnquiry.Enquiry_date
+                    , newEnquiry.Status, newEnquiry.Answered_by, newEnquiry.Deleted, newEnquiry.Deleted_by);
+                int result = DBUtl.ExecSQL(insert, newEnquiry.Visitor_email_address, newEnquiry.Description, newEnquiry.Enquiry_date
+                    , newEnquiry.Status, newEnquiry.Answered_by, newEnquiry.Deleted, newEnquiry.Deleted_by);
 
                 if (result == 1)
                 {
@@ -59,16 +60,35 @@ namespace MoneyExchangeWebApp.Controllers
             }
             return View();
         }
-        public IActionResult AllEnquiries()
+        public IActionResult AllFaqs()
         {
-            List<Enquiry> faqList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
+            List<FAQ> faqList = DBUtl.GetList<FAQ>("SELECT * FROM FAQ");
             return View(faqList);
         }
 
-        public IActionResult AllEnquiry()
+        public IActionResult AllEnquiries()
         {
-            List<Enquiry> enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
+            List<Enquiry> enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries WHERE Deleted ='False'");
             return View(enquiryList);
+        }
+
+        [Authorize]
+        public IActionResult ReplyToEnquiry(int Enquiry_id)
+        {
+            string sql = @"SELECT * FROM Enquiries WHERE Enquiry_id = {0}";
+            string select = String.Format(sql, Enquiry_id);
+            List<Enquiry> EnquiryList = DBUtl.GetList<Enquiry>(select);
+            if (EnquiryList.Count == 1)
+            {
+                Enquiry EL = EnquiryList[0];
+                return View(EL);
+            }
+            else
+            {
+                TempData["Message"] = "Enquiry could not be found";
+                TempData["MsgType"] = "warning";
+            }
+            return View();
         }
     }
 }
