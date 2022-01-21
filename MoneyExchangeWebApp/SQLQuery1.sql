@@ -6,27 +6,32 @@ DROP TABLE IF EXISTS Enquiries;
 DROP TABLE IF EXISTS Accounts;
 DROP TABLE IF EXISTS ExchangeRates;
 DROP TABLE IF EXISTS FAQ;
-DROP TABLE IF EXISTS Stock;
+DROP TABLE IF EXISTS Wallet;
 --
 -- Create tables
 --
 
 CREATE TABLE Accounts(
-	Account_id		INT				IDENTITY PRIMARY KEY,
-	Username 		VARCHAR(32) 	NOT NULL,
+	AccountId		INT				IDENTITY PRIMARY KEY,
+	EmailAddress 	VARCHAR(32) 	NOT NULL,
 	Password 		VARBINARY(200) 	NOT NULL,
 	Name 			VARCHAR(32) 	NOT NULL,
+	Address			VARCHAR(200)	NOT NULL,
+	PhoneNumber		INT				NOT NULL,
+	Gender			VARCHAR(10)		NOT NULL,
+	DOB				DATE			NOT NULL,
 	Role 			VARCHAR(32) 	NOT NULL,
-	Date_created	DATE			NOT NULL,
+	DateCreated		DATE			NOT NULL,
 	Deleted			BIT				NOT NULL,
-    Deleted_by		VARCHAR(32)		NULL
+	DateDeleted		DATE			NULL,
 );
 
-INSERT INTO Accounts(Username, Password, Name, Role, Date_created, Deleted, Deleted_by) VALUES 
-('john123', HASHBYTES('SHA1', 'password1'), 'John Wick', 'admin', '2012-08-12',0, null),
-('jam123', HASHBYTES('SHA1', 'password2'), 'James Charles', 'staff', '2013-05-02', 0, null),
-('char123', HASHBYTES('SHA1', 'password3'), 'Charlene Lim', 'staff', '2015-05-04', 0, null),
-('Kanye123', HASHBYTES('SHA1', 'password3'), 'Kanye West', 'staff', '2019-05-04', 1, 'John Wick');
+INSERT INTO Accounts(EmailAddress, Password, Name, Address, PhoneNumber, Gender, DOB, Role, DateCreated, Deleted, DateDeleted) VALUES 
+('john123@gmail.com', HASHBYTES('SHA1', 'password1'), 'John gino', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','staff', '2012-08-12',0, null),
+('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'), 'Huang Kaiwen', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin', '2013-05-02', 0, null),
+('k.artixc@gmail.com', HASHBYTES('SHA1', 'password3'), 'Karthikeyan Suresh', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-06-14','admin', '2015-05-04', 0, null),
+('Tengyik1763@gmail.com', HASHBYTES('SHA1', 'password3'), 'Teng Yik', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-01-19', 'admin', '2019-05-04', 0, null),
+('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'), 'Mak Jun Wai Jasper', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12', 'admin', '2019-05-04' ,0, null);
 
 CREATE TABLE Enquiries(
 	EnquiryId 				INT 			IDENTITY PRIMARY KEY,
@@ -40,12 +45,12 @@ CREATE TABLE Enquiries(
 	AnswerDate				DATE			NULL
 );
 INSERT INTO Enquiries(EmailAddress, Subject, Question, EnquiryDate, Status, Answer ,AnsweredBy, AnswerDate) VALUES
-('thunderblades48@gmail.com', 'Transactions' ,'How much money can I convert in one transaction?', '2020-11-16', 'Replied', 'No Answer', 'jam123'),
-('k.artixc@gmail.com','Currency' ,'Are the exchange rates updated regularly?', '2020-11-18', 'Replied', 'Lazy to type answer','john123'),
-('k.artixc@gmail.com','Currency' ,'How many currencies do you offer for conversion?', '2021-01-15', 'Pending', null, null),
-('karthikeyansuresh7@gmail.com', 'Currency' ,'What is the currency exchange rate between SGD and MMK?', '2021-11-18', 'Pending', null, null),
-('k.artixc@gmail.com','Wallet' ,'Can I hold different currencies in my wallet?', '2021-01-15', 'Pending', null, null),
-('kaiwen4399@gmail.com','Other','Sending Test', '2022-01-03', 'Pending', null, null);
+('thunderblades48@gmail.com', 'Transactions' ,'How much money can I convert in one transaction?', '2020-11-16', 'Replied', 'No Answer', 'jam123','2022-01-02'),
+('k.artixc@gmail.com','Currency' ,'Are the exchange rates updated regularly?', '2020-11-18', 'Replied', 'Lazy to type answer','john123', '2022-01-02'),
+('k.artixc@gmail.com','Currency' ,'How many currencies do you offer for conversion?', '2021-01-15', 'Pending', null, null, null),
+('karthikeyansuresh7@gmail.com', 'Currency' ,'What is the currency exchange rate between SGD and MMK?', '2021-11-18', 'Pending', null, null, null),
+('k.artixc@gmail.com','Wallet' ,'Can I hold different currencies in my wallet?', '2021-01-15', 'Pending', null, null, null),
+('kaiwen4399@gmail.com','Other','Sending Test', '2022-01-03', 'Pending', null, null, null);
 
 
 CREATE TABLE FAQ(
@@ -87,14 +92,16 @@ INSERT INTO Transactions(Source_currency, Source_amount, Converted_currency, Con
 ('SGD', 123.00, 'MMK', 160774.14, 1307.11, '2021-11-14', 'Charlene Lim', 0, null),
 ('SGD', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-14', 'Charlene Lim', 1, 'Kanye West');
 
-CREATE TABLE Stock(
-	Stock_id		INT         	IDENTITY PRIMARY KEY,
-	Stock_name		VARCHAR(5)		NOT NULL,
-	Stock_amount	DECIMAL(9,2)	NOT NULL,
-	Average_rate	Float	NOT NULL
+CREATE TABLE Wallet(
+	WalletId	INT         	IDENTITY PRIMARY KEY,
+	Email		VARCHAR(200)	NOT NULL,
+	ISO			VARCHAR(3)		NOT NULL,
+	Amount		Float			NOT NULL,
+
 );
-INSERT INTO Stock(Stock_name, Stock_amount, Average_rate) VALUES
-('SGD', 100000.00, 1.0),
-('MMK', 112345.00, 1315.5),
-('CNY', 12345.00, 4.66),
-('MYR', 98760.00, 0.33);
+INSERT INTO Wallet(Email, ISO, Amount) VALUES
+('k.artixc@gmail.com','SGD', 100000.00),
+('k.artixc@gmail.com','MMK', 112345.00),
+('k.artixc@gmail.com','CNY', 12345.00),
+('k.artixc@gmail.com','MYR', 98760.00),
+('Tengyik1763@gmail.com','SGD', 1000000.00);
