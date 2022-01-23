@@ -79,74 +79,195 @@ namespace MoneyExchangeWebApp.Controllers
         }
         #endregion
 
-        #region Top5Currencies - Teng Yik
+        /*#region Top5Currencies - Teng Yik
         public IActionResult Top5Currencies()
         {
             return View();
         }
 
-        // [HttpPost]
-        // public IActionResult Top5Currencies()
-        //{
-        /*if (!ModelState.IsValid)
+        [HttpPost]
+        public IActionResult Top5Currencies(Top5Currency tp5c)   //Top 5 currency traded by month
+        {
+        if (!ModelState.IsValid)
         {
             ViewData["Message"] = "Invalid choice.";
             ViewData["MsgType"] = "warning";
         } 
         else
-        {*/
-        /*string sql = @"SELECT DISTINCT Source_currency AS [ISO], COUNT(DISTINCT Source_currency) AS [ISO count]
+        {
+        string sql = @"SELECT DISTINCT Source_currency AS [ISO], COUNT(DISTINCT Source_currency) AS [ISO count]
                        FROM Transactions 
-                       WHERE MONTH(Transaction_date) = 1";*/
-        /*AND Deleted = 'False' 
-        ORDER BY 'ISO count' '{0}'";*/
+                       WHERE MONTH(Transaction_date) = 1
+                       ND Deleted = 'False'
+                        ORDER BY 'ISO count' '{0}'";  
 
-        // string count = "";
+        string count = "";
 
-        /*if (tp5c.BestOrWorst.Equals("Best"))
+        if (tp5c.BestOrWorst.Equals("Best"))
         {
             count = String.Format(sql, tp5c.Month, "DESC");
         }
         if (tp5c.BestOrWorst.Equals("Worst"))
         {
             count = String.Format(sql, tp5c.Month, "ASC");
-        }*/
+        }
 
-        // DataTable dt = DBUtl.GetTable(sql);
+        DataTable dt = DBUtl.GetTable(sql);
 
 
 
-        //return RedirectToAction("DisplayResults", dt);
-        // }
-        //return View("Top5Currencies");
-        // }
-        #endregion
+        return RedirectToAction("DisplayResults", dt);
+         }
+        return View("Top5Currencies");
+         }
+        #endregion*/
 
-        public IActionResult DisplayResults()
+        // Top or Worst 5 Currencies Traded by Month
+        public IActionResult TradesDashboard()
         {
-            /*if(dt.Columns.Count == 0)
+            return View();
+        }
+
+        public IActionResult Redirect()
+        {
+            IFormCollection form = HttpContext.Request.Form;
+
+            string bestorworst = form["BestOrWorst"].ToString().Trim();
+
+            if (bestorworst.Equals("Best"))
             {
                 return RedirectToAction("Top5Currencies");
-            } 
-            else
+            }
+
+            if (bestorworst.Equals("Worst"))
             {
+                return RedirectToAction("Worst5Currencies");
+            }
+
+            return View();
+        }
+
+        public IActionResult Top5Currencies()
+        {
+            return View();
+        }
+        public IActionResult Worst5Currencies()
+        {
+            return View();
+        }
+        public IActionResult DisplayTopResults()
+        {
+
+                IFormCollection form = HttpContext.Request.Form;
+
+                string month = form["Month"].ToString().Trim();
+
+                int apple = Int32.Parse(month);
+
+                string sql = @"SELECT Source_currency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM Transactions 
+                           WHERE MONTH(Transaction_date) = {0}
+                           GROUP BY Source_currency ORDER BY 'No. of Trades' DESC ";
+
+                string select = String.Format(sql, apple);
+
+
+                DataTable dt = DBUtl.GetTable(select);
+
                 return View(dt);
-            }*/
+        }
 
-            string sql = @"SELECT COUNT(Source_currency) AS 'ISO'
-                           FROM Transactions
-                           ORDER BY Source_currency DESC ";
-                              // WHERE MONTH(Transaction_date) = 1";
+        public IActionResult DisplayWorstResults()
+        {
+            IFormCollection form = HttpContext.Request.Form;
 
-            DataTable dt = DBUtl.GetTable(sql);
+            string month = form["Month"].ToString().Trim();
+
+            int apple = Int32.Parse(month);
+
+            string sql = @"SELECT Source_currency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM Transactions 
+                           WHERE MONTH(Transaction_date) = {0}
+                           GROUP BY Source_currency ORDER BY 'No. of Trades' ASC ";
+
+            string select = String.Format(sql, apple);
+
+
+            DataTable dt = DBUtl.GetTable(select);
 
             return View(dt);
-
-
-
-
-
-
         }
+
+
+        //Top or Worst 5 Trading Days by Month
+
+        public IActionResult DaysDashboard()
+        {
+            return View();
+        }
+
+        public IActionResult RedirectDays()
+        {
+            IFormCollection form = HttpContext.Request.Form;
+
+            string bestorworst = form["BestOrWorst"].ToString().Trim();
+
+            if (bestorworst.Equals("Best"))
+            {
+                return RedirectToAction("TopDays");
+            }
+
+            if (bestorworst.Equals("Worst"))
+            {
+                return RedirectToAction("WorstDays");
+            }
+
+            return View();
+        }
+
+        public IActionResult TopDays()
+        {
+            return View();
+        }
+
+        public IActionResult WorstDays()
+        {
+            return View();
+        }
+
+        public IActionResult DisplayTopDays()
+        {
+            IFormCollection form = HttpContext.Request.Form;
+
+            string month = form["Month"].ToString().Trim();
+
+            int durian = Int32.Parse(month);
+
+            string sql = @"SELECT COUNT(Transaction_date) AS 'No. of Trades on that day' FROM Transactions 
+                          WHERE DAYOFMONTH(Transaction_date) = {0};
+                          GROUP BY Transaction_date ORDER BY 'No. of Trades on that day' DESC ";
+
+            string select = String.Format(sql, durian);
+
+
+            return View();
+        }
+
+        public IActionResult DisplayWorstDays()
+        {
+            IFormCollection form = HttpContext.Request.Form;
+
+            string month = form["Month"].ToString().Trim();
+
+            int durian = Int32.Parse(month);
+
+            string sql = @"SELECT COUNT(Transaction_date) AS 'No. of Trades on that day' FROM Transactions 
+                          WHERE DAYOFMONTH(Transaction_date) = {0};
+                          GROUP BY Transaction_date ORDER BY 'No. of Trades on that day' ASC "; 
+
+            string select = String.Format(sql, durian);
+
+
+            return View();
+        }
+
     }
 }

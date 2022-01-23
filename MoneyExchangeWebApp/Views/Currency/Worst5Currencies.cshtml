@@ -5,10 +5,10 @@
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Top 5 Currencies</h2>
+            <h2 class="text-primary">Worst 5 Currencies</h2>
         </div>
 
-        <form method="post" asp-controller="Currency" asp-action="DisplayTopResults">
+        <form method="post" asp-controller="Currency" asp-action="DisplayWorstResults">
 
             <div class="col-sm-6">
         @*<select class="form-control row mb-3" name="BestOrWorst" id="BestOrWorst">
@@ -33,7 +33,7 @@
         </select>
         <div class="col-sm-6">
            <input type="submit" id="btn" value="Submit" class="form-control row" 
-            asp-controller="Currency" asp-action="DisplayTopResults"/>
+            asp-controller="Currency" asp-action="DisplayWorstResults"/>
       </div>
       </div>
       
@@ -41,39 +41,3 @@
     </div>
 </div>
 <br /><br />
-       @*<body>
-           <div class="container">
-    <h3>All Publishers </h3>
-
-    
-
-    @if (TempData["Message"] != null)
-    {
-        <div class="alert alert-@TempData["MsgType"]">
-        @TempData["Message"]
-        </div>
-    }
-
-    <table class='table'>
-        <tr>
-            @for (int col = 0; col < Model.Columns.Count; col++)
-            {
-                <th>@Model.Columns[col]</th>
-            }
-        </tr>
-
-
-    @for (int row = 0; row < Model.Rows.Count; row++)
-    {
-        <tr>
-            @for (int col = 0; col < Model.Columns.Count; col++)
-            {
-                <td>@Model.Rows[row][col]</td>
-            }
-        </tr>
-    }
-    </table>
-</div>
-        </body>
-*@
-        

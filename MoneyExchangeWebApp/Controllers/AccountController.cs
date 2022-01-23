@@ -301,12 +301,12 @@ using System.Security.Claims;
 
                 string title = "reset password";
                 string template = @"Hi, '{0}', here's the link to reset your password.
-                                 <a href='http://localhost:5165/Account/ResetPassword/'{1}''> 
+                                 <a href='http://localhost:5165/Account/ResetPassword'> 
                                  Reset password </a>";
 
-                string body = String.Format(template, AccList[0].Name.EscQuote(), id);
+                string body = String.Format(template, AccList[0].Name);
                 string result;
-                if (EmailUtl.SendEmail(email, title, body, out result))
+                if (EmailUtl.SendEmail("tengyik1763@gmail.com", title, body, out result))
                 {
                     ViewData["Message"] = "Email Successfully Sent";
                     ViewData["MsgType"] = "success";
@@ -330,23 +330,47 @@ using System.Security.Claims;
         [HttpPost]
         public IActionResult ResetPassword(ResetPassword rs)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                string sql = @"UPDATE Accounts SET Password = '{0}' WHERE Username = '{1}'";
-                string update = String.Format(sql, rs.Password.EscQuote(), rs.Email.EscQuote());
+                TempData["Message"] = "Password not changed";
+                TempData["MsgType"] = "danger";
+            } 
+            else
+            {
+                string sql1 = @"SELECT * FROM Accounts WHERE Username = '{0}'";
+                string select = String.Format(sql1, rs.Email.EscQuote());
+                List<Account> AccList = DBUtl.GetList<Account>(select);
                 
-                if (DBUtl.ExecSQL(update) == 1)
+                int userid = AccList[0].Account_id;
+
+                
+
+                if (AccList.Count == 0)
                 {
-                    TempData["Message"] = "Password successfully changed.";
-                    TempData["MsgType"] = "success";
-                } else
+                    TempData["Message"] = "Account cannot be found";
+                    TempData["MsgType"] = "danger";
+                }
+                else
                 {
-                    TempData["Message"] = "Password not changed";
-                    TempData["MsgType"] = "warning";
+                    string sql = @"UPDATE Accounts SET Password = HASHBYTES('SHA1', '{0}') WHERE Account_id = {1}";
+                    string update = String.Format(sql, rs.Password.EscQuote(), userid);
+
+                    if (DBUtl.ExecSQL(update) == 1)
+                    {
+                        TempData["Message"] = "Password successfully changed.";
+                        TempData["MsgType"] = "success";
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Password is incorrect";
+                        TempData["MsgType"] = "warning";
+                    }
                 }
             }
             return View();
         }
+
+        
    }
 
 }
