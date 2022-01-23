@@ -27,7 +27,7 @@ using System.Security.Claims;
       public IActionResult Login(string returnUrl = null)
       {
          TempData["ReturnUrl"] = returnUrl;
-         return View();
+            return View("_Login");
       }
 
       [AllowAnonymous]
@@ -37,7 +37,7 @@ using System.Security.Claims;
          if (!AuthenticateUser(user.UserID, user.Password,
                                out ClaimsPrincipal principal))
          {
-            TempData["Message"] = "Incorrect User ID or Password";
+            TempData["Message"] = "Incorrect Email Address or Password";
             return View();
          }
          else
@@ -63,7 +63,7 @@ using System.Security.Claims;
                                     out ClaimsPrincipal principal)
       {
          principal = null;
-         string sql = @"SELECT * FROM Accounts WHERE Username = '{0}' AND Password = HASHBYTES('SHA1', '{1}') ";
+         string sql = @"SELECT * FROM Accounts WHERE EmailAddress = '{0}' AND Password = HASHBYTES('SHA1', '{1}') ";
 
          string select = String.Format(sql, uid, pw);
          DataTable ds = DBUtl.GetTable(select);
@@ -74,7 +74,7 @@ using System.Security.Claims;
                   new ClaimsIdentity(
                      new Claim[] {
                         new Claim(ClaimTypes.NameIdentifier, uid),
-                        new Claim(ClaimTypes.Name, ds.Rows[0]["Name"].ToString()),
+                        new Claim(ClaimTypes.Name, ds.Rows[0]["FirstName"].ToString()),
                         new Claim(ClaimTypes.Role, ds.Rows[0]["Role"].ToString())
                      },
                      CookieAuthenticationDefaults.AuthenticationScheme));;
@@ -85,7 +85,7 @@ using System.Security.Claims;
         #endregion
 
         #region "Display User Accounts" - Teng Yik
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "admin")]*/
         public IActionResult AccountIndex()
         {
             List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE Deleted='false'");
@@ -104,34 +104,37 @@ using System.Security.Claims;
         #endregion
 
         #region "Add User Accounts" - Teng Yik
-        [Authorize (Roles = "Admin")]
-        public IActionResult AddUsers()
+        /*[Authorize]*/
+        public IActionResult AddStaffUsers()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddUsers(Account AC)
+        public IActionResult AddStaffUsers(Account AC)
         {
             if (!ModelState.IsValid)
             {
                 ViewData["Message"] = "Invalid Input";
                 ViewData["MsgType"] = "warning";
-                return View("AddUsers");
+                return View("AddStaffUsers");
 
-            } else
+            }
+            else
             {
                 string sql =
-              @"INSERT INTO Accounts(Username, Password, Name, Role, Date_created, Deleted)
-              VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4:yyyy-MM-dd}', {5})";
+              @"INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, PhoneNumber, 
+                Gender, DOB, Role, DateCreated, Deleted, DeletedBy, DateDeleted)
+                VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', '{9:yyyy-MM-dd}', '{10}', '{11}', '{12:yyyy-MM-dd}')";
 
-                string insert = String.Format(sql, AC.Username.EscQuote(), AC.Password.EscQuote(), AC.Name.EscQuote(), AC.Role.EscQuote(), 
-                    AC.Date_created, 0);
+                string insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
+                    AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "Staff".EscQuote(),
+                    DateTime.Now, 0, null, null);
 
                 int count = DBUtl.ExecSQL(insert);
                 if (count == 1)
                 {
-                    TempData["Message"] = "User Successfully Added.";
+                    TempData["Message"] = "Staff User Successfully Added.";
                     TempData["MsgType"] = "success";
                     return RedirectToAction("AccountIndex");
                 }
@@ -139,7 +142,7 @@ using System.Security.Claims;
                 {
                     ViewData["Message"] = DBUtl.DB_Message;
                     ViewData["MsgType"] = "danger";
-                    return View("AddUsers");
+                    return View("AddStaffUsers");
                 }
             }
         }
@@ -147,11 +150,12 @@ using System.Security.Claims;
         #endregion
 
         #region "Edit User Accounts" - Teng Yik
-        [Authorize]
+        //GET
+        /*[Authorize]*/
         public IActionResult EditUsers(int id)
         {
-            string sql = @"SELECT * FROM Accounts WHERE Account_id={0}";
-
+            string sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
+            Account AC = new();
             string select = String.Format(sql, id);
             List<Account> Alist = DBUtl.GetList<Account>(select);
             if (Alist.Count == 1)
@@ -167,7 +171,8 @@ using System.Security.Claims;
             }
         }
 
-        [Authorize]
+        //POST
+        /*[Authorize]*/
         [HttpPost]
         public IActionResult EditUsers(Account A)
         {
@@ -180,9 +185,11 @@ using System.Security.Claims;
             else
             {
                 string sql = @"UPDATE Accounts  
-                              SET Password= HASHBYTES('SHA1','{1}'), Name='{2}', Role='{3}', Date_created='{4:yyyy-MM-dd}' 
-                            WHERE Account_id={0}";
-                string update = String.Format(sql, A.Account_id, A.Password.EscQuote(), A.Name.EscQuote(), A.Role.EscQuote(), A.Date_created);
+                              SET EmailAddress='{1}' FirstName='{2}', LastName='{3}', 
+                              Address='{4}', PhoneNumber={5}, Gender='{6}', DOB='{7:yyyy-MM-dd}'
+                            WHERE AccountId={0}";
+                string update = String.Format(sql, A.AccountId, A.EmailAddress.EscQuote(), A.FirstName.EscQuote(),
+                    A.LastName.EscQuote(), A.Address.EscQuote(), A.PhoneNumber, A.Gender.EscQuote(), A.DOB);
 
                 if (DBUtl.ExecSQL(update) == 1)
                 {
@@ -200,10 +207,10 @@ using System.Security.Claims;
         #endregion
 
         #region "Delete user Accounts" - Teng Yik
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         public IActionResult Delete(int id)
         {
-            string sql = @"SELECT * FROM Accounts WHERE Account_id={0}";
+            string sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
             string select = String.Format(sql, id);
             DataTable dt = DBUtl.GetTable(select);
             if (dt.Rows.Count != 1)
@@ -214,11 +221,11 @@ using System.Security.Claims;
             else
             {
                 string sql1 = @"UPDATE Accounts  
-                              SET Deleted='True', Deleted_by='{1}' WHERE Account_id={0}";
+                              SET Deleted='True', DeletedBy='{1}', DateDeleted='{2:yyyy-MM-dd}' WHERE AccountId={0}";
 
                 string userid = User.Identity.Name;
 
-                int res = DBUtl.ExecSQL(String.Format(sql1, id, userid));
+                int res = DBUtl.ExecSQL(String.Format(sql1, id, userid, DateTime.Now.ToShortDateString()));
                 if (res == 1)
                 {
                     TempData["Message"] = "Account has been deleted";
@@ -240,7 +247,7 @@ using System.Security.Claims;
         public IActionResult RecoverAccount(int id)
         {
             string sql = @"SELECT * FROM Accounts 
-                         WHERE Account_id={0}";
+                         WHERE AccountId={0}";
 
             string select = String.Format(sql, id);
             DataTable ds = DBUtl.GetTable(select);
@@ -251,7 +258,7 @@ using System.Security.Claims;
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE Accounts SET Deleted='False', Deleted_by=null WHERE Account_id={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Accounts SET Deleted='False', DeletedBy=null, DateDeleted=null WHERE Account_id={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Account Recovered";
@@ -272,20 +279,15 @@ using System.Security.Claims;
         {
             return View();
         }
-        #endregion
-
-        #region "Forgot Username" - Teng Yik
-        #endregion
-
 
         [HttpPost]
         public IActionResult ForgotPassword(IFormCollection form)
         {
             string email = form["Email"].ToString().Trim();
-            string sql = @"SELECT * FROM Accounts WHERE Username = '{0}'";
+            string sql = @"SELECT * FROM Accounts WHERE EmailAddress = '{0}'";
             string select = String.Format(sql, email);
             List<Account> AccList = DBUtl.GetList<Account>(select);
-            int id = AccList[0].Account_id;
+            int id = AccList[0].AccountId;
 
             if (AccList.Count != 1)
             {
@@ -304,7 +306,7 @@ using System.Security.Claims;
                                  <a href='http://localhost:5165/Account/ResetPassword'> 
                                  Reset password </a>";
 
-                string body = String.Format(template, AccList[0].Name);
+                string body = String.Format(template, AccList[0].FirstName.EscQuote());
                 string result;
                 if (EmailUtl.SendEmail("tengyik1763@gmail.com", title, body, out result))
                 {
@@ -320,8 +322,13 @@ using System.Security.Claims;
                 return View();
             }
 
-        }    
+        }
+        #endregion
 
+        #region "Forgot Username" - Teng Yik
+        #endregion
+
+        #region "Reset Password" - Teng Yik
         public IActionResult ResetPassword()
         {
             return View();
@@ -337,11 +344,11 @@ using System.Security.Claims;
             } 
             else
             {
-                string sql1 = @"SELECT * FROM Accounts WHERE Username = '{0}'";
+                string sql1 = @"SELECT * FROM Accounts WHERE EmailAddress = '{0}'";
                 string select = String.Format(sql1, rs.Email.EscQuote());
                 List<Account> AccList = DBUtl.GetList<Account>(select);
                 
-                int userid = AccList[0].Account_id;
+                int userid = AccList[0].AccountId;
 
                 
 
@@ -352,7 +359,7 @@ using System.Security.Claims;
                 }
                 else
                 {
-                    string sql = @"UPDATE Accounts SET Password = HASHBYTES('SHA1', '{0}') WHERE Account_id = {1}";
+                    string sql = @"UPDATE Accounts SET Password = HASHBYTES('SHA1', '{0}') WHERE AccountId = {1}";
                     string update = String.Format(sql, rs.Password.EscQuote(), userid);
 
                     if (DBUtl.ExecSQL(update) == 1)
@@ -369,8 +376,25 @@ using System.Security.Claims;
             }
             return View();
         }
+        #endregion
 
-        
-   }
+        #region "API Calls"
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            string sql = @"SELECT * FROM Accounts WHERE Deleted='False'";
+            var AccountList = DBUtl.GetList<Account>(sql);
+            return Json(new { data = AccountList });
+        }
+        #endregion
+
+        #region "Getting all accounts with API" - Karthik
+        public IActionResult AllAccounts()
+        {
+            return View();
+        }
+        #endregion
+
+    }
 
 }

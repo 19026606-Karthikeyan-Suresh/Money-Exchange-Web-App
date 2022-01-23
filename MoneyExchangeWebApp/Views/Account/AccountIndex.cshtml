@@ -1,64 +1,32 @@
-﻿@using MoneyExchangeWebApp.Models;
-@model List<Account>
-
-    @if (TempData["Message"] != null)
-{
-   <div class="alert alert-@TempData["MsgType"]">
-      @TempData["Message"]
-   </div>
-}
-
-    <div class="container py-sm-5">
-            <header class="text-center text-black">
-                <h1 class="display-2"><b>Accounts</b></h1>
-            </header>
-            <div class="row py-4">
-                <div class="col-sm-10 mx-auto">
-                    <div class="card rounded shadow border-0">
-                        <div class="card-body p-sm-5 bg-white rounded">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-responsive" style="text-align:center">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Email</th>
-                                            <th>Password</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Role</th>
-                                            <th>Date Created</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @foreach (Account item in Model)
-                                        {
-                                            <tr>
-                                                <td>@item.AccountId</td>
-                                                <td>@item.EmailAddress</td>
-                                                <td>@item.Password</td>
-                                                <td>@item.FirstName</td>
-                                                <td>@item.LastName</td>
-                                                <td>@item.Role</td>
-                                                <td>@item.DateCreated.ToShortDateString()</td>
-                                                <td>
-                                                    <a asp-controller="Account" 
-                                                    asp-action="EditUsers" 
-                                                    asp-route-id="@item.AccountId"><i class="fas fa-pencil-alt"></i> </a>
-                                                    |
-                                                    <a asp-controller="Account" 
-                                                    asp-action="Delete"
-                                                    asp-route-id="@item.AccountId"
-                                                    onclick="return confirm('Delete Account [@item.EmailAddress]')"> <i class="fas fa-trash-alt"></i></a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+﻿<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Account List</h2>
         </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Account" asp-action="AddStaffUsers" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create new Staff User
+            </a>
+        </div>
+    </div>
+    <br/><br/>
+
+<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone Number</th>
+            <th>Position</th>
+            <th>Date Joined</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+</div>
+
+@section Scripts{
+    <script src="~/js/Account.js"></script>
+}
