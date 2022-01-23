@@ -19,10 +19,13 @@
                             <thead>
                                 <tr>
                                     <th>Guest Email</th>
+                                    <th>Subject</th>
                                     <th>Enquiry</th>
                                     <th>Date Submitted</th>
                                     <th>Status</th>
+                                    <th>Answer</th>
                                     <th>Answered By</th>
+                                    <th>Answered Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -31,15 +34,18 @@
                                 @foreach (Enquiry item in Model)
                                 {
                                     <tr>
-                                        <td>@item.Visitor_email_address</td>
-                                        <td>@item.Description</td>
-                                        <td>@item.Enquiry_date.ToShortDateString()</td>
+                                        <td>@item.EmailAddress</td>
+                                        <td>@item.Subject</td>
+                                        <td>@item.Question</td>
+                                        <td>@item.EnquiryDate.ToShortDateString()</td>
                                         <td>@item.Status</td>
-                                        <td>@item.Answered_by</td>
+                                        <td>@item.Answer</td>
+                                        <td>@item.AnsweredBy</td>
+                                        <td>@item.AnswerDate.ToShortDateString()</td>
                                         <td>
-                                            <a asp-controller="Enquiries" 
-                                            asp-action="ReplyToEnquiry" 
-                                            asp-route-id="@item.Enquiry_id"><i class="bi bi-envelope-plus"></i> </a>
+                                            <a asp-controller="Enquiry" 
+                                            asp-action="EnquiryReply" 
+                                            asp-route-id="@item.EnquiryId"><i class="bi bi-envelope-plus"></i> </a>
                                         </td>
                                     </tr>
                                 }

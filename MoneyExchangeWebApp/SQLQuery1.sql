@@ -19,20 +19,21 @@ CREATE TABLE Accounts(
 	LastName		VARCHAR(32)		NOT NULL,
 	Address			VARCHAR(200)	NOT NULL,
 	PhoneNumber		INT				NOT NULL,
-	Gender			VARCHAR(10)		NOT NULL,
+	Gender			VARCHAR(20)		NOT NULL,
 	DOB				DATE			NOT NULL,
 	Role 			VARCHAR(32) 	NOT NULL,
 	DateCreated		DATE			NOT NULL,
 	Deleted			BIT				NOT NULL,
-	DateDeleted		DATE			NULL,
+	DeletedBy		VARCHAR(32)		NULL,
+	DateDeleted		DATE			NULL
 );
 
-INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, PhoneNumber, Gender, DOB, Role, DateCreated, Deleted, DateDeleted) VALUES 
-('john123@gmail.com', HASHBYTES('SHA1', 'password1'), 'John', 'gino', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','staff', '2012-08-12',0, null),
-('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'), 'Kaiwen', 'Huang', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin', '2013-05-02', 0, null),
-('k.artixc@gmail.com', HASHBYTES('SHA1', 'password3'), 'Karthikeyan', 'Suresh', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-06-14','admin', '2015-05-04', 0, null),
-('Tengyik1763@gmail.com', HASHBYTES('SHA1', 'password3'), 'Yik', 'Teng', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-01-19', 'admin', '2019-05-04', 0, null),
-('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'), 'Jasper', 'Mak Jun Wai', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12', 'admin', '2019-05-04' ,0, null);
+INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, PhoneNumber, Gender, DOB, Role, DateCreated, Deleted, DeletedBy, DateDeleted) VALUES 
+('john123@gmail.com', HASHBYTES('SHA1', 'password1'), 'John', 'gino', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','staff', '2012-08-12',0, null, null),
+('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'), 'Kaiwen', 'Huang', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin', '2013-05-02', 0, null, null),
+('k.artixc@gmail.com', HASHBYTES('SHA1', 'password3'), 'Karthikeyan', 'Suresh', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-06-14','admin', '2015-05-04', 0, null, null),
+('Tengyik1763@gmail.com', HASHBYTES('SHA1', 'password3'), 'Yik', 'Teng', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-01-19', 'admin', '2019-05-04', 0, null, null),
+('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'), 'Jasper', 'Mak Jun Wai', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12', 'admin', '2019-05-04' ,0, null, null);
 
 CREATE TABLE Enquiries(
 	EnquiryId 				INT 			IDENTITY PRIMARY KEY,

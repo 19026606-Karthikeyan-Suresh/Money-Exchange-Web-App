@@ -1,0 +1,59 @@
+﻿@model MoneyExchangeWebApp.Models.Enquiry
+
+<form method="post" 
+      asp-controller="Enquiry"
+      asp-action="EnquiryReply" 
+      >
+
+   <div class="form-group row">
+      <div class="offset-sm-2 col-sm-5" >
+         <h2>Reply Enquiry!</h2>
+      </div>
+   </div>
+
+   <input type="text" asp-for="EnquiryId" hidden />
+
+    <div class ="form-floating col-sm-4 mb-3">
+        <input type="text" class="form-control" id="VisitorEmailInput" asp-for="EmailAddress" disabled>
+        <label for="VisitorEmailInput">To</label>
+    </div>
+
+   <div class="form-floating col-sm-4 mb-3">
+        <input type="text" class="form-control" id="SubjectInput" asp-for="Subject" disabled>
+        <label for="SubjectInput">Subject</label>
+   </div>
+
+   <div class="form-floating col-sm-4 mb-3">
+        <textarea class="form-control" id="floatingTextarea1" asp-for="Question" style="height: 100px" disabled></textarea>
+        <label for="floatingTextarea2">Question</label>
+   </div>
+
+    <input type="datetime" asp-for="EnquiryDate" hidden />
+    <input type="text" asp-for="Status" hidden/>
+
+   <div class="form-floating col-sm-4 mb-3">
+        <textarea class="form-control" id="floatingTextarea2" asp-for="Answer" style="height: 100px"></textarea>
+        <label for="floatingTextarea2">Your Reply</label>
+        <span asp-validation-for="Answer" class="text-danger"></span>
+   </div>
+
+    <input asp-for="AnsweredBy" value=@User.Identity.Name hidden />
+    <input asp-for="AnswerDate" value=@DateTime.Now hidden />
+
+   <div class="form-group row">
+      <div class="offset-sm-2 col-sm-5">
+         <input type="submit" value="Edit" class="btn btn-primary" /><br />
+      </div>
+   </div>
+
+   @if (ViewData["Message"] != null)
+    {
+      <div class="form-group row">
+         <div class="offset-sm-2 col-sm-5">
+            <div class="alert alert-@ViewData["MsgType"]">
+               <text>@ViewData["Message"]</text>
+            </div>
+         </div>
+      </div>
+   }
+</form>

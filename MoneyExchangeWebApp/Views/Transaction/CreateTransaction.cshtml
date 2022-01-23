@@ -1,9 +1,8 @@
-﻿@model Transaction
+﻿@model MoneyExchangeWebApp.Models.Transaction;
 
 <form method="post"
       asp-controller="Transaction"
-      asp-action ="CreateTransaction"
-      class="form-floating">
+      asp-action ="CreateTransaction">
 
    <div class="form-group row">
       <div class="offset-sm-3 col-sm-6">
@@ -11,19 +10,16 @@
       </div>
    </div>
 
-   <div class="form-group row">
-      <label class="control-label offset-sm-1 col-sm-2" asp-for="Source_currency">Source :</label>
-      <div class="col-sm-6">
-         <input type="text" class="form-control" id="floatingInputValue" placeholder="ISO" value="SGD">
-         <label for="floatingInputValue">Source Currency</label>
-      </div>
+   <div class ="form-floating mb-3 row-cols-2">
+       <input type="text" class="form-control" id="SourceInput" placeholder="SGD" asp-for="Source_currency">
+       <label for="SourceInput">FROM: </label>
+       <span asp-validation-for="Source_currency" class="text-danger"></span>
    </div>
 
-   <div class="form-group row">
-      <label class="control-label offset-sm-1 col-sm-2" asp-for="Source_amount">Amount :</label>
-      <div class="col-sm-6">
-         <input type="text" asp-for="Source_amount" class="form-control" />
-      </div>
+   <div class="form-floating mb-3 row-cols-5">
+       <input type="text" class="form-control" id="SourceAmount" placeholder="SGD" asp-for="Source_amount">
+       <label for="SourceInput">Source Amount</label>
+       <span asp-validation-for="Source_amount" class="text-danger"></span>
    </div>
 
    <div class="form-group row">

@@ -4,29 +4,37 @@
 <h2 style="text-align: center;">Have a Question? Feel free to enquire us about it!</h2>
 <br />
 
-<form asp-controller="Enquiries"
+<form asp-controller="Enquiry"
       asp-action="Enquire"
       method="post">
 
     <div class="form-group row">
-        <label class="control-label col-sm-2" asp-for="Visitor_email_address">Email :</label>
+        <label class="control-label col-sm-2" asp-for="EmailAddress">Email :</label>
         <div class="col-sm-4">
-            <input asp-for="Visitor_email_address" class="form-control" type="email"/>
+            <input asp-for="EmailAddress" class="form-control" type="email"/>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="control-label col-sm-2" asp-for="Description">Enquiry :</label>
+        <label class="control-label col-sm-2" asp-for="Subject">Subject :</label>
         <div class="col-sm-5">
-            <input asp-for="Description" class="form-control" />
+            <input asp-for="Subject" class="form-control" />
         </div>
     </div>
 
-    <input asp-for="Enquiry_date" value=@DateTime.Now hidden />
-    <input asp-for="Status" hidden value=0 />
-    <input asp-for="Answered_by" value=@null hidden />
-    <input asp-for="Deleted" value=0 hidden />
-    <input asp-for="Deleted_by" value=@null hidden />
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="Question">Enquiry :</label>
+        <div class="col-sm-5">
+            <input asp-for="Question" class="form-control" />
+        </div>
+    </div>
+
+
+    <input asp-for="EnquiryDate" value=@DateTime.Now hidden />
+    <input asp-for="Status" value="pending" hidden/>
+    <input asp-for="Answer" value=@null hidden />
+    <input asp-for="AnsweredBy" value=@null hidden />
+    <input asp-for="AnswerDate" value=@null hidden />
 
 
     <div class="form-group row">
