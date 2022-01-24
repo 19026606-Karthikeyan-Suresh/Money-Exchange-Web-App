@@ -1,7 +1,7 @@
 ﻿<div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Top or Worst</h2>
+            <h2 class="text-primary">Top or Worst Days</h2>
         </div>
 
         <form method="post" asp-controller="Currency" asp-action="RedirectDays">
@@ -13,6 +13,10 @@
                 <option value="Worst">Worst 5</option>
         </select>
         </div>
+        <div class="col-sm-6">
+           <input type="submit" id="btn" value="Submit" class="form-control row" 
+            asp-controller="Currency" asp-action="RedirectDays"/>
+      </div>
         </form>
     </div>
     </div>

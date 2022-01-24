@@ -128,7 +128,7 @@ namespace MoneyExchangeWebApp.Controllers
             return View();
         }
 
-        public IActionResult Redirect()
+        public IActionResult RedirectTrades()
         {
             IFormCollection form = HttpContext.Request.Form;
 
@@ -155,7 +155,7 @@ namespace MoneyExchangeWebApp.Controllers
         {
             return View();
         }
-        public IActionResult DisplayTopResults()
+        public IActionResult DisplayTopCurrencies()   //need to use TOP(5) as well
         {
 
                 IFormCollection form = HttpContext.Request.Form;
@@ -164,7 +164,7 @@ namespace MoneyExchangeWebApp.Controllers
 
                 int apple = Int32.Parse(month);
 
-                string sql = @"SELECT Source_currency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM Transactions 
+                string sql = @"SELECT TOP(5) Source_currency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM Transactions 
                            WHERE MONTH(Transaction_date) = {0}
                            GROUP BY Source_currency ORDER BY 'No. of Trades' DESC ";
 
@@ -176,7 +176,7 @@ namespace MoneyExchangeWebApp.Controllers
                 return View(dt);
         }
 
-        public IActionResult DisplayWorstResults()
+        public IActionResult DisplayWorstCurrencies()  //need to use TOP(5) as well
         {
             IFormCollection form = HttpContext.Request.Form;
 
@@ -184,7 +184,7 @@ namespace MoneyExchangeWebApp.Controllers
 
             int apple = Int32.Parse(month);
 
-            string sql = @"SELECT Source_currency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM Transactions 
+            string sql = @"SELECT TOP(5) Source_currency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM Transactions 
                            WHERE MONTH(Transaction_date) = {0}
                            GROUP BY Source_currency ORDER BY 'No. of Trades' ASC ";
 
@@ -239,16 +239,20 @@ namespace MoneyExchangeWebApp.Controllers
 
             string month = form["Month"].ToString().Trim();
 
-            int durian = Int32.Parse(month);
+            int apple = Int32.Parse(month);
 
-            string sql = @"SELECT COUNT(Transaction_date) AS 'No. of Trades on that day' FROM Transactions 
-                          WHERE DAYOFMONTH(Transaction_date) = {0};
-                          GROUP BY Transaction_date ORDER BY 'No. of Trades on that day' DESC ";
+            string sql = @"SELECT TOP(5) Transaction_date AS 'Day', COUNT(Transaction_id) AS 'No. of Trades'
+                           FROM Transactions
+                          WHERE MONTH(Transaction_date) = {0}
+                          GROUP BY Transaction_date ORDER BY 'No. of Trades' DESC";
 
-            string select = String.Format(sql, durian);
+
+            string select = String.Format(sql, apple);
 
 
-            return View();
+            DataTable dt = DBUtl.GetTable(select);
+
+            return View(dt);
         }
 
         public IActionResult DisplayWorstDays()
@@ -257,16 +261,20 @@ namespace MoneyExchangeWebApp.Controllers
 
             string month = form["Month"].ToString().Trim();
 
-            int durian = Int32.Parse(month);
+            int apple = Int32.Parse(month);
 
-            string sql = @"SELECT COUNT(Transaction_date) AS 'No. of Trades on that day' FROM Transactions 
-                          WHERE DAYOFMONTH(Transaction_date) = {0};
-                          GROUP BY Transaction_date ORDER BY 'No. of Trades on that day' ASC "; 
+            string sql = @"SELECT TOP(5) Transaction_date AS 'Day', COUNT(Transaction_id) AS 'No. of Trades'
+                           FROM Transactions
+                          WHERE MONTH(Transaction_date) = {0}
+                          GROUP BY Transaction_date ORDER BY 'No. of Trades' ASC";
 
-            string select = String.Format(sql, durian);
+
+            string select = String.Format(sql, apple);
 
 
-            return View();
+            DataTable dt = DBUtl.GetTable(select);
+
+            return View(dt);
         }
 
     }
