@@ -84,12 +84,29 @@ using System.Security.Claims;
       }
         #endregion
 
-        #region "Display User Accounts" - Teng Yik
-        /*[Authorize(Roles = "admin")]*/
+        #region "Get Account List" - Teng Yik
+        [HttpGet]
+        [Authorize(Roles = "admin,staff")]
+        public IActionResult GetAll()
+        {
+            string sql;
+            if (User.IsInRole("staff"))
+            {
+                sql = @"SELECT * FROM Accounts WHERE Deleted='False' AND role='user'";
+
+            }
+            else
+            {
+                sql = @"SELECT * FROM Accounts WHERE Deleted='False'";
+            }
+            var AccountList = DBUtl.GetList<Account>(sql);
+            return Json(new { data = AccountList });
+        }
+
+        [Authorize(Roles = "admin,staff")]
         public IActionResult AccountIndex()
         {
-            List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE Deleted='false'");
-            return View(accountList);
+            return View();
         }
 
         #endregion
@@ -104,20 +121,21 @@ using System.Security.Claims;
         #endregion
 
         #region "Add User Accounts" - Teng Yik
-        /*[Authorize]*/
-        public IActionResult AddStaffUsers()
+        [Authorize(Roles ="staff, admin")]
+        public IActionResult AddAccount()
         {
             return View();
         }
 
+        [Authorize(Roles = "staff, admin")]
         [HttpPost]
-        public IActionResult AddStaffUsers(Account AC)
+        public IActionResult AddAccount(Account AC)
         {
             if (!ModelState.IsValid)
             {
                 ViewData["Message"] = "Invalid Input";
                 ViewData["MsgType"] = "warning";
-                return View("AddStaffUsers");
+                return View("AddAccount");
 
             }
             else
@@ -127,14 +145,26 @@ using System.Security.Claims;
                 Gender, DOB, Role, DateCreated, Deleted, DeletedBy, DateDeleted)
                 VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', '{9:yyyy-MM-dd}', '{10}', '{11}', '{12:yyyy-MM-dd}')";
 
-                string insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
-                    AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "Staff".EscQuote(),
+                string insert;
+                if(User.IsInRole("staff"))
+                {
+                    insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
+                    AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "user".EscQuote(),
                     DateTime.Now, 0, null, null);
+
+                }
+                else
+                {
+                    insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
+                    AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "staff".EscQuote(),
+                    DateTime.Now, 0, null, null);
+                }
+
 
                 int count = DBUtl.ExecSQL(insert);
                 if (count == 1)
                 {
-                    TempData["Message"] = "Staff User Successfully Added.";
+                    TempData["Message"] = "User Successfully Added.";
                     TempData["MsgType"] = "success";
                     return RedirectToAction("AccountIndex");
                 }
@@ -142,7 +172,7 @@ using System.Security.Claims;
                 {
                     ViewData["Message"] = DBUtl.DB_Message;
                     ViewData["MsgType"] = "danger";
-                    return View("AddStaffUsers");
+                    return View("AddAccount");
                 }
             }
         }
@@ -151,13 +181,23 @@ using System.Security.Claims;
 
         #region "Edit User Accounts" - Teng Yik
         //GET
-        /*[Authorize]*/
+        [Authorize(Roles ="staff, admin")]
         public IActionResult EditUsers(int id)
         {
-            string sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
-            Account AC = new();
+            //Filter types of Users
+            string sql;
+            if (User.IsInRole("staff"))
+            {
+                sql = @"SELECT * FROM Accounts WHERE AccountId={0} AND role='user'";
+            }
+            else
+            {
+                sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
+            }
+
             string select = String.Format(sql, id);
             List<Account> Alist = DBUtl.GetList<Account>(select);
+
             if (Alist.Count == 1)
             {
                 Account A = Alist[0];
@@ -172,7 +212,7 @@ using System.Security.Claims;
         }
 
         //POST
-        /*[Authorize]*/
+        [Authorize(Roles ="staff,admin")]
         [HttpPost]
         public IActionResult EditUsers(Account A)
         {
@@ -207,7 +247,7 @@ using System.Security.Claims;
         #endregion
 
         #region "Delete user Accounts" - Teng Yik
-        /*[Authorize(Roles = "Admin")]*/
+        [Authorize(Roles = "staff, admin")]
         public IActionResult Delete(int id)
         {
             string sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
@@ -237,13 +277,13 @@ using System.Security.Claims;
                     TempData["MsgType"] = "danger";
                 }
             }
-            return RedirectToAction("AccountIndex");
+            return RedirectToAction("AllAccounts");
         }
 
         #endregion
 
         #region "Recover Deleted Account" - Teng Yik
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult RecoverAccount(int id)
         {
             string sql = @"SELECT * FROM Accounts 
@@ -325,9 +365,6 @@ using System.Security.Claims;
         }
         #endregion
 
-        #region "Forgot Username" - Teng Yik
-        #endregion
-
         #region "Reset Password" - Teng Yik
         public IActionResult ResetPassword()
         {
@@ -374,23 +411,6 @@ using System.Security.Claims;
                     }
                 }
             }
-            return View();
-        }
-        #endregion
-
-        #region "API Calls"
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            string sql = @"SELECT * FROM Accounts WHERE Deleted='False'";
-            var AccountList = DBUtl.GetList<Account>(sql);
-            return Json(new { data = AccountList });
-        }
-        #endregion
-
-        #region "Getting all accounts with API" - Karthik
-        public IActionResult AllAccounts()
-        {
             return View();
         }
         #endregion

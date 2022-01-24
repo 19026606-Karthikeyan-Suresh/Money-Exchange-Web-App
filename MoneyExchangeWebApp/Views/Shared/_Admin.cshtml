@@ -9,64 +9,24 @@
            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
    </button>
-
    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-                <a class="nav-link" asp-controller="Currency" asp-action="ExchangeRates"><i class="fas fa-home"></i> Home</a>
-          </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
-                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   <i class="fas fa-coins"> Currency</i>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyIndex">Currency List</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="CurrencyCreate">Create Currency</a>
-                   <div class="dropdown-divider"></div>
-                   <a class="nav-item nav-link" asp-controller="Currency" asp-action="DeletedCurrencies">Deleted Currencies</a>
-                </div>
-            </li>
-
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
-                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-file-invoice-dollar"> Transaction</i> 
-            </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="nav-item nav-link" asp-controller="Transaction" asp-action="TransactionIndex">Transaction List</a>
-                <div class="dropdown-divider"></div>
-                <a class="nav-item nav-link" asp-controller="Transaction" asp-action="CreateTransaction">Create Transaction</a>
-                <div class="dropdown-divider"></div>
-                <a class="nav-item nav-link" asp-controller="Transaction" asp-action="DeletedTransactions">Deleted Transactions</a>
-                </div>
-         </li>      
-
-         <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
-                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-money-check"> Stocks</i> 
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="nav-item nav-link" asp-controller="Stock" asp-action="StockIndex">Stock List</a>
-            </div>
-         </li>
-
-         <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown"
-               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <i class="fas fa-users"> Accounts</i>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-               <a class="nav-item nav-link" asp-controller="Account" asp-action="AccountIndex">View all Accounts</a>
-               <div class="dropdown-divider"></div>
-               <a class="nav-item nav-link" asp-controller="Account" asp-action="DeletedAccounts">Deleted Accounts</a>
-               <div class="dropdown-divider"></div>
-               <a class="nav-item nav-link" asp-controller="Account" asp-action="AddUsers">Add User</a>
-            </div>
-         </li>
-     </ul>
+        <li class="nav-item">
+              <a class="nav-link" asp-controller="Currency" asp-action="ExchangeRates">Exchange Rates <i class="fas fa-percent"></i></a>
+        </li>
+        <li class="nav-item">
+              <a class="nav-link" asp-controller="Account" asp-action="AccountIndex">Accounts <i class="fas fa-users"></i></a>
+        </li>
+        <li class="nav-item">
+              <a class="nav-link" asp-controller="Transaction" asp-action="TransactionIndex">Transactions <i class="fas fa-file-invoice-dollar"></i></a>
+        </li>
+        <li class="nav-item">
+              <a class="nav-link" asp-controller="Enquiry" asp-action="EnquiryIndex">Enquiries <i class="fas fa-inbox"></i></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Wallet" asp-action="WalletIndex">Wallet <i class="fas fa-wallet"></i></a>
+        </li>
+      </ul>
       <ul class="nav navbar-nav ms-auto">
          <li>
             <p class="navbar-text">

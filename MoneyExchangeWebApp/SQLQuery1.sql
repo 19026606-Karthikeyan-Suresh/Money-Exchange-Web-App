@@ -33,7 +33,12 @@ INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, Phone
 ('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'), 'Kaiwen', 'Huang', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin', '2013-05-02', 0, null, null),
 ('k.artixc@gmail.com', HASHBYTES('SHA1', 'password3'), 'Karthikeyan', 'Suresh', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-06-14','admin', '2015-05-04', 0, null, null),
 ('Tengyik1763@gmail.com', HASHBYTES('SHA1', 'password3'), 'Yik', 'Teng', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-01-19', 'admin', '2019-05-04', 0, null, null),
-('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'), 'Jasper', 'Mak Jun Wai', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12', 'admin', '2019-05-04' ,0, null, null);
+('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'), 'Jasper', 'Mak Jun Wai', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12', 'admin', '2019-05-04' ,0, null, null),
+('DummyUser1@myrp.edu.sg', HASHBYTES('SHA1', 'password5'), 'Jaden', ' Wai', '21C Tanjong Pagar International', '87689013', 'Male','1999-01-12', 'user', '2022-01-03' ,0, null, null),
+('DummyUser2@myrp.edu.sg', HASHBYTES('SHA1', 'password6'), 'Mark', ' Haedrig', '19D Tanjong Pagar International', '87680987', 'Male','2000-04-05', 'user', '2021-07-05' ,0, null, null),
+('DummyUser3@myrp.edu.sg', HASHBYTES('SHA1', 'password7'), 'Amelia', ' Toh', 'Tanjong Pagar Bazar', '89761238', 'Female','2011-07-09', 'user', '2019-05-04' ,0, null, null),
+('DummyUser4@myrp.edu.sg', HASHBYTES('SHA1', 'password8'), 'Amanda', ' Koh', 'Bedok South Park 1', '806184567', 'Unspecified','1999-07-08', 'user', '2018-02-04' ,0, null, null),
+('DummyUser5@myrp.edu.sg', HASHBYTES('SHA1', 'password9'), 'Abdul', 'Rahman', 'Tampines North Blk 167D #167-042', '90718760', 'Male','2007-05-01', 'user', '2018-01-04' ,0, null, null);
 
 CREATE TABLE Enquiries(
 	EnquiryId 				INT 			IDENTITY PRIMARY KEY,
