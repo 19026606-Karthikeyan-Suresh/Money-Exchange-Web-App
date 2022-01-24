@@ -74,7 +74,7 @@ using System.Security.Claims;
                   new ClaimsIdentity(
                      new Claim[] {
                         new Claim(ClaimTypes.NameIdentifier, uid),
-                        new Claim(ClaimTypes.Name, ds.Rows[0]["FirstName"].ToString()),
+                        new Claim(ClaimTypes.Name, ds.Rows[0]["EmailAddress"].ToString()),
                         new Claim(ClaimTypes.Role, ds.Rows[0]["Role"].ToString())
                      },
                      CookieAuthenticationDefaults.AuthenticationScheme));;
