@@ -63,7 +63,7 @@ namespace MoneyExchangeWebApp.Controllers
 
             }
 
-            List<ExchangeRates> curExList = DBUtl.GetList<ExchangeRates>("SELECT * FROM ExchangeRates ORDER BY Target_currency");
+            List<ExchangeRates> curExList = DBUtl.GetList<ExchangeRates>("SELECT * FROM ExchangeRates ORDER BY QuoteCurrency");
 
             return View(curExList);
 
