@@ -9,7 +9,7 @@ namespace MoneyExchangeWebApp.Models
         public int AccountId { get; set; }
         [Required(ErrorMessage = "Email Address field cannot be empty!")]
         public string EmailAddress { get; set; }
-        [Required(ErrorMessage = "You need to set a password to log in!")]
+        //[Required(ErrorMessage = "You need to set a password to log in!")]
         public string Password { get; set; }
         [Required(ErrorMessage = "First Name field cannot be empty!")]
         public string FirstName { get; set; }
