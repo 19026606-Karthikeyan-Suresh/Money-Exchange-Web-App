@@ -2,8 +2,8 @@
 {
     public class ExchangeRates
     {
-       public string Source_currency { get; set; }
-        public string Target_currency { get; set;}
-        public double Exchange_rate { get; set; }  
+       public string BaseCurrency { get; set; }
+        public string QuoteCurrency { get; set;}
+        public double ExchangeRate { get; set; }  
     }
 }

@@ -6,7 +6,7 @@
       >
 
    <div class="form-group row">
-      <div class="offset-sm-2 col-sm-5" >
+      <div class="col-sm-5 mx-auto" >
          <h2>Reply Enquiry!</h2>
       </div>
    </div>
@@ -32,7 +32,7 @@
     <input type="text" asp-for="Status" hidden/>
 
    <div class="form-floating col-sm-4 mb-3">
-        <textarea class="form-control" id="floatingTextarea2" asp-for="Answer" style="height: 100px"></textarea>
+        <textarea1 class="form-control" id="floatingTextarea2" asp-for="Answer" style="height: 100px"></textarea1>
         <label for="floatingTextarea2">Your Reply</label>
         <span asp-validation-for="Answer" class="text-danger"></span>
    </div>
@@ -43,6 +43,12 @@
    <div class="form-group row">
       <div class="offset-sm-2 col-sm-5">
          <input type="submit" value="Edit" class="btn btn-primary" /><br />
+      </div>
+   </div>
+
+         <div class="form-group row">
+      <div class="offset-sm-2 col-sm-6">
+         <div asp-validation-summary="All" class="text-danger"></div>
       </div>
    </div>
 
@@ -57,3 +63,16 @@
       </div>
    }
 </form>
+
+@section Scripts{
+  <script>
+    tinymce.init({
+      selector: 'textarea1',
+      plugins: 'a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+      toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
+      toolbar_mode: 'floating',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+    });
+  </script>
+}

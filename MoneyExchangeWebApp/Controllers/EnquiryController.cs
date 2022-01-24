@@ -66,15 +66,20 @@ namespace MoneyExchangeWebApp.Controllers
             return View(faqList);
         }
 
+        public IActionResult GetAllEnquiries()
+        {
+            var enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
+            return Json(new { data = enquiryList });
+        }
+
         public IActionResult EnquiryIndex()
         {
-            List<Enquiry> enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries WHERE Deleted ='False'");
-            return View(enquiryList);
+            return View();
         }
 
         public IActionResult EnquiryReply(int id)
         {
-            string sql = @"SELECT * FROM Enquiries WHERE Enquiry_id={0}";
+            string sql = @"SELECT * FROM Enquiries WHERE EnquiryId={0}";
 
             string select = String.Format(sql, id);
             List<Enquiry> ERlist = DBUtl.GetList<Enquiry>(select);

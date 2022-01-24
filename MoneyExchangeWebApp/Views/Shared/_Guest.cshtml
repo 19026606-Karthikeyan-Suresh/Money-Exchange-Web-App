@@ -267,6 +267,7 @@
 				<ul class="dropdown-menu form-wrapper">					
 					<li>
 						<form asp-controller="Account" asp-action="Login" method="post">
+							<p class="hint-text">Sign In!</p>
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Username" name="UserID" required="required">
 							</div>
@@ -275,7 +276,7 @@
 							</div>
 							<input type="submit" class="btn btn-primary btn-block" value="Login">
 							<div class="form-footer">
-								<a href="#">Forgot Your password?</a>
+								<a asp-controller="Account" asp-action="ForgotPassword">Forgot Your password?</a>
 							</div>
 						</form>
 						<div class="or-seperator"><b>or</b></div>

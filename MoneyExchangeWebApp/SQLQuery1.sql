@@ -23,22 +23,24 @@ CREATE TABLE Accounts(
 	DOB				DATE			NOT NULL,
 	Role 			VARCHAR(32) 	NOT NULL,
 	DateCreated		DATE			NOT NULL,
+	EditedBy		VARCHAR(200)	NULL,
+	EditedDate		DATE			NULL,
 	Deleted			BIT				NOT NULL,
 	DeletedBy		VARCHAR(32)		NULL,
 	DateDeleted		DATE			NULL
 );
 
-INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, PhoneNumber, Gender, DOB, Role, DateCreated, Deleted, DeletedBy, DateDeleted) VALUES 
-('john123@gmail.com', HASHBYTES('SHA1', 'password1'), 'John', 'gino', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','staff', '2012-08-12',0, null, null),
-('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'), 'Kaiwen', 'Huang', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin','2013-05-02', 0, null, null),
-('k.artixc@gmail.com', HASHBYTES('SHA1', 'password3'), 'Karthikeyan', 'Suresh', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-06-14','admin','2015-05-04', 0, null, null),
-('Tengyik1763@gmail.com', HASHBYTES('SHA1', 'password3'), 'Yik', 'Teng', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-01-19', 'admin','2019-05-04',0 , null, null),
-('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'), 'Jasper', 'Mak Jun Wai', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','admin', '2019-05-04' ,0 , null, null),
-('DummyUser1@myrp.edu.sg', HASHBYTES('SHA1', 'password5'), 'Jaden', ' Wai', '21C Tanjong Pagar International', '87689013', 'Male','1999-01-12', 'user','2022-01-03' ,0, null, null),
-('DummyUser2@myrp.edu.sg', HASHBYTES('SHA1', 'password6'), 'Mark', ' Haedrig', '19D Tanjong Pagar International', '87680987', 'Male','2000-04-05', 'user', '2021-07-05' ,0, null, null),
-('DummyUser3@myrp.edu.sg', HASHBYTES('SHA1', 'password7'), 'Amelia', ' Toh', 'Tanjong Pagar Bazar', '89761238', 'Female','2011-07-09', 'user', '2019-05-04' ,0, null, null),
-('DummyUser4@myrp.edu.sg', HASHBYTES('SHA1', 'password8'), 'Amanda', ' Koh', 'Bedok South Park 1', '806184567', 'Unspecified','1999-07-08', 'user', '2018-02-04' ,0, null, null),
-('DummyUser5@myrp.edu.sg', HASHBYTES('SHA1', 'password9'), 'Abdul', 'Rahman', 'Tampines North Blk 167D #167-042', '90718760', 'Male','2007-05-01', 'user', '2018-01-04' ,0, null, null);
+INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, PhoneNumber, Gender, DOB, Role, DateCreated, EditedBy, EditedDate, Deleted, DeletedBy, DateDeleted) VALUES 
+('john123@gmail.com', HASHBYTES('SHA1', 'password1'), 'John', 'gino', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','staff', '2012-08-12',null,null,0, null, null),
+('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'), 'Kaiwen', 'Huang', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin','2013-05-02',null,null, 0, null, null),
+('k.artixc@gmail.com', HASHBYTES('SHA1', 'password3'), 'Karthikeyan', 'Suresh', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-06-14','admin','2015-05-04',null,null, 0, null, null),
+('Tengyik1763@gmail.com', HASHBYTES('SHA1', 'password3'), 'Yik', 'Teng', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-01-19', 'admin','2019-05-04',null,null,0 , null, null),
+('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'), 'Jasper', 'Mak Jun Wai', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','admin', '2019-05-04' ,null,null,0 , null, null),
+('DummyUser1@myrp.edu.sg', HASHBYTES('SHA1', 'password5'), 'Jaden', ' Wai', '21C Tanjong Pagar International', '87689013', 'Male','1999-01-12', 'user','2022-01-03' ,null,null,0, null, null),
+('DummyUser2@myrp.edu.sg', HASHBYTES('SHA1', 'password6'), 'Mark', ' Haedrig', '19D Tanjong Pagar International', '87680987', 'Male','2000-04-05', 'user', '2021-07-05' ,null,null,0, null, null),
+('DummyUser3@myrp.edu.sg', HASHBYTES('SHA1', 'password7'), 'Amelia', ' Toh', 'Tanjong Pagar Bazar', '89761238', 'Female','2011-07-09', 'user', '2019-05-04' ,null,null,0, null, null),
+('DummyUser4@myrp.edu.sg', HASHBYTES('SHA1', 'password8'), 'Amanda', ' Koh', 'Bedok South Park 1', '806184567', 'Unspecified','1999-07-08', 'user', '2018-02-04' ,null,null,0, null, null),
+('DummyUser5@myrp.edu.sg', HASHBYTES('SHA1', 'password9'), 'Abdul', 'Rahman', 'Tampines North Blk 167D #167-042', '90718760', 'Male','2007-05-01', 'user', '2018-01-04' ,null,null,0, null, null);
 
 CREATE TABLE Enquiries(
 	EnquiryId 				INT 			IDENTITY PRIMARY KEY,
@@ -88,17 +90,19 @@ CREATE TABLE Transactions(
 	QuoteAmount			  DECIMAL(9,2)  NOT NULL,
 	ExchangeRate		  DECIMAL(9,2)  NOT NULL,
 	TransactionDate		  DATE 			NOT NULL,
-	AccountId			  INT			NOT NULL,
-    DoneBy  			  VARCHAR(32)	NOT NULL,
+	DoneBy				  VARCHAR(200)  NOT NULL,
+	EditedBy			  VARCHAR(200)  NULL,
+	EditedDate			  DATE			NULL,
 	Deleted				  BIT			NOT NULL,
-    DeletedBy			  VARCHAR(32) 	NULL
+    DeletedBy			  VARCHAR(32) 	NULL,
+	DeletedDate			  DATE			NULL
 );
 
-INSERT INTO Transactions(BaseCurrency, BaseAmount, QuoteCurrency, QuoteAmount, ExchangeRate, TransactionDate, AccountId, DoneBy, Deleted, DeletedBy) VALUES
-('SGD', 10.00, 'MYR', 30.77, 3.08, '2021-11-16', 1,'John Gino', 0, null),
-('SGD', 1200000.00, 'CNY', 5662411.20, 4.72, '2021-11-15', 3,'Karthikeyan Suresh' ,0, null), 
-('SGD', 123.00, 'MMK', 160774.14, 1307.11, '2021-11-14', 3,'Karthikeyan Suresh', 0, null),
-('SGD', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-14', 3,'Karthikeyan Suresh', 1, 'Ng Yik Teng');
+INSERT INTO Transactions(BaseCurrency, BaseAmount, QuoteCurrency, QuoteAmount, ExchangeRate, TransactionDate, DoneBy, Deleted, DeletedBy, DeletedDate) VALUES
+('SGD', 10.00, 'MYR', 30.77, 3.08, '2021-11-16','john123@gmail.com', null, null, 0, null, null),
+('SGD', 1200000.00, 'CNY', 5662411.20, 4.72, '2021-11-15','k.artixc@gmail.com' , null, null, 0, null, null), 
+('SGD', 123.00, 'MMK', 160774.14, 1307.11, '2021-11-14','k.artixc@gmail.com', null, null, 0, null, null),
+('SGD', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-14','k.artixc@gmail.com', null, null, 1, 'Ng Yik Teng', '2022-01-05');
 
 CREATE TABLE Stock(
 	StockId		INT         	IDENTITY PRIMARY KEY,

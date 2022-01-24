@@ -16,7 +16,7 @@ namespace MoneyExchangeWebApp.Controllers
     {
         #region "Display ExchangeRates" - Jasper
         private string apiWebsite = "https://freecurrencyapi.net/api/v2/latest?apikey=d7ba8d40-5e88-11ec-b4e7-e7f7a5d589f5&base_currency=SGD";
-        public IActionResult ExchangeRates()
+        public IActionResult GetAllExchangeRates()
         {
             dynamic data = WebUtl.CallWebApi(apiWebsite);
             dynamic result = new
@@ -63,10 +63,17 @@ namespace MoneyExchangeWebApp.Controllers
 
             }
 
-            List<ExchangeRates> curExList = DBUtl.GetList<ExchangeRates>("SELECT * FROM ExchangeRates ORDER BY QuoteCurrency");
+            var curExList = DBUtl.GetList<ExchangeRates>("SELECT * FROM ExchangeRates ORDER BY QuoteCurrency");
 
-            return View(curExList);
+            return Json(new { data = curExList });
 
+        }
+        #endregion
+
+        #region
+        public IActionResult ExchangeRates()
+        {
+            return View();
         }
         #endregion
 

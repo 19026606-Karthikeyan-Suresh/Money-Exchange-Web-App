@@ -12,34 +12,35 @@ namespace MoneyExchangeWebApp.Controllers
     public class TransactionController : Controller
     {
         #region "View All Transactions" - Karthik
-        [Authorize]
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public IActionResult GetAllTransactions()
+        {
+            string sql;
+            sql = @"SELECT * FROM Transactions WHERE Deleted='False'";
+            var TRlist = DBUtl.GetList<Transaction>(sql);
+            return Json(new { data = TRlist });
+        }
+
+        [Authorize(Roles = "admin")]
         public IActionResult TransactionIndex()
         {
-            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE Deleted='False' ORDER BY Transaction_date DESC");
-            return View(tranList);
-
+            return View();
         }
         #endregion
 
-        public IActionResult TransactionHistory()
-        {
-            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE Deleted='False' ORDER BY Transaction_date DESC");
-            return View(tranList);
-
-        }
-
         #region "View Deleted Transactions" - Karthik
-        [Authorize]
+        [Authorize(Roles ="admin")]
         public IActionResult DeletedTransactions()
         {
-            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE Deleted='True' ORDER BY Transaction_date DESC");
+            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE Deleted='True' ORDER BY TransactionDate DESC");
             return View(tranList);
 
         }
         #endregion
 
         #region "Create Transaction" - Karthik
-        [Authorize]
+        [Authorize(Roles ="admin")]
         public IActionResult CreateTransaction()
         {
             return View();
@@ -58,12 +59,12 @@ namespace MoneyExchangeWebApp.Controllers
             else
             {
                 string user = User.Identity.Name;
-                string sql = @"INSERT INTO Transactions(Source_currency, Source_amount, Converted_currency, 
-                Converted_amount, Exchange_rate, Transaction_date, Created_by, Deleted, Deleted_by) 
-                VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd}', '{6}', {7}, '{8}')";
+                string sql = @"INSERT INTO Transactions(BaseCurrency, BaseAmount, QuoteCurrency, 
+                QuoteAmount, ExchangeRate, TransactionDate, DoneBy, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) 
+                VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd}', '{6}', '{7}', '{8:yyyy-MM-dd}', {9}, '{10}', '{11:yyyy-MM-dd}')";
 
-                string insert = String.Format(sql, TR.Source_currency.EscQuote(), TR.Source_amount,
-                    TR.Converted_currency.EscQuote(), TR.Converted_amount, TR.Exchange_rate, TR.Transaction_date, user, 0, null);
+                string insert = String.Format(sql, TR.BaseCurrency.EscQuote(), TR.BaseAmount,
+                    TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, TR.TransactionDate, TR.DoneBy, null, null, 0, null, null);
 
                 if (DBUtl.ExecSQL(insert) == 1)
                 {
@@ -82,10 +83,10 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Edit Transaction" - Karthik
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public IActionResult TransactionEdit(int id)
         {
-            string sql = @"SELECT * FROM Transactions WHERE Transaction_id={0}";
+            string sql = @"SELECT * FROM Transactions WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
             List<Transaction> TRlist = DBUtl.GetList<Transaction>(select);
@@ -115,11 +116,13 @@ namespace MoneyExchangeWebApp.Controllers
             else
             {
                 string sql = @"UPDATE Transactions  
-                              SET Source_currency='{1}', Source_amount={2}, Converted_currency='{3}',
-                                  Converted_amount={4}, Exchange_rate={5}, Transaction_date='{6:yyyy-MM-dd}'
-                            WHERE Transaction_id={0}";
-                string update = String.Format(sql, TR.Transaction_id, TR.Source_currency.EscQuote(), TR.Source_amount,
-                    TR.Converted_currency.EscQuote(), TR.Converted_amount, TR.Exchange_rate, TR.Transaction_date);
+                              SET BaseCurrency='{1}', BaseAmount={2}, QuoteCurrency='{3}',
+                                  QuoteAmount={4}, ExchangeRate={5}, TransactionDate='{6:yyyy-MM-dd}',
+                                  EditedBy='{7}', EditedDate='{8:yyyy-MM-dd}'
+                              WHERE TransactionId={0}";
+                string update = String.Format(sql, TR.TransactionId, TR.BaseCurrency.EscQuote(), TR.BaseAmount,
+                    TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, TR.TransactionDate, 
+                    User.Identity.Name.EscQuote(), DateTime.Now);
 
                 if (DBUtl.ExecSQL(update) == 1)
                 {
@@ -137,11 +140,11 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Soft Delete Transaction" - Karthik
-        [Authorize]
+        [Authorize(Roles ="admin")]
         public IActionResult SoftDelete(int id)
         {
             string sql = @"SELECT * FROM Transactions 
-                         WHERE Transaction_id={0}";
+                         WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
             DataTable ds = DBUtl.GetTable(select);
@@ -152,7 +155,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET Deleted='True',Deleted_by='{1}' WHERE Transaction_id={0}", id, User.Identity.Name.EscQuote()));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET Deleted='True',DeletedBy='{1}' WHERE TransactionId={0}", id, User.Identity.Name.EscQuote()));
                 if (res == 1)
                 {
                     TempData["Message"] = "Transaction Record Deleted";
@@ -173,7 +176,7 @@ namespace MoneyExchangeWebApp.Controllers
         public IActionResult PermanentDelete(int id)
         {
             string sql = @"SELECT * FROM Transactions 
-                         WHERE Transaction_id={0}";
+                         WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
             DataTable ds = DBUtl.GetTable(select);
@@ -184,7 +187,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("DELETE FROM Transactions WHERE Transaction_id={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("DELETE FROM Transactions WHERE TransactionId={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Transaction Record Deleted Permanently";
@@ -205,7 +208,7 @@ namespace MoneyExchangeWebApp.Controllers
         public IActionResult RecoverTransaction(int id)
         {
             string sql = @"SELECT * FROM Transactions 
-                         WHERE Transaction_id={0}";
+                         WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
             DataTable ds = DBUtl.GetTable(select);
@@ -216,7 +219,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET Deleted='False', Deleted_by='null' WHERE Transaction_id={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET Deleted='False', Deletedby='null' WHERE TransactionId={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Transaction Record Recovered";
@@ -229,6 +232,22 @@ namespace MoneyExchangeWebApp.Controllers
                 }
             }
             return RedirectToAction("DeletedTransactions");
+        }
+        #endregion
+
+        #region"Transaction Details" - Karthik
+        public IActionResult TransactionDetails(int id)
+        {
+            string sql = @"SELECT * FROM Transactions WHERE TransactionId={0}";
+            List<Transaction> TRlist = DBUtl.GetList<Transaction>(String.Format(sql, id));
+            if(TRlist.Count > 0)
+            {
+                return View(TRlist[0]);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
         #endregion
 

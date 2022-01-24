@@ -11,66 +11,72 @@
       </div>
    </div>
 
-   <input type="text" asp-for="Transaction_id" hidden />
+   <input type="text" asp-for="TransactionId" hidden />
 
    <div class="form-group row">
-      <label class="control-label col-sm-2" for="Source_currency">Source Currency :</label>
+      <label class="control-label col-sm-2" for="Source_currency">Base Currency :</label>
       <div class="col-sm-5">
-         <input type="text" asp-for="Source_currency" class="form-control" />
+         <input type="text" asp-for="BaseCurrency" class="form-control" />
       </div>
       <div class="col-sm-4">
-         <span asp-validation-for="Source_currency" class="text-danger"></span>
+         <span asp-validation-for="BaseCurrency" class="text-danger"></span>
       </div>
    </div>
 
    <div class="form-group row">
-      <label class="control-label col-sm-2" for="Source_amount">Source Amount :</label>
+      <label class="control-label col-sm-2" for="Source_amount">Base Amount :</label>
       <div class="col-sm-5">
-         <input type="text" asp-for="Source_amount" class="form-control" />
+         <input type="text" asp-for="BaseAmount" class="form-control" />
       </div>
       <div class="col-sm-4">
-         <span asp-validation-for="Source_amount" class="text-danger"></span>
+         <span asp-validation-for="BaseAmount" class="text-danger"></span>
       </div>
    </div>
 
    <div class="form-group row">
-      <label class="control-label col-sm-2" for="Converted_currency">Converted currency :</label>
+      <label class="control-label col-sm-2" for="Converted_currency">Quote currency :</label>
       <div class="col-sm-5">
-         <input type="text" asp-for="Converted_currency" class="form-control" />
+         <input type="text" asp-for="QuoteCurrency" class="form-control" />
       </div>
       <div class="col-sm-4">
-         <span asp-validation-for="Converted_currency" class="text-danger"></span>
+         <span asp-validation-for="QuoteCurrency" class="text-danger"></span>
       </div>
    </div>
 
    <div class="form-group row">
       <label class="control-label col-sm-2" for="Exchange_rate">Exchange Rate :</label>
       <div class="col-sm-5">
-         <input type="text" asp-for="Exchange_rate" class="form-control" />
+         <input type="text" asp-for="ExchangeRate" class="form-control" />
       </div>
       <div class="col-sm-4">
-         <span asp-validation-for="Exchange_rate" class="text-danger"></span>
+         <span asp-validation-for="ExchangeRate" class="text-danger"></span>
       </div>
    </div>
 
    <div class="form-group row">
-      <label class="control-label col-sm-2" for="Converted_amount">Converted Amount :</label>
+      <label class="control-label col-sm-2" for="Converted_amount">Quote Amount :</label>
       <div class="col-sm-5">
-         <input type="text" asp-for="Converted_amount" class="form-control" />
+         <input type="text" asp-for="QuoteAmount" class="form-control" />
       </div>
       <div class="col-sm-4">
-         <span asp-validation-for="Converted_amount" class="text-danger"></span>
+         <span asp-validation-for="QuoteAmount" class="text-danger"></span>
       </div>
    </div>
 
    <div class="form-group row">
       <label class="control-label col-sm-2" for="Transaction_date">Transaction date :</label>
       <div class="col-sm-5">
-         <input type="text" asp-for="Transaction_date" asp-format="{0:yyyy-MM-dd}"
+         <input type="date" asp-for="TransactionDate" asp-format="{0:yyyy-MM-dd}"
                 class="form-control" placeholder="YYYY-MM-DD" />
       </div>
       <div class="col-sm-4">
-         <span asp-validation-for="Transaction_date" class="text-danger"></span>
+         <span asp-validation-for="TransactionDate" class="text-danger"></span>
+      </div>
+   </div>
+
+      <div class="form-group row">
+      <div class="offset-sm-2 col-sm-6">
+         <div asp-validation-summary="All" class="text-danger"></div>
       </div>
    </div>
 

@@ -84,7 +84,7 @@ using System.Security.Claims;
       }
         #endregion
 
-        #region "Get Account List" - Teng Yik
+        #region "Get Account List" - Karthik
         [HttpGet]
         [Authorize(Roles = "admin,staff")]
         public IActionResult GetAll()

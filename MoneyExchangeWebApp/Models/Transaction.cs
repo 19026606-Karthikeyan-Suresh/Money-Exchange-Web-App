@@ -10,24 +10,25 @@ namespace MoneyExchangeWebApp.Models
     public class Transaction
     {
         [Key]
-        public int Transaction_id { get; set; }
-
+        public int TransactionId { get; set; }
         [Required]
-        public string Source_currency { get; set; }
+        public string BaseCurrency { get; set; }
         [Required]
-        public decimal Source_amount { get; set; }
+        public decimal BaseAmount { get; set; }
         [Required]
-        public string Converted_currency { get; set; }
+        public string QuoteCurrency { get; set; }
         [Required]
-        public decimal Exchange_rate { get; set; }
+        public decimal QuoteAmount { get; set; }
         [Required]
-        public decimal Converted_amount { get; set; }
+        public decimal ExchangeRate { get; set; }
         [Required]
-        public DateTime Transaction_date { get; set; }
-        public string Created_by { get; set; }
-        [Required]
+        public DateTime TransactionDate { get; set; }
+        public string DoneBy { get; set; }
+        public string EditedBy { get; set; }
+        public DateTime EditedDate { get; set; }
         public int Deleted { get; set; }
-        public string Deleted_by { get; set;}
+        public string DeletedBy { get; set;}
+        public DateTime DeletedDate { get; set; }
 
     }
 }

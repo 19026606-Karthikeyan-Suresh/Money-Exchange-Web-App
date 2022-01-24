@@ -29,6 +29,7 @@
                                             <th>Date</th>
                                             <th>Created By</th>
                                             <th>Deleted By</th>
+                                            <th>Deleted Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -37,24 +38,25 @@
                                         @foreach (Transaction item in Model)
                                         {
                                             <tr>
-                                                <td>@item.Transaction_id</td>
-                                                <td>@item.Source_currency</td>
-                                                <td>@item.Source_amount</td>
-                                                <td>@item.Converted_currency</td>
-                                                <td>@item.Converted_amount</td>
-                                                <td>@item.Exchange_rate</td>
-                                                <td>@item.Transaction_date.ToShortDateString()</td>
-                                                <td>@item.Created_by</td>
-                                                <td>@item.Deleted_by</td>
+                                                <td>@item.TransactionId</td>
+                                                <td>@item.BaseCurrency</td>
+                                                <td>@item.BaseAmount</td>
+                                                <td>@item.QuoteCurrency</td>
+                                                <td>@item.QuoteAmount</td>
+                                                <td>@item.ExchangeRate</td>
+                                                <td>@item.TransactionDate.ToShortDateString()</td>
+                                                <td>@item.DoneBy</td>
+                                                <td>@item.DeletedBy</td>
+                                                <td>@item.DeletedDate.ToShortDateString()</td>
                                                 <td>
                                                     <a asp-controller="Transaction" 
                                                     asp-action="RecoverTransaction" 
-                                                    asp-route-id="@item.Transaction_id"><i class="fas fa-plus-circle"></i> </a>
+                                                    asp-route-id="@item.TransactionId"><i class="fas fa-plus-circle"></i> </a>
                                                     |
                                                     <a asp-controller="Transaction" 
                                                     asp-action="PermanentDelete"
-                                                    asp-route-id="@item.Transaction_id"
-                                                    onclick="return confirm('Delete Transaction [@item.Transaction_id] Permanently')"> <i class="fas fa-trash-alt"></i></a>
+                                                    asp-route-id="@item.TransactionId"
+                                                    onclick="return confirm('Delete Transaction [@item.TransactionId] Permanently')"> <i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
                                         }

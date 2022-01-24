@@ -15,22 +15,23 @@
     <div class="row py-5">
         <div class="col-sm-11 mx-auto">
                     <div class="table-responsive">
-                        <table class="table table-hover table-responsive" style="text-align:left">
+                        <table id="EnqTbl"class="table table-hover table-responsive" style="text-align:left">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Guest Email</th>
                                     <th>Subject</th>
                                     <th>Enquiry</th>
                                     <th>Date Submitted</th>
                                     <th>Status</th>
-                                    <th>Answer</th>
+@*                                    <th>Answer</th>
                                     <th>Answered By</th>
-                                    <th>Answered Date</th>
+                                    <th>Answered Date</th>*@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
 
-                            <tbody>
+@*                            <tbody>
                                 @foreach (Enquiry item in Model)
                                 {
                                     <tr>
@@ -49,8 +50,12 @@
                                         </td>
                                     </tr>
                                 }
-                            </tbody>
+                            </tbody>*@
                         </table>
                     </div>
                 </div>
             </div>
+
+ @section Scripts{
+    <script src="~/js/Enquiry.js"></script>
+}

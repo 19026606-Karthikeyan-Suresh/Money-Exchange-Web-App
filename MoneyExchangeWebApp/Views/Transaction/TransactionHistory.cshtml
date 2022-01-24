@@ -33,22 +33,22 @@
         @foreach(Transaction item in Model)
         {
             <tr>
-                <td>@item.Transaction_id</td>
-                <td>@item.Source_currency</td>
-                <td>@item.Source_amount</td>
-                <td>@item.Converted_currency</td>
-                <td>@item.Converted_amount</td>
-                <td>@item.Exchange_rate</td>
-                <td>@item.Transaction_date.ToShortDateString()</td>
-                <td>@item.Created_by</td>
+                <td>@item.TransactionId</td>
+                <td>@item.BaseCurrency</td>
+                <td>@item.BaseAmount</td>
+                <td>@item.QuoteCurrency</td>
+                <td>@item.QuoteAmount</td>
+                <td>@item.ExchangeRate</td>
+                <td>@item.TransactionDate.ToShortDateString()</td>
+                <td>@item.DoneBy</td>
                 <td>
                     <a asp-controller="Transaction" 
                     asp-action="TransactionEdit" 
-                    asp-route-id="@item.Transaction_id"><i class="fas fa-pencil-alt"></i> </a>
+                    asp-route-id="@item.TransactionId"><i class="fas fa-pencil-alt"></i> </a>
                     |
                     <a asp-controller="Transaction" 
                     asp-action="SoftDelete"
-                    asp-route-id="@item.Transaction_id"> <i class="fas fa-trash-alt"></i></a>
+                    asp-route-id="@item.TransactionId"> <i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>
         }
