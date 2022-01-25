@@ -65,6 +65,8 @@ namespace MoneyExchangeWebApp.Controllers
 
             var curExList = DBUtl.GetList<ExchangeRates>("SELECT * FROM ExchangeRates ORDER BY QuoteCurrency");
 
+
+
             return Json(new { data = curExList });
 
         }
