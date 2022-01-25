@@ -9,21 +9,21 @@ using System.Data;
 
 namespace MoneyExchangeWebApp.Controllers
 {
-    public class TransactionController : Controller
+    public class ConvTransactionController : Controller
     {
-        #region "View All Transactions" - Karthik
+        #region "View All ConvTransactions" - Karthik
         [HttpGet]
         [Authorize(Roles = "admin")]
-        public IActionResult GetAllTransactions()
+        public IActionResult GetAllConvTransactions()
         {
             string sql;
-            sql = @"SELECT * FROM Transactions WHERE Deleted='False'";
-            var TRlist = DBUtl.GetList<Transaction>(sql);
+            sql = @"SELECT * FROM ConvTransactions WHERE Deleted='False'";
+            var TRlist = DBUtl.GetList<ConvTransaction>(sql);
             return Json(new { data = TRlist });
         }
 
         [Authorize(Roles = "admin")]
-        public IActionResult TransactionIndex()
+        public IActionResult ConvTransactionIndex()
         {
             return View();
         }
@@ -31,9 +31,9 @@ namespace MoneyExchangeWebApp.Controllers
 
         #region "View Deleted Transactions" - Karthik
         [Authorize(Roles ="admin")]
-        public IActionResult DeletedTransactions()
+        public IActionResult DeletedConvTransactions()
         {
-            List<Transaction> tranList = DBUtl.GetList<Transaction>("SELECT * FROM Transactions WHERE Deleted='True' ORDER BY TransactionDate DESC");
+            List<ConvTransaction> tranList = DBUtl.GetList<ConvTransaction>("SELECT * FROM Transactions WHERE Deleted='True' ORDER BY TransactionDate DESC");
             return View(tranList);
 
         }
@@ -41,25 +41,25 @@ namespace MoneyExchangeWebApp.Controllers
 
         #region "Create Transaction" - Karthik
         [Authorize(Roles ="admin")]
-        public IActionResult CreateTransaction()
+        public IActionResult CreateConvTransaction()
         {
             return View();
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateTransaction(Transaction TR)
+        public IActionResult CreateConvTransaction(ConvTransaction TR)
         {
             if (!ModelState.IsValid)
             {
                 ViewData["Message"] = "Invalid Input";
                 ViewData["MsgType"] = "warning";
-                return View("CreateTransaction");
+                return View("CreateConvTransaction");
             }
             else
             {
                 string user = User.Identity.Name;
-                string sql = @"INSERT INTO Transactions(BaseCurrency, BaseAmount, QuoteCurrency, 
+                string sql = @"INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, 
                 QuoteAmount, ExchangeRate, TransactionDate, DoneBy, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) 
                 VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd}', '{6}', '{7}', '{8:yyyy-MM-dd}', {9}, '{10}', '{11:yyyy-MM-dd}')";
 
@@ -70,13 +70,13 @@ namespace MoneyExchangeWebApp.Controllers
                 {
                     TempData["Message"] = "Transaction Successfully Added.";
                     TempData["MsgType"] = "success";
-                    return RedirectToAction("TransactionIndex");
+                    return RedirectToAction("ConvTransactionIndex");
                 }
                 else
                 {
                     ViewData["Message"] = DBUtl.DB_Message;
                     ViewData["MsgType"] = "danger";
-                    return View("CreateTransaction");
+                    return View("CreateConvTransaction");
                 }
             }
         }
@@ -84,38 +84,38 @@ namespace MoneyExchangeWebApp.Controllers
 
         #region "Edit Transaction" - Karthik
         [Authorize(Roles = "admin")]
-        public IActionResult TransactionEdit(int id)
+        public IActionResult ConvTransactionEdit(int id)
         {
-            string sql = @"SELECT * FROM Transactions WHERE TransactionId={0}";
+            string sql = @"SELECT * FROM ConvTransactions WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
-            List<Transaction> TRlist = DBUtl.GetList<Transaction>(select);
+            List<ConvTransaction> TRlist = DBUtl.GetList<ConvTransaction>(select);
             if (TRlist.Count == 1)
             {
-                Transaction TR = TRlist[0];
+                ConvTransaction TR = TRlist[0];
                 return View(TR);
             }
             else
             {
                 TempData["Message"] = "Transaction Record does not exist";
                 TempData["MsgType"] = "warning";
-                return RedirectToAction("TransactionIndex");
+                return RedirectToAction("ConvTransactionIndex");
             }
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult TransactionEdit(Transaction TR)
+        public IActionResult ConvTransactionEdit(ConvTransaction TR)
         {
             if (!ModelState.IsValid)
             {
                 ViewData["Message"] = "Invalid Input";
                 ViewData["MsgType"] = "danger";
-                return View("TransactionEdit", TR);
+                return View("ConvTransactionEdit", TR);
             }
             else
             {
-                string sql = @"UPDATE Transactions  
+                string sql = @"UPDATE ConvTransactions  
                               SET BaseCurrency='{1}', BaseAmount={2}, QuoteCurrency='{3}',
                                   QuoteAmount={4}, ExchangeRate={5}, TransactionDate='{6:yyyy-MM-dd}',
                                   EditedBy='{7}', EditedDate='{8:yyyy-MM-dd}'
@@ -134,16 +134,16 @@ namespace MoneyExchangeWebApp.Controllers
                     TempData["Message"] = DBUtl.DB_Message;
                     TempData["MsgType"] = "danger";
                 }
-                return RedirectToAction("TransactionIndex");
+                return RedirectToAction("ConvTransactionIndex");
             }
         }
         #endregion
 
         #region "Soft Delete Transaction" - Karthik
         [Authorize(Roles ="admin")]
-        public IActionResult SoftDelete(int id)
+        public IActionResult SoftDeleteConvTransaction(int id)
         {
-            string sql = @"SELECT * FROM Transactions 
+            string sql = @"SELECT * FROM ConvTransactions 
                          WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
@@ -155,7 +155,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET Deleted='True',DeletedBy='{1}' WHERE TransactionId={0}", id, User.Identity.Name.EscQuote()));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE ConvTransactions SET Deleted='True',DeletedBy='{1}' WHERE TransactionId={0}", id, User.Identity.Name.EscQuote()));
                 if (res == 1)
                 {
                     TempData["Message"] = "Transaction Record Deleted";
@@ -167,15 +167,15 @@ namespace MoneyExchangeWebApp.Controllers
                     TempData["MsgType"] = "danger";
                 }
             }
-            return RedirectToAction("TransactionIndex");
+            return RedirectToAction("ConvTransactionIndex");
         }
         #endregion
 
         #region "Permanently Delete Transaction" - Karthik
         [Authorize]
-        public IActionResult PermanentDelete(int id)
+        public IActionResult PermanentDeleteConvTransaction(int id)
         {
-            string sql = @"SELECT * FROM Transactions 
+            string sql = @"SELECT * FROM ConvTransactions 
                          WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
@@ -187,7 +187,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("DELETE FROM Transactions WHERE TransactionId={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("DELETE FROM ConvTransactions WHERE TransactionId={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Transaction Record Deleted Permanently";
@@ -199,7 +199,7 @@ namespace MoneyExchangeWebApp.Controllers
                     TempData["MsgType"] = "danger";
                 }
             }
-            return RedirectToAction("DeletedTransactions");
+            return RedirectToAction("DeletedConvTransactions");
         }
         #endregion
 
@@ -231,15 +231,15 @@ namespace MoneyExchangeWebApp.Controllers
                     TempData["MsgType"] = "danger";
                 }
             }
-            return RedirectToAction("DeletedTransactions");
+            return RedirectToAction("DeletedConvTransactions");
         }
         #endregion
 
-        #region"Transaction Details" - Karthik
-        public IActionResult TransactionDetails(int id)
+        #region"Conversion Transaction Details" - Karthik
+        public IActionResult ConvTransactionDetails(int id)
         {
-            string sql = @"SELECT * FROM Transactions WHERE TransactionId={0}";
-            List<Transaction> TRlist = DBUtl.GetList<Transaction>(String.Format(sql, id));
+            string sql = @"SELECT * FROM ConvTransactions WHERE TransactionId={0}";
+            List<ConvTransaction> TRlist = DBUtl.GetList<ConvTransaction>(String.Format(sql, id));
             if(TRlist.Count > 0)
             {
                 return View(TRlist[0]);

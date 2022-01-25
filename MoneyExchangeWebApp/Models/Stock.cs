@@ -9,12 +9,12 @@ namespace MoneyExchangeWebApp.Models
     public class Stock
     {
         [Required]
-        public int Stock_id { get; set; }
+        public int StockId { get; set; }
         [Required]
-        public string  Stock_name { get; set; }
+        public string  AccountId { get; set; }
         [Required]
-        public decimal Stock_amount { get; set; }
+        public decimal ISO { get; set; }
         [Required]
-        public decimal Average_rate { get; set; }
+        public decimal Amount { get; set; }
     }
 }

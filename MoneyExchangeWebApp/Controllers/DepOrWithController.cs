@@ -11,16 +11,55 @@ using System.Security.Claims;
 
 namespace MoneyExchangeWebApp.Controllers
 {
-    public class WalletController : Controller
+    public class DepOrWithController : Controller
     {
         #region "View List of stock" - Karthik
-        [Authorize]
-        public IActionResult WalletIndex()
+        [Authorize(Roles ="admin, user")]
+        public IActionResult StocksOwnedByOwner()
         {
-            List<Stock> curList = DBUtl.GetList<Stock>("SELECT * FROM Stock");
-            return View(curList);
+            string email = User.Identity.Name;
+            List<Account> Alist = DBUtl.GetList<Account>(String.Format(@"SELECT * FROM Accounts WHERE EmailAddress='{0}'", email.EscQuote()));
+
+            if (Alist.Count == 1)
+            {
+                var account = Alist[0];
+                int AccId = account.AccountId;
+                List<Stock> curList = DBUtl.GetList<Stock>(String.Format("SELECT * FROM Stock WHERE AccountId={0}", AccId));
+                if (curList.Count == 1)
+                {
+                    return View(curList);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+
         }
         #endregion
+
+        public IActionResult StockAdd(int id)
+        {
+            string sql = @"SELECT * FROM Stock WHERE Stock_id={0}";
+
+            string select = String.Format(sql, id);
+            List<Stock> Stocklist = DBUtl.GetList<Stock>(select);
+            if (Stocklist.Count == 1)
+            {
+                Stock S = Stocklist[0];
+                return View(S);
+            }
+            else
+            {
+                TempData["Message"] = "Stock does not exist";
+                TempData["MsgType"] = "warning";
+                return RedirectToAction("StockIndex");
+            }
+        }
 
         #region "Edit Stock" - Karthik
         [Authorize]
@@ -55,9 +94,9 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                string sql = @"UPDATE Stock SET Stock_amount={1} WHERE Stock_id={0}";
-                string update = String.Format(sql,S.Stock_id, S.Stock_amount);
-
+                string sql1 = @"UPDATE Stock SET Amount={1} WHERE StockId={0}";
+                string update = String.Format(sql1,S.StockId, S.Amount);
+                string sql2 = @"INSERT INTO DepWithTransactions ";
                 if (DBUtl.ExecSQL(update) == 1)
                 {
                     TempData["Message"] = "Stock Updated";

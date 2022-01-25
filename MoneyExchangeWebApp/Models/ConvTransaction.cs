@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MoneyExchangeWebApp.Models
 {
-    public class Transaction
+    public class ConvTransaction
     {
         [Key]
         public int TransactionId { get; set; }
