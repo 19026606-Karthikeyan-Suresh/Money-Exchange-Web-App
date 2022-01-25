@@ -1,12 +1,13 @@
 ﻿--
 -- Drop tables if they exist to make script re-runnable
 --
-DROP TABLE IF EXISTS Transactions;
+DROP TABLE IF EXISTS ConvTransactions;
 DROP TABLE IF EXISTS Enquiries;
 DROP TABLE IF EXISTS Accounts;
 DROP TABLE IF EXISTS ExchangeRates;
 DROP TABLE IF EXISTS FAQ;
 DROP TABLE IF EXISTS Stock;
+DROP TABLE IF EXISTS DepWithTransactions;
 --
 -- Create tables
 --
@@ -31,11 +32,11 @@ CREATE TABLE Accounts(
 );
 
 INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, PhoneNumber, Gender, DOB, Role, DateCreated, EditedBy, EditedDate, Deleted, DeletedBy, DateDeleted) VALUES 
-('john123@gmail.com', HASHBYTES('SHA1', 'password1'), 'John', 'gino', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','staff', '2012-08-12',null,null,0, null, null),
-('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'), 'Kaiwen', 'Huang', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin','2013-05-02',null,null, 0, null, null),
 ('k.artixc@gmail.com', HASHBYTES('SHA1', 'password3'), 'Karthikeyan', 'Suresh', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-06-14','admin','2015-05-04',null,null, 0, null, null),
+('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'), 'Kaiwen', 'Huang', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin','2013-05-02',null,null, 0, null, null),
 ('Tengyik1763@gmail.com', HASHBYTES('SHA1', 'password3'), 'Yik', 'Teng', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-01-19', 'admin','2019-05-04',null,null,0 , null, null),
 ('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'), 'Jasper', 'Mak Jun Wai', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','admin', '2019-05-04' ,null,null,0 , null, null),
+('john123@gmail.com', HASHBYTES('SHA1', 'password1'), 'John', 'gino', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','staff', '2012-08-12',null,null,0, null, null),
 ('DummyUser1@myrp.edu.sg', HASHBYTES('SHA1', 'password5'), 'Jaden', ' Wai', '21C Tanjong Pagar International', '87689013', 'Male','1999-01-12', 'user','2022-01-03' ,null,null,0, null, null),
 ('DummyUser2@myrp.edu.sg', HASHBYTES('SHA1', 'password6'), 'Mark', ' Haedrig', '19D Tanjong Pagar International', '87680987', 'Male','2000-04-05', 'user', '2021-07-05' ,null,null,0, null, null),
 ('DummyUser3@myrp.edu.sg', HASHBYTES('SHA1', 'password7'), 'Amelia', ' Toh', 'Tanjong Pagar Bazar', '89761238', 'Female','2011-07-09', 'user', '2019-05-04' ,null,null,0, null, null),
@@ -82,23 +83,23 @@ CREATE TABLE ExchangeRates(
     	ExchangeRate   	Float 			NOT NULL
 );
 
-CREATE TABLE Transactions(
+CREATE TABLE ConvTransactions(
 	TransactionId 	      INT 	    	IDENTITY PRIMARY KEY,
 	BaseCurrency	      VARCHAR(5)    NOT NULL,
 	BaseAmount	 	      DECIMAL(9,2)  NOT NULL,
 	QuoteCurrency		  VARCHAR(5)	NOT NULL,
 	QuoteAmount			  DECIMAL(9,2)  NOT NULL,
 	ExchangeRate		  DECIMAL(9,2)  NOT NULL,
-	TransactionDate		  DATE 			NOT NULL,
+	TransactionDate		  DATETIME		NOT NULL,
 	DoneBy				  VARCHAR(200)  NOT NULL,
 	EditedBy			  VARCHAR(200)  NULL,
-	EditedDate			  DATE			NULL,
+	EditedDate			  DATETIME		NULL,
 	Deleted				  BIT			NOT NULL,
     DeletedBy			  VARCHAR(32) 	NULL,
-	DeletedDate			  DATE			NULL
+	DeletedDate			  DATETIME		NULL
 );
 
-INSERT INTO Transactions(BaseCurrency, BaseAmount, QuoteCurrency, QuoteAmount, ExchangeRate, TransactionDate, DoneBy, Deleted, DeletedBy, DeletedDate) VALUES
+INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, QuoteAmount, ExchangeRate, TransactionDate, DoneBy, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) VALUES
 ('SGD', 10.00, 'MYR', 30.77, 3.08, '2021-11-16','john123@gmail.com', null, null, 0, null, null),
 ('SGD', 1200000.00, 'CNY', 5662411.20, 4.72, '2021-11-15','k.artixc@gmail.com' , null, null, 0, null, null), 
 ('SGD', 123.00, 'MMK', 160774.14, 1307.11, '2021-11-14','k.artixc@gmail.com', null, null, 0, null, null),
@@ -117,3 +118,24 @@ INSERT INTO Stock(AccountId, ISO, Amount) VALUES
 (1,'CNY', 12345.00),
 (1,'MYR', 98760.00),
 (2,'SGD', 1000000.00);
+
+CREATE TABLE DepWithTransactions(
+	TransactionId	INT				IDENTITY PRIMARY KEY,
+	EmailAddress	VARCHAR(200)	NOT NULL,
+	DepOrWith		BIT				NOT NULL,
+	Currency		VARCHAR(3)		NULL,
+	DepositAmt		Float			NULL,
+	WithdrawalAmt	Float			NULL,
+	TransactionDate	DATETIME		NOT NULL,
+	EditedBy		VARCHAR(200)	NULL,
+	EditedDate		DATETIME		NULL,
+	Deleted			BIT				NOT NULl,
+	DeletedBy		VARCHAR(200)	NULL,
+	DeletedDate		DATETIME		NULL,
+);
+
+INSERT INTO DepWithTransactions(EmailAddress, DepOrWith, Currency, DepositAmt, WithdrawalAmt, TransactionDate, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) VALUES
+('k.artixc@gmail.com', 0, 'SGD', 1000.00, 0, '2021-01-14', null, null, 0, null, null),
+('k.artixc@gmail.com', 1, 'MMK', 234.00, 0, '2021-01-15', null, null, 0, null, null),
+('k.artixc@gmail.com', 0, 'CNY', 4000.00, 0, '2021-01-16', null, null, 0, null, null),
+('k.artixc@gmail.com', 1, 'MYR', 30000.00, 0, '2021-01-17', null, null, 0, null, null);

@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#trtable').DataTable({
         "ajax": {
-            "url": "/Transaction/GetAllTransactions"
+            "url": "/ConvTransaction/GetAllConvTransactions"
         },
         "columns": [
             { "data": "transactionId", "width": "5%" },
@@ -22,11 +22,11 @@ function loadDataTable() {
                 "data": "transactionId",
                 "render": function (data) {
                     return `
-                        <a href="/Transaction/TransactionEdit/${data}"><i class="fas fa-user-edit"></i></a>
+                        <a href="/ConvTransaction/ConvTransactionEdit/${data}"><i class="fas fa-user-edit"></i></a>
                         |
-                        <a href="/Transaction/SoftDelete/${data}"><i class="fas fa-trash-alt"></i></a>
+                        <a href="/ConvTransaction/SoftDeleteConvTransaction/${data}"><i class="fas fa-trash-alt"></i></a>
                         |
-                        <a href="/Transaction/TransactionDetails/${data}"><i class="fas fa-eye"></i></a>
+                        <a href="/ConvTransaction/ConvTransactionDetails/${data}"><i class="fas fa-eye"></i></a>
                             `
                 },
                 "width": "10%"
