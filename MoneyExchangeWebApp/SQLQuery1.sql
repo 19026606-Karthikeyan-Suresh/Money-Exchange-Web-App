@@ -21,14 +21,14 @@ CREATE TABLE Accounts(
 	Address			VARCHAR(200)	NOT NULL,
 	PhoneNumber		INT				NOT NULL,
 	Gender			VARCHAR(20)		NOT NULL,
-	DOB				DATE			NOT NULL,
+	DOB				DATETIME		NOT NULL,
 	Role 			VARCHAR(32) 	NOT NULL,
-	DateCreated		DATE			NOT NULL,
+	DateCreated		DATETIME		NOT NULL,
 	EditedBy		VARCHAR(200)	NULL,
-	EditedDate		DATE			NULL,
+	EditedDate		DATETIME		NULL,
 	Deleted			BIT				NOT NULL,
 	DeletedBy		VARCHAR(32)		NULL,
-	DateDeleted		DATE			NULL
+	DateDeleted		DATETIME		NULL
 );
 
 INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, PhoneNumber, Gender, DOB, Role, DateCreated, EditedBy, EditedDate, Deleted, DeletedBy, DateDeleted) VALUES 
@@ -45,14 +45,14 @@ INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, Phone
 
 CREATE TABLE Enquiries(
 	EnquiryId 				INT 			IDENTITY PRIMARY KEY,
-	EmailAddress			VARCHAR(100) 	NOT NULL,
-	Subject					VARCHAR(100)	NOT NULL,
-	Question	 			VARCHAR(100) 	NOT NULL,
-	EnquiryDate 			DATE 			NOT NULL,
+	EmailAddress			VARCHAR(200) 	NOT NULL,
+	Subject					VARCHAR(200)	NOT NULL,
+	Question	 			VARCHAR(200) 	NOT NULL,
+	EnquiryDate 			DATETIME		NOT NULL,
 	Status 					VARCHAR(20)		NOT NULL,
-	Answer					VARCHAR(100)	NULL,
-	AnsweredBy				VARCHAR(32)  	NULL,
-	AnswerDate				DATE			NULL
+	Answer					VARCHAR(200)	NULL,
+	AnsweredBy				VARCHAR(200)  	NULL,
+	AnswerDate				DATETIME		NULL
 );
 INSERT INTO Enquiries(EmailAddress, Subject, Question, EnquiryDate, Status, Answer ,AnsweredBy, AnswerDate) VALUES
 ('thunderblades48@gmail.com', 'Transactions' ,'How much money can I convert in one transaction?', '2020-11-16', 'Replied', 'No Answer', 'jam123','2022-01-02'),
@@ -113,11 +113,11 @@ CREATE TABLE Stock(
 
 );
 INSERT INTO Stock(AccountId, ISO, Amount) VALUES
-(1,'SGD', 100000.00),
-(1,'MMK', 112345.00),
-(1,'CNY', 12345.00),
-(1,'MYR', 98760.00),
-(2,'SGD', 1000000.00);
+(1,'SGD', 100000),
+(1,'MMK', 112345),
+(1,'CNY', 12345),
+(1,'MYR', 98760),
+(2,'SGD', 1000000);
 
 CREATE TABLE DepWithTransactions(
 	TransactionId	INT				IDENTITY PRIMARY KEY,
