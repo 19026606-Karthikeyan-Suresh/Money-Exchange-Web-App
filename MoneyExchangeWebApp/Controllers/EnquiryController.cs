@@ -39,11 +39,11 @@ namespace MoneyExchangeWebApp.Controllers
                 
                 string insert =
                    @"INSERT INTO Enquiries(EmailAddress, Subject, Question, EnquiryDate, Status, Answer, AnsweredBy, AnswerDate) 
-                 VALUES('{0}', '{1}', '{2}','{3:yyyy-MM-dd}', '{3}', '{4}', '{5}', '{6:yyyy-MM-dd}')";
+                 VALUES('{0}', '{1}', '{2}','{3:yyyy-MM-dd}', '{4}', '{5}', '{6}', '{7:yyyy-MM-dd}')";
                 string final = String.Format(insert, newEnquiry.EmailAddress.EscQuote(), newEnquiry.Subject.EscQuote(), newEnquiry.Question.EscQuote()
-                    , newEnquiry.EnquiryDate, newEnquiry.Status.EscQuote(), newEnquiry.Answer.EscQuote(),newEnquiry.AnsweredBy.EscQuote(), newEnquiry.AnswerDate);
+                    , DateTime.Now, "pending".EscQuote(), null, null, null);
 
-                int result = DBUtl.ExecSQL(insert);
+                int result = DBUtl.ExecSQL(final);
 
                 if (result == 1)
                 {
