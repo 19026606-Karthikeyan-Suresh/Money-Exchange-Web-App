@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MoneyExchangeWebApp.Models;
 using System.Collections.Generic;
 
@@ -7,6 +9,7 @@ namespace MoneyExchangeWebApp.Controllers
 {
     public class WalletController : Controller
     {
+        #region Show Admin Wallet - Karthik
         // GET: Admin Wallet
         public ActionResult GetAdminWallet()
         {
@@ -25,9 +28,20 @@ namespace MoneyExchangeWebApp.Controllers
         {
             return View();
         }
+        #endregion
+
+        #region Add Currency to Wallet - Karthik
+        [Authorize(Roles = "admin")]
+        public IActionResult AddaCurrency()
+        {
+            var Clist = DBUtl.GetList("SELECT QuoteCurrency FROM ExchangeRates ORDER BY QuoteCurrency");
+            ViewData["Currencylist"] = new SelectList(Clist, "QuoteCurrency", "QuoteCurrency");
+            return View();
+        }
+        #endregion
 
 
-        #region For User
+        /*#region For User
         // Display User Waller
         public ActionResult UserWalletIndex()
         {
@@ -40,7 +54,7 @@ namespace MoneyExchangeWebApp.Controllers
         {
             return View();
         }
-        #endregion
+        #endregion*/
 
 
         /*#region Unncessary Features DO NOT DELETE - Karthik

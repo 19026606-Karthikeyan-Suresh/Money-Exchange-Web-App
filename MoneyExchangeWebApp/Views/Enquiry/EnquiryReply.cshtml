@@ -3,27 +3,35 @@
 <form method="post" 
       asp-controller="Enquiry"
       asp-action="EnquiryReply" 
-      >
+      enctype="multipart/form-data">
+      
 
-   <div class="form-group row">
-      <div class="col-sm-5 mx-auto" >
+   <div class="border p-3 mt-4">
+      <div class="row pb-2" >
          <h2>Reply Enquiry!</h2>
       </div>
-   </div>
+      <hr />
 
    <input type="text" asp-for="EnquiryId" hidden />
 
-    <div class ="form-floating col-sm-4 mb-3">
-        <input type="text" class="form-control" id="VisitorEmailInput" asp-for="EmailAddress" disabled>
-        <label for="VisitorEmailInput">To</label>
-    </div>
-
-   <div class="form-floating col-sm-4 mb-3">
-        <input type="text" class="form-control" id="SubjectInput" asp-for="Subject" disabled>
-        <label for="SubjectInput">Subject</label>
+   <div class="row g-2 mb-3">
+     <div class="col-md">
+       <div class="form-floating">
+        <input type="text" class="form-control" placeholder="Email Address" asp-for="EmailAddress" disabled>
+        <label asp-for="EmailAddress">Visitor Email</label>
+        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+      </div>
+     </div>
+     <div class="col-md">
+       <div class="form-floating">
+         <input type="text" class="form-control" placeholder="Subject" asp-for="Subject" disabled>
+         <label asp-for="Subject">Subject</label>
+         <span asp-validation-for="Subject" class="text-danger"></span>
+       </div>
+     </div>
    </div>
 
-   <div class="form-floating col-sm-4 mb-3">
+   <div class="form-floating row g-2 mb-3">
         <textarea class="form-control" id="floatingTextarea1" asp-for="Question" style="height: 100px" disabled></textarea>
         <label for="floatingTextarea2">Question</label>
    </div>
@@ -31,7 +39,7 @@
     <input type="datetime" asp-for="EnquiryDate" hidden />
     <input type="text" asp-for="Status" hidden/>
 
-   <div class="form-floating col-sm-4 mb-3">
+   <div class="form-floating row g-2 mb-3">
         <textarea1 class="form-control" id="floatingTextarea2" asp-for="Answer" style="height: 100px"></textarea1>
         <label for="floatingTextarea2">Your Reply</label>
         <span asp-validation-for="Answer" class="text-danger"></span>
@@ -40,10 +48,10 @@
     <input asp-for="AnsweredBy" value=@User.Identity.Name hidden />
     <input asp-for="AnswerDate" value=@DateTime.Now hidden />
 
-   <div class="form-group row">
-      <div class="offset-sm-2 col-sm-5">
-         <input type="submit" value="Edit" class="btn btn-primary" /><br />
-      </div>
+
+   <div class="btn-group col-sm-12 ">
+   <a asp-action="EnquiryIndex" class="btn btn-outline-secondary mx-2">Back to Index</a>
+   <input type="submit" value="Send Email" class="btn btn-outline-primary mx-2"/>
    </div>
 
          <div class="form-group row">
@@ -55,13 +63,14 @@
    @if (ViewData["Message"] != null)
     {
       <div class="form-group row">
-         <div class="offset-sm-2 col-sm-5">
+         <div class="ms-auto">
             <div class="alert alert-@ViewData["MsgType"]">
                <text>@ViewData["Message"]</text>
             </div>
          </div>
       </div>
    }
+      </div>
 </form>
 
 @section Scripts{

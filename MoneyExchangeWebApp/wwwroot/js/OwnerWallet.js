@@ -16,11 +16,11 @@ function loadDataTable() {
                 "data": "stockId",
                 "render": function (data) {
                     return `
-                        <a href="/Account/EditUsers/${data}"><i class="fas fa-user-edit"></i></a>
+                        <a href="/Wallet/DepositMoney/${data}"><i class="fas fa-donate"></i></a>
                         |
-                        <a href="/Account/Delete/${data}"><i class="fas fa-trash-alt"></i></a>
+                        <a href="/Wallet/WithdrawMoney/${data}"><i class="fas fa-hand-holding-usd"></i></a>
                         |
-                        <a href="/Account/AccountDetails/${data}"><i class="fas fa-eye"></i></a>
+                        <a href="/DepOrWith/TransactionHistory/${data}"><i class="fas fa-receipt"></i></a>
                             `
                 },
                 "width" : "10%"
