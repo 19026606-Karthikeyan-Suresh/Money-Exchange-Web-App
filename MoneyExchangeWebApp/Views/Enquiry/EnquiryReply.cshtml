@@ -17,14 +17,14 @@
    <div class="row g-2 mb-3">
      <div class="col-md">
        <div class="form-floating">
-        <input type="text" class="form-control" placeholder="Email Address" asp-for="EmailAddress" disabled>
+        <input type="text" class="form-control" placeholder="Email Address" asp-for="EmailAddress" readonly>
         <label asp-for="EmailAddress">Visitor Email</label>
         <span asp-validation-for="EmailAddress" class="text-danger"></span>
       </div>
      </div>
      <div class="col-md">
        <div class="form-floating">
-         <input type="text" class="form-control" placeholder="Subject" asp-for="Subject" disabled>
+         <input type="text" class="form-control" placeholder="Subject" asp-for="Subject" readonly>
          <label asp-for="Subject">Subject</label>
          <span asp-validation-for="Subject" class="text-danger"></span>
        </div>
