@@ -123,5 +123,34 @@ namespace MoneyExchangeWebApp.Controllers
                 return RedirectToAction("EnquiryList");
             }
         }
+        public IActionResult SendEmail()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult SendEmail(Email e)
+        {
+
+            string email = "19028252@myrp.edu.sg";
+            string title = @"Dear {0}, <br/>
+                            <p>the exchange rate of SGD to MMK is 1-1319.13 today </p>
+                            Your Sincerely";
+            string result;
+            if (EmailUtl.SendEmail(email, title, e.Template, out result))
+            {
+                ViewData["Message"] = "Email Successfully Sent";
+                ViewData["MsgType"] = "success";
+                return RedirectToAction("AllEnquiries");
+            }
+            else
+            {
+                ViewData["Message"] = result;
+                ViewData["MsgType"] = "warning";
+                return View();
+
+            }
+
+        }
+
     }
 }
