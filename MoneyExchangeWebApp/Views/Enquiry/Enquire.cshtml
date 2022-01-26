@@ -30,11 +30,17 @@
     </div>
 
 
-    <input asp-for="EnquiryDate" value=@DateTime.Now hidden />
-    <input asp-for="Status" value="pending" hidden/>
-    <input asp-for="Answer" value=@null hidden />
+    @*<input asp-for="EnquiryDate" value=@DateTime.Now hidden />*@
+    @*<input asp-for="Status" value="pending" hidden/>*@
+@*    <input asp-for="Answer" value=@null hidden />
     <input asp-for="AnsweredBy" value=@null hidden />
-    <input asp-for="AnswerDate" value=@null hidden />
+    <input asp-for="AnswerDate" value=@null hidden />*@
+
+       <div class="form-group row">
+<div class="offset-sm-2 col-sm-6">
+<div asp-validation-summary="All" class="text-danger"></div>
+</div>
+</div>
 
 
     <div class="form-group row">

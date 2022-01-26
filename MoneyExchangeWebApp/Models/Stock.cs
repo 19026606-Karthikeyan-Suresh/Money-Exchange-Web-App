@@ -11,10 +11,10 @@ namespace MoneyExchangeWebApp.Models
         [Required]
         public int StockId { get; set; }
         [Required]
-        public string  AccountId { get; set; }
+        public int AccountId { get; set; }
         [Required]
-        public decimal ISO { get; set; }
-        [Required]
-        public decimal Amount { get; set; }
+        public String ISO { get; set; }
+        [Required(ErrorMessage ="You need to state an amount!")]
+        public double Amount { get; set; }
     }
 }
