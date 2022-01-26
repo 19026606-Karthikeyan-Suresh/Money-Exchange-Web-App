@@ -97,7 +97,7 @@ using System.Security.Claims;
             }
             else
             {
-                sql = @"SELECT * FROM Accounts WHERE Deleted='False'";
+                sql = @"SELECT * FROM Accounts WHERE Deleted='False' AND role!='admin'";
             }
             var AccountList = DBUtl.GetList<Account>(sql);
             return Json(new { data = AccountList });
@@ -225,7 +225,7 @@ using System.Security.Claims;
             else
             {
                 string sql = @"UPDATE Accounts  
-                              SET EmailAddress='{1}' FirstName='{2}', LastName='{3}', 
+                              SET EmailAddress='{1}', FirstName='{2}', LastName='{3}', 
                               Address='{4}', PhoneNumber={5}, Gender='{6}', DOB='{7:yyyy-MM-dd}'
                             WHERE AccountId={0}";
                 string update = String.Format(sql, A.AccountId, A.EmailAddress.EscQuote(), A.FirstName.EscQuote(),

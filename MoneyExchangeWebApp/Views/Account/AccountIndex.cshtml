@@ -11,6 +11,17 @@
     </div>
     <br/><br/>
 
+       @if (ViewData["Message"] != null)
+   {
+      <div class="form-group row">
+         <div class="offset-sm-2 col-sm-6">
+            <div class="alert alert-@ViewData["MsgType"]">
+               <text>@ViewData["Message"]</text>
+            </div>
+         </div>
+      </div>
+   }
+
 <table id="tblData" class="table table-bordered table-striped" style="width:100%">
     <thead>
         <tr>

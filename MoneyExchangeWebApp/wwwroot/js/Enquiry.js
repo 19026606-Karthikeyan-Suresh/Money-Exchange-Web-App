@@ -20,7 +20,7 @@ function loadDataTable() {
                 "data": "enquiryId",
                 "render": function (data) {
                     return `
-                        <a href="/Enquiry/EnquiryReply/${data}"><i class="fas fa-user-edit"></i></a>
+                        <a href="/Enquiry/EnquiryReply/${data}"><i class="fas fa-reply"></i></a>
                             `
                 },
                 "width": "10%"
