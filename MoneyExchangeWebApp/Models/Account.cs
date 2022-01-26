@@ -25,9 +25,13 @@ namespace MoneyExchangeWebApp.Models
         public DateTime DOB { get; set; }
         public string Role { get; set; }
         public DateTime DateCreated { get; set; }
+        public string EditedBy { get; set; }
+        public DateTime DateEdited { get; set; }
         public int Deleted { get; set; }
         public string DeletedBy { get; set; }
         public DateTime DateDeleted { get; set; }
+        
+
     }
 }
 

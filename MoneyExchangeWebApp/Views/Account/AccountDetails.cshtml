@@ -85,6 +85,19 @@
        <span asp-validation-for="DateCreated" class="text-danger"></span>
    </div>
 
+   <div class="form-floating mb-3">
+       <input type="text" class="form-control" asp-for="EditedBy">
+       <label asp-for="EditedBy">Edited By</label>
+       <span asp-validation-for="EditedBy" class="text-danger"></span>
+   </div>
+
+   <div class="form-floating mb-3">
+       <input type="date" class="form-control" asp-for="DateEdited">
+       <label asp-for="DateEdited">Date Edited</label>
+       <span asp-validation-for="DateEdited" class="text-danger"></span>
+   </div>
+
+
    <div class="btn-group col-sm-12 ">
    <a asp-action="AccountIndex" class="btn btn-outline-primary mx-2">Back to Index</a>
    <input type="submit" value="Edit" class="btn btn-outline-secondary mx-2"/>
