@@ -173,9 +173,9 @@ namespace MoneyExchangeWebApp.Controllers
 
                 int apple = Int32.Parse(month);
 
-                string sql = @"SELECT TOP(5) Source_currency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM Transactions 
-                           WHERE MONTH(Transaction_date) = {0}
-                           GROUP BY Source_currency ORDER BY 'No. of Trades' DESC ";
+                string sql = @"SELECT TOP(5) BaseCurrency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM ConvTransactions 
+                           WHERE MONTH(TransactionDate) = {0}
+                           GROUP BY BaseCurrency ORDER BY 'No. of Trades' DESC ";
 
                 string select = String.Format(sql, apple);
 
@@ -193,9 +193,9 @@ namespace MoneyExchangeWebApp.Controllers
 
             int apple = Int32.Parse(month);
 
-            string sql = @"SELECT TOP(5) Source_currency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM Transactions 
-                           WHERE MONTH(Transaction_date) = {0}
-                           GROUP BY Source_currency ORDER BY 'No. of Trades' ASC ";
+            string sql = @"SELECT TOP(5) BaseCurrency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM ConvTransactions 
+                           WHERE MONTH(TransactionDate) = {0}
+                           GROUP BY BaseCurrency ORDER BY 'No. of Trades' ASC ";
 
             string select = String.Format(sql, apple);
 
@@ -250,10 +250,10 @@ namespace MoneyExchangeWebApp.Controllers
 
             int apple = Int32.Parse(month);
 
-            string sql = @"SELECT TOP(5) Transaction_date AS 'Day', COUNT(Transaction_id) AS 'No. of Trades'
-                           FROM Transactions
-                          WHERE MONTH(Transaction_date) = {0}
-                          GROUP BY Transaction_date ORDER BY 'No. of Trades' DESC";
+            string sql = @"SELECT TOP(5) TransactionDate AS 'Day', COUNT(TransactionId) AS 'No. of Trades'
+                           FROM ConvTransactions
+                          WHERE MONTH(TransactionDate) = {0}
+                          GROUP BY TransactionDate ORDER BY 'No. of Trades' DESC";
 
 
             string select = String.Format(sql, apple);
@@ -272,10 +272,10 @@ namespace MoneyExchangeWebApp.Controllers
 
             int apple = Int32.Parse(month);
 
-            string sql = @"SELECT TOP(5) Transaction_date AS 'Day', COUNT(Transaction_id) AS 'No. of Trades'
-                           FROM Transactions
-                          WHERE MONTH(Transaction_date) = {0}
-                          GROUP BY Transaction_date ORDER BY 'No. of Trades' ASC";
+            string sql = @"SELECT TOP(5) TransactionDate AS 'Day', COUNT(TransactionId) AS 'No. of Trades'
+                           FROM ConvTransactions
+                          WHERE MONTH(TransactionDate) = {0}
+                          GROUP BY TransactionDate ORDER BY 'No. of Trades' ASC";
 
 
             string select = String.Format(sql, apple);

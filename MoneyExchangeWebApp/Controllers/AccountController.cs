@@ -9,79 +9,79 @@ using System.Collections.Generic;
 using System.Data;
 using System.Security.Claims;
 
-  namespace MoneyExchangeWebApp.Controllers
+namespace MoneyExchangeWebApp.Controllers
 {
-   public class AccountController : Controller
-   {
+    public class AccountController : Controller
+    {
         #region "Login/Logout" - Teng Yik
         [Authorize]
         public IActionResult Logoff(string returnUrl = null)
-      {
-         HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-         if (Url.IsLocalUrl(returnUrl))
-            return Redirect(returnUrl);
-         return RedirectToAction("ExchangeRates", "Currency");
-      }
-
-      [AllowAnonymous]
-      public IActionResult Login(string returnUrl = null)
-      {
-         TempData["ReturnUrl"] = returnUrl;
-            return View("_Login");
-      }
-
-      [AllowAnonymous]
-      [HttpPost]
-      public IActionResult Login(UserLogin user)
-      {
-         if (!AuthenticateUser(user.UserID, user.Password,
-                               out ClaimsPrincipal principal))
-         {
-            TempData["Message"] = "Incorrect Email Address or Password";
-            return View();
-         }
-         else
-         {
-            HttpContext.SignInAsync(
-               CookieAuthenticationDefaults.AuthenticationScheme,
-               principal);
-
-            if (TempData["returnUrl"] != null)
-            {
-               string returnUrl = TempData["returnUrl"].ToString();
-               if (Url.IsLocalUrl(returnUrl))
-                  return Redirect(returnUrl);
-            }
-
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            if (Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
             return RedirectToAction("ExchangeRates", "Currency");
-         }
-      }
+        }
+
+        [AllowAnonymous]
+        public IActionResult Login(string returnUrl = null)
+        {
+            TempData["ReturnUrl"] = returnUrl;
+            return View("_Login");
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Login(UserLogin user)
+        {
+            if (!AuthenticateUser(user.UserID, user.Password,
+                                  out ClaimsPrincipal principal))
+            {
+                TempData["Message"] = "Incorrect Email Address or Password";
+                return View();
+            }
+            else
+            {
+                HttpContext.SignInAsync(
+                   CookieAuthenticationDefaults.AuthenticationScheme,
+                   principal);
+
+                if (TempData["returnUrl"] != null)
+                {
+                    string returnUrl = TempData["returnUrl"].ToString();
+                    if (Url.IsLocalUrl(returnUrl))
+                        return Redirect(returnUrl);
+                }
+
+                return RedirectToAction("ExchangeRates", "Currency");
+            }
+        }
         #endregion
 
         #region "Authenticate User" - Teng Yik
         private bool AuthenticateUser(string uid, string pw,
                                     out ClaimsPrincipal principal)
-      {
-         principal = null;
-         string sql = @"SELECT * FROM Accounts WHERE EmailAddress = '{0}' AND Password = HASHBYTES('SHA1', '{1}') ";
+        {
+            principal = null;
+            string sql = @"SELECT * FROM Accounts WHERE EmailAddress = '{0}' AND Password = HASHBYTES('SHA1', '{1}') ";
 
-         string select = String.Format(sql, uid, pw);
-         DataTable ds = DBUtl.GetTable(select);
-         if (ds.Rows.Count == 1)
-         {
-            principal =
-               new ClaimsPrincipal(
-                  new ClaimsIdentity(
-                     new Claim[] {
+            string select = String.Format(sql, uid, pw);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count == 1)
+            {
+                principal =
+                   new ClaimsPrincipal(
+                      new ClaimsIdentity(
+                         new Claim[] {
                         new Claim(ClaimTypes.NameIdentifier, uid),
                         new Claim(ClaimTypes.Name, ds.Rows[0]["EmailAddress"].ToString()),
                         new Claim(ClaimTypes.Role, ds.Rows[0]["Role"].ToString())
-                     },
-                     CookieAuthenticationDefaults.AuthenticationScheme));;
+                         },
+                         CookieAuthenticationDefaults.AuthenticationScheme)); ;
                 return true;
-         }
-         return false;
-      }
+            }
+            return false;
+        }
         #endregion
 
         #region "Get Account List" - Karthik
@@ -121,7 +121,7 @@ using System.Security.Claims;
         #endregion
 
         #region "Add User Accounts" - Teng Yik
-        [Authorize(Roles ="staff, admin")]
+        [Authorize(Roles = "staff, admin")]
         public IActionResult AddAccount()
         {
             return View();
@@ -146,7 +146,7 @@ using System.Security.Claims;
                 VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', '{9:yyyy-MM-dd}', '{10}', '{11}', '{12:yyyy-MM-dd}')";
 
                 string insert;
-                if(User.IsInRole("staff"))
+                if (User.IsInRole("staff"))
                 {
                     insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
                     AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "user".EscQuote(),
@@ -181,7 +181,7 @@ using System.Security.Claims;
 
         #region "Edit User Accounts" - Teng Yik
         //GET
-        [Authorize(Roles ="staff, admin")]
+        [Authorize(Roles = "staff, admin")]
         public IActionResult EditUsers(int id)
         {
             //Filter types of Users
@@ -212,7 +212,7 @@ using System.Security.Claims;
         }
 
         //POST
-        [Authorize(Roles ="staff,admin")]
+        [Authorize(Roles = "staff,admin")]
         [HttpPost]
         public IActionResult EditUsers(Account A)
         {
@@ -378,16 +378,16 @@ using System.Security.Claims;
             {
                 TempData["Message"] = "Password not changed";
                 TempData["MsgType"] = "danger";
-            } 
+            }
             else
             {
                 string sql1 = @"SELECT * FROM Accounts WHERE EmailAddress = '{0}'";
                 string select = String.Format(sql1, rs.Email.EscQuote());
                 List<Account> AccList = DBUtl.GetList<Account>(select);
-                
+
                 int userid = AccList[0].AccountId;
 
-                
+
 
                 if (AccList.Count == 0)
                 {
@@ -415,6 +415,48 @@ using System.Security.Claims;
         }
         #endregion
 
-    }
+        #region Register - Teng Yik
+        public IActionResult Register()
+        {
+            return View();
+        }
+        public IActionResult RegisterPost(Account A)
+        {
 
+            if (!ModelState.IsValid)
+            {
+                ViewData["Message"] = "Invalid Input";
+                ViewData["MsgType"] = "danger";
+                return View("Register", A);
+            }
+            else
+            {
+                string sql = @"INSERT INTO Accounts (EmailAddress, Password, FirstName, LastName, Address, PhoneNumber,
+                               Gender, DOB, Role, DateCreated, EditedBy, EditedDate, Deleted, DeletedBy, DateDeleted) 
+                               VALUES('{0}', HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', 
+                               '{9:yyyy-MM-dd}', '{10}', '{11:yyyy-MM-dd}', {12}, '{13}', '{14:yyyy-MM-dd}'";
+
+
+
+                string insert = String.Format(sql, A.EmailAddress.EscQuote(), A.Password.EscQuote(), A.FirstName.EscQuote(),
+                    A.LastName.EscQuote(), A.Address.EscQuote(), A.PhoneNumber, A.Gender.EscQuote(), A.DOB, "user", 
+                      A.DateCreated, null, null, 0, null, null);
+
+
+                if (DBUtl.ExecSQL(insert) == 1)
+                {
+                    TempData["Message"] = "Accounts Updated";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
+                return RedirectToAction("_Login");
+            }
+            #endregion
+        }
+    }
 }
+

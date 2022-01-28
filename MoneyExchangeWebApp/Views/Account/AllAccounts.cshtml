@@ -1,0 +1,66 @@
+﻿@using MoneyExchangeWebApp.Models;
+@model List<Account>
+
+    @if (TempData["Message"] != null)
+{
+   <div class="alert alert-@TempData["MsgType"]">
+      @TempData["Message"]
+   </div>
+}
+
+    <div class="container py-sm-5">
+            <header class="text-center text-black">
+                <h1 class="display-2"><b>Accounts</b></h1>
+            </header>
+            <div class="row py-4">
+                <div class="col-sm-10 mx-auto">
+                    <div class="card rounded shadow border-0">
+                        <div class="card-body p-sm-5 bg-white rounded">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-responsive" style="text-align:center">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Email</th>
+                                            <th>Password</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Role</th>
+                                            <th>Date Created</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (Account item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.AccountId</td>
+                                                <td>@item.EmailAddress</td>
+                                                <td>@item.Password</td>
+                                                <td>@item.FirstName</td>
+                                                <td>@item.LastName</td>
+                                                <td>@item.Role</td>
+                                                <td>@item.DateCreated.ToShortDateString()</td>
+                                                <td>
+                                                    <div class="w-75 btn-group" role="group">
+                                                    <a asp-controller="Account" 
+                                                    asp-action="EditUsers" 
+                                                    asp-route-id="@item.AccountId" class="btn btn-primary mx-2"><i class="fas fa-pencil-alt"></i> </a>
+                                                    |
+                                                    <a asp-controller="Account" 
+                                                    asp-action="Delete"
+                                                    asp-route-id="@item.AccountId" class="btn btn-primary mx-2"
+                                                    onclick="return confirm('Delete Account [@item.EmailAddress]')"> <i class="fas fa-trash-alt"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
