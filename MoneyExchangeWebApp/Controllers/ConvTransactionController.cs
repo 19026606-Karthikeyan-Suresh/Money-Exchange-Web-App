@@ -52,13 +52,11 @@ namespace MoneyExchangeWebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData["Message"] = "Invalid Input";
-                ViewData["MsgType"] = "warning";
+                TempData["error"] = "Invalid Input";
                 return View("CreateConvTransaction");
             }
             else
             {
-                string user = User.Identity.Name;
                 string sql = @"INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, 
                 QuoteAmount, ExchangeRate, TransactionDate, DoneBy, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) 
                 VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd}', '{6}', '{7}', '{8:yyyy-MM-dd}', {9}, '{10}', '{11:yyyy-MM-dd}')";
@@ -68,8 +66,7 @@ namespace MoneyExchangeWebApp.Controllers
 
                 if (DBUtl.ExecSQL(insert) == 1)
                 {
-                    TempData["Message"] = "Transaction Successfully Added.";
-                    TempData["MsgType"] = "success";
+                    TempData["success"] = "Transaction Successfully Added.";
                     return RedirectToAction("ConvTransactionIndex");
                 }
                 else
@@ -97,8 +94,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                TempData["Message"] = "Transaction Record does not exist";
-                TempData["MsgType"] = "warning";
+                TempData["error"] = "Transaction Record does not exist";
                 return RedirectToAction("ConvTransactionIndex");
             }
         }
@@ -109,8 +105,7 @@ namespace MoneyExchangeWebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData["Message"] = "Invalid Input";
-                ViewData["MsgType"] = "danger";
+                TempData["error"] = "Invalid Input";
                 return View("ConvTransactionEdit", TR);
             }
             else
@@ -126,13 +121,12 @@ namespace MoneyExchangeWebApp.Controllers
 
                 if (DBUtl.ExecSQL(update) == 1)
                 {
-                    TempData["Message"] = "Transaction Updated";
-                    TempData["MsgType"] = "success";
+                    TempData["success"] = "Transaction Updated";
                 }
                 else
                 {
-                    TempData["Message"] = DBUtl.DB_Message;
-                    TempData["MsgType"] = "danger";
+                    ViewData["Message"] = DBUtl.DB_Message;
+                    ViewData["MsgType"] = "danger";
                 }
                 return RedirectToAction("ConvTransactionIndex");
             }
@@ -151,20 +145,17 @@ namespace MoneyExchangeWebApp.Controllers
             if (ds.Rows.Count != 1)
             {
                 TempData["Message"] = "Transaction Record does not exist";
-                TempData["MsgType"] = "warning";
             }
             else
             {
                 int res = DBUtl.ExecSQL(String.Format("UPDATE ConvTransactions SET Deleted='True',DeletedBy='{1}' WHERE TransactionId={0}", id, User.Identity.Name.EscQuote()));
                 if (res == 1)
                 {
-                    TempData["Message"] = "Transaction Record Deleted";
-                    TempData["MsgType"] = "success";
+                    TempData["success"] = "Transaction Record Deleted";
                 }
                 else
                 {
-                    TempData["Message"] = DBUtl.DB_Message;
-                    TempData["MsgType"] = "danger";
+                    TempData["error"] = DBUtl.DB_Message;
                 }
             }
             return RedirectToAction("ConvTransactionIndex");

@@ -85,15 +85,15 @@
          <input type="submit" value="Edit" class="btn btn-primary" /><br />
       </div>
    </div>
+</form>
 
    @if (ViewData["Message"] != null)
-    {
+   {
       <div class="form-group row">
-         <div class="offset-sm-2 col-sm-5">
+         <div class="offset-sm-2 col-sm-6">
             <div class="alert alert-@ViewData["MsgType"]">
                <text>@ViewData["Message"]</text>
             </div>
          </div>
       </div>
    }
-</form>
