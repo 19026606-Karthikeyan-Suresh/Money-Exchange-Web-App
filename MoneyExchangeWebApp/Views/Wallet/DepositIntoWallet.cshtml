@@ -1,0 +1,38 @@
+﻿@model Stock
+
+@*<div class="modal fade" id="DepositCurrencyModal" tabindex="-1" aria-labelledby="DepositCurrencyLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="DepositCurrencyLabel">How much are you depositing?</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">*@
+          <form method="post" asp-controller="Wallet" asp-action="DepositIntoWallet" asp-route-id="StockId">
+
+          <div class="form-floating mb-3">
+              <input type="text" class="form-control" asp-for="ISO" readonly>
+               <label asp-for="ISO">ISO</label>
+               <span asp-validation-for="ISO" class="text-danger"></span>
+          </div>          
+          <div class="form-floating mb-3">
+              <input type="text" class="form-control" asp-for="Amount" readonly>
+               <label asp-for="Amount">Current Balance</label>
+               <span asp-validation-for="Amount" class="text-danger"></span>
+          </div>
+          <div class="form-floating mb-3">
+              <input type="text" class="form-control" placeholder="Deposit Amount" id="deposit">
+               <label for="deposit">Deposit</label>
+          </div>
+
+@*          <div class="modal-footer">*@
+              <div class="btn-group col-sm-12">
+                  <button type="button" class="btn btn-outline-secondary mx-2" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary mx-2">Deposit</button>
+              </div>
+@*          </div>*@
+          </form>
+@*      </div>
+    </div>
+  </div>
+</div>*@

@@ -8,11 +8,10 @@ namespace MoneyExchangeWebApp.Models
 {
     public class Stock
     {
-        [Required]
         public int StockId { get; set; }
         [Required]
         public int AccountId { get; set; }
-        [Required]
+        [Required(ErrorMessage ="You need to select a Currency!")]
         public String ISO { get; set; }
         [Required(ErrorMessage ="You need to state an amount!")]
         public double Amount { get; set; }

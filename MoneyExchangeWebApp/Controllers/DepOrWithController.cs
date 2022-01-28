@@ -13,7 +13,7 @@ namespace MoneyExchangeWebApp.Controllers
 {
     public class DepOrWithController : Controller
     {
-        #region "View List of stock" - Karthik
+        /*#region "View List of stock" - Karthik
         [Authorize(Roles ="admin, user")]
         public IActionResult StocksOwnedByOwner()
         {
@@ -40,9 +40,9 @@ namespace MoneyExchangeWebApp.Controllers
             }
 
         }
-        #endregion
+        #endregion*/
 
-        public IActionResult StockAdd(int id)
+/*        public IActionResult StockAdd(int id)
         {
             string sql = @"SELECT * FROM Stock WHERE Stock_id={0}";
 
@@ -59,7 +59,7 @@ namespace MoneyExchangeWebApp.Controllers
                 TempData["MsgType"] = "warning";
                 return RedirectToAction("StockIndex");
             }
-        }
+        }*/
 
         #region "Edit Stock" - Karthik
         [Authorize]

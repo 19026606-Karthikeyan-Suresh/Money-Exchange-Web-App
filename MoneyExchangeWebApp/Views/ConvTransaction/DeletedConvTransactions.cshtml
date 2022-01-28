@@ -1,13 +1,6 @@
 ﻿@using MoneyExchangeWebApp.Models;
 @model List<ConvTransaction>
 
-    @if (TempData["Message"] != null)
-{
-   <div class="alert alert-@TempData["MsgType"]">
-      @TempData["Message"]
-   </div>
-}
-
     <div class="container py-sm-5">
             <header class="text-center text-black">
                 <h1 class="display-2"><b>Deleted Transactions</b></h1>

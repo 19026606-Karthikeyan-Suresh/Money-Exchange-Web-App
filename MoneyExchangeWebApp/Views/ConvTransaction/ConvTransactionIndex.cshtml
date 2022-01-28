@@ -1,20 +1,13 @@
 ﻿@using MoneyExchangeWebApp.Models;
 @model List<ConvTransaction>
 
-    @if (TempData["Message"] != null)
-{
-   <div class="alert alert-@TempData["MsgType"]">
-      @TempData["Message"]
-   </div>
-}
-
     <div class="container py-sm-5">
         <div class="row pt-4">
             <div class="col-6">
                 <h2 class="text-primary">Transaction List</h2>
             </div>
             <div class="col-6 text-end">
-                <a asp-controller="Transaction" asp-action="CreateConvTransaction" class="btn btn-primary">
+                <a asp-action="CreateConvTransaction" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i> &nbsp; Create new Transaction
                 </a>
             </div>
