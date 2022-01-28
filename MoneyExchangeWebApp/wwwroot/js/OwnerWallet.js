@@ -24,7 +24,7 @@ function loadDataTable() {
                         <a href="/Wallet/DepositIntoWallet/${data}" class="btn btn-outline-primary mx-2">
                         <i class="fas fa-donate"></i> Deposit</a>
 
-                        <a href="/Wallet/WithdrawMoney/${data}" class="btn btn-outline-primary mx-2">
+                        <a href="/Wallet/WithdrawFromWallet/${data}" class="btn btn-outline-primary mx-2">
                         <i class="fas fa-hand-holding-usd"></i> Withdraw</a>
 
                         <a href="/DepOrWith/TransactionHistory/${data}" class="btn btn-outline-secondary mx-2">

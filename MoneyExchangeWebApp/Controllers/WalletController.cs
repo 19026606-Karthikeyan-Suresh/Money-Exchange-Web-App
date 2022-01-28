@@ -43,15 +43,7 @@ namespace MoneyExchangeWebApp.Controllers
         {
             var Clist = DBUtl.GetList("SELECT QuoteCurrency FROM ExchangeRates ORDER BY QuoteCurrency");
             ViewData["Currencylist"] = new SelectList(Clist, "QuoteCurrency", "QuoteCurrency");
-            if (id == 0)
-            {
-                return View();
-
-            }
-            else
-            {
-                return RedirectToAction("DepositIntoWallet",id);
-            }
+            return View();
         }
         #endregion
 
@@ -170,6 +162,7 @@ namespace MoneyExchangeWebApp.Controllers
             List<Stock> sList = DBUtl.GetList<Stock>(String.Format(sql, id));
             if (sList.Count == 1)
             {
+                StockDeporWith sd = new StockDeporWith(sList[0].StockId, sList[0].ISO, sList[0].Amount, 0);
                 Stock s = sList[0];
                 return View(s);
             }
@@ -183,34 +176,108 @@ namespace MoneyExchangeWebApp.Controllers
         [HttpPost]
         public IActionResult DepositIntoWallet(Stock s)
         {
-            IFormCollection form = HttpContext.Request.Form;
-            string deposit = form["deposit"].ToString().Trim();
-            string StocksOwnedSql = @"SELECT * FROM Stock WHERE AccountId={0} AND ISO='{1}'";
-            string updateSql = @"UPDATE Stock SET Amount={0} WHERE StockId={1}";
-
-            List<Stock> Slist = DBUtl.GetList<Stock>(String.Format(StocksOwnedSql, 1, s.ISO.EscQuote()));
-            if (Slist.Count == 1)
+            if (!ModelState.IsValid)
             {
-                double amt = + Slist[0].Amount;
-                int res = DBUtl.ExecSQL(String.Format(updateSql, amt, Slist[0].StockId));
-                if (res == 1)
+                ViewData["Message"] = "Model State is Invalid";
+                ViewData["MsgType"] = "danger";
+                return View("ShowWallet");
+            }
+            else
+            {
+                IFormCollection form = HttpContext.Request.Form;
+                string deposit = form["deposit"].ToString().Trim();
+                string updateSql = @"UPDATE Stock SET Amount={0} WHERE StockId={1}";
+                double myDeposit= Double.Parse(deposit);
+                if (s != null)
                 {
-                    ViewData["Message"] = "Amount has been Updated!";
-                    ViewData["MsgType"] = "success";
-                    return View("ShowWallet");
+                    double amt = s.Amount + myDeposit;
+                    int res = DBUtl.ExecSQL(String.Format(updateSql, amt, s.StockId));
+                    if (res == 1)
+                    {
+                        ViewData["Message"] = "Amount has been successfully deposited!";
+                        ViewData["MsgType"] = "success";
+                        return View("ShowWallet");
+                    }
+                    else
+                    {
+                        ViewData["Message"] = s.StockId;
+                        ViewData["MsgType"] = "danger";
+                        return View();
+                    }
                 }
                 else
                 {
-                    ViewData["Message"] = "Amount not updated in Database!";
-                    ViewData["MsgType"] = "danger";
-                    return View();
+                    return NotFound();
+                }
+
+            }
+
+        }
+        #endregion
+
+        #region Withdraw Currency - Karthik
+        public IActionResult WithdrawFromWallet(int id)
+        {
+            if(User.IsInRole("admin"))
+            {
+                string sql = @"SELECT * FROM Stock WHERE StockId={0}";
+                List<Stock> sList = DBUtl.GetList<Stock>(String.Format(sql, id));
+                if (sList.Count == 1)
+                {
+                    StockDeporWith sd = new StockDeporWith(sList[0].StockId, sList[0].ISO, sList[0].Amount, 0);
+                    Stock s = sList[0];
+                    return View(s);
+                }
+                else
+                {
+                    ViewData["Message"] = "Currency does not exist";
+                    return RedirectToAction("ShowWallet");
                 }
             }
             else
             {
                 return NotFound();
             }
+        }
 
+        [HttpPost]
+        public IActionResult WithdrawFromWallet(Stock s)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Message"] = "Model State is Invalid";
+                ViewData["MsgType"] = "danger";
+                return View("ShowWallet");
+            }
+            else
+            {
+                IFormCollection form = HttpContext.Request.Form;
+                string withdraw = form["withdraw"].ToString().Trim();
+                string updateSql = @"UPDATE Stock SET Amount={0} WHERE StockId={1}";
+                double myWithdrawal = Double.Parse(withdraw);
+                if (s != null)
+                {
+                    double amt = s.Amount - myWithdrawal;
+                    int res = DBUtl.ExecSQL(String.Format(updateSql, amt, s.StockId));
+                    if (res == 1)
+                    {
+                        ViewData["Message"] = "Amount has been successfully withdrawn!";
+                        ViewData["MsgType"] = "success";
+                        return View("ShowWallet");
+                    }
+                    else
+                    {
+                        ViewData["Message"] = s.StockId;
+                        ViewData["MsgType"] = "danger";
+                        return View();
+                    }
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
         }
         #endregion
 

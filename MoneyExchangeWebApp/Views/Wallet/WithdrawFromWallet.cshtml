@@ -8,7 +8,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">*@
-          <form method="post" asp-controller="Wallet" asp-action="DepositIntoWallet">
+          <form method="post" asp-controller="Wallet" asp-action="WithdrawFromWallet">
 
           <input asp-for="StockId" hidden readonly/>
 
@@ -21,14 +21,14 @@
                <label asp-for="Amount">Current Balance</label>
           </div>
           <div class="form-floating mb-3">
-              <input type="text" class="form-control" placeholder="Deposit Amount" name="deposit" id="deposit">
-               <label for="deposit">Deposit</label>
+              <input type="text" class="form-control" name="withdraw" id="withdraw">
+               <label for="withdraw">Withdraw</label>
           </div>
 
 @*          <div class="modal-footer">*@
               <div class="btn-group col-sm-12">
                   <a type="button" asp-controller="Wallet" asp-action="ShowWallet" class="btn btn-outline-secondary mx-2">Go back to Index</a>
-                  <button type="submit" class="btn btn-primary mx-2">Deposit</button>
+                  <button type="submit" class="btn btn-primary mx-2">Withdraw</button>
               </div>
 @*          </div>*@
 @if (ViewData["Message"] != null)
