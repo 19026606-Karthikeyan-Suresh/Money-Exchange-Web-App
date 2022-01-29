@@ -162,7 +162,6 @@ namespace MoneyExchangeWebApp.Controllers
             List<Stock> sList = DBUtl.GetList<Stock>(String.Format(sql, id));
             if (sList.Count == 1)
             {
-                StockDeporWith sd = new StockDeporWith(sList[0].StockId, sList[0].ISO, sList[0].Amount, 0);
                 Stock s = sList[0];
                 return View(s);
             }
@@ -224,7 +223,6 @@ namespace MoneyExchangeWebApp.Controllers
                 List<Stock> sList = DBUtl.GetList<Stock>(String.Format(sql, id));
                 if (sList.Count == 1)
                 {
-                    StockDeporWith sd = new StockDeporWith(sList[0].StockId, sList[0].ISO, sList[0].Amount, 0);
                     Stock s = sList[0];
                     return View(s);
                 }

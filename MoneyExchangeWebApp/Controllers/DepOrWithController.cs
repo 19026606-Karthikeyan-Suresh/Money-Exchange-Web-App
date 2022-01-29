@@ -14,16 +14,11 @@ namespace MoneyExchangeWebApp.Controllers
     public class DepOrWithController : Controller
     {
         #region List all transactions for specific currency - Karthik
-        public IActionResult GetAllDOWTransactions(int id)
+        public IActionResult DOWTransactions(int id)
         {
             string sql = @"SELECT * FROM DepWithTransactions WHERE StockId={0}";
             List<DepWithTransactions> DWTlist = DBUtl.GetList<DepWithTransactions>(sql, id);
-            return Json(new {data = DWTlist});
-        }
-
-        public IActionResult DOWTransactions()
-        {
-            return View();
+            return View(DWTlist);
         }
         #endregion
     }

@@ -7,7 +7,7 @@ namespace MoneyExchangeWebApp.Models
         public int TransactionId { get; set; }
         public int StockId { get; set; }
         public string ISO { get; set; }
-        public int DepOrWith { get; set; }
+        public string DepOrWith { get; set; }
         public double Amount { get; set; }
         public string DoneBy { get; set; }
         public DateTime TransactionDate { get; set; }

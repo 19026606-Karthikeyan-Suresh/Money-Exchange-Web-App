@@ -1,4 +1,20 @@
-﻿@using MoneyExchangeWebApp.Models;
+﻿@section MoreScripts {
+   <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+   <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+   <script>
+      $(document).ready(function () {
+         $('#tDOWtable')DataTable({
+            ordering: false,
+            paging: true,
+            searching: false,
+            info: false, 
+            lengthChange: false,
+            pageLength: 5
+         });
+      });
+   </script>
+}
 @model List<DepWithTransactions>
 
     <div class="container py-sm-5">
@@ -6,11 +22,11 @@
             <div class="col-6">
                 <h2 class="text-primary">Transaction List</h2>
             </div>
-            <div class="col-6 text-end">
+@*            <div class="col-6 text-end">
                 <a asp-action="CreateConvTransaction" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i> &nbsp; Create new Transaction
                 </a>
-            </div>
+            </div>*@
     </div>
     <br/><br/>
 
@@ -19,19 +35,30 @@
                 <div class="card rounded shadow border-0">
                     <div class="card-body p-sm-10 bg-white rounded">
                         <div class="table-responsive">
-                            <table id="trtable"  class="table table-hover table-responsive" style="text-align:center">
+                            <table id="tDOWtable"  class="table table-hover table-responsive" style="text-align:center">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Transaction Type</th>
                                         <th>ISO</th>
+                                        <th>Transaction Type</th>
+                                        <th>Amount</th>
                                         <th>Done by</th>
-                                        <th>Exchange Rate</th>
                                         <th>Date</th>
-                                        <th>Created By</th>
-                                        <th>Actions</th>
                                     </tr>
-                                </thead>                                    
+                                </thead>
+                                <tbody>
+                                    @foreach(DepWithTransactions DWT in Model)
+                                    {
+                                    <tr>
+                                        <td>@DWT.TransactionId</td>
+                                        <td>@DWT.ISO</td>
+                                        <td>@DWT.DepOrWith</td>
+                                        <td>@DWT.Amount</td>
+                                        <td>@DWT.DoneBy</td>
+                                        <td>@DWT.TransactionDate.ToShortDateString()</td>
+                                    </tr>
+                                    }
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -39,7 +66,3 @@
             </div>
         </div>
     </div>
-
-    @section Scripts{
-    <script src="~/js/ConvTransaction.js"></script>
-}

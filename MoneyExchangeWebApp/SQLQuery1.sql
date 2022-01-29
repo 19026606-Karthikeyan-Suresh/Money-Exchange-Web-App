@@ -359,7 +359,7 @@ CREATE TABLE DepWithTransactions(
 	TransactionId	INT				IDENTITY PRIMARY KEY,
 	StockId			INT				NOT NULL,
 	ISO				VARCHAR(3)		NOT NULL,
-	DepOrWith		BIT				NOT NULL,
+	DepOrWith		VARCHAR(30)		NOT NULL,
 	Amount			Float			NULL,
 	DoneBy			VARCHAR(200)	NOT NULL,
 	TransactionDate	DATETIME		NOT NULL,
@@ -371,15 +371,15 @@ CREATE TABLE DepWithTransactions(
 );
 
 INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, DoneBy, TransactionDate, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) VALUES
-(1, 'SGD', 0, 1000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(1, 'SGD', 0, 2000.00, 'k.artixc@gmail.com', '2022-01-03', null, null, 0, null, null),
-(1, 'SGD', 1, 3000.00, 'k.artixc@gmail.com', '2021-04-12', null, null, 0, null, null),
-(1, 'SGD', 0, 4000.00, 'k.artixc@gmail.com', '2021-03-14', null, null, 0, null, null),
-(1, 'SGD', 0, 1000.00, 'k.artixc@gmail.com', '2021-02-14', null, null, 0, null, null),
-(1, 'SGD', 0, 1000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(1, 'SGD', 1, 2000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(1, 'SGD', 0, 4000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(1, 'SGD', 1, 2000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(2, 'MMK', 0, 34.00, 'k.artixc@gmail.com', '2021-01-15', null, null, 0, null, null),
-(3, 'CNY', 1, 4000.00, 'k.artixc@gmail.com', '2021-01-16', null, null, 0, null, null),
-(4, 'MYR', 0, 30000.00, 'k.artixc@gmail.com', '2021-01-17', null, null, 0, null, null);
+(1, 'SGD', 'Deposit', 1000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
+(1, 'SGD', 'Deposit', 2000.00, 'k.artixc@gmail.com', '2022-01-03', null, null, 0, null, null),
+(1, 'SGD', 'Withdrawal', 3000.00, 'k.artixc@gmail.com', '2021-04-12', null, null, 0, null, null),
+(1, 'SGD', 'Deposit', 4000.00, 'k.artixc@gmail.com', '2021-03-14', null, null, 0, null, null),
+(1, 'SGD', 'Deposit', 1000.00, 'k.artixc@gmail.com', '2021-02-14', null, null, 0, null, null),
+(1, 'SGD', 'Deposit', 1000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
+(1, 'SGD', 'Withdrawal', 2000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
+(1, 'SGD', 'Deposit', 4000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
+(1, 'SGD', 'Withdrawal', 2000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
+(2, 'MMK', 'Deposit', 34.00, 'k.artixc@gmail.com', '2021-01-15', null, null, 0, null, null),
+(3, 'CNY', 'Withdrawal', 4000.00, 'k.artixc@gmail.com', '2021-01-16', null, null, 0, null, null),
+(4, 'MYR', 'Deposit', 30000.00, 'k.artixc@gmail.com', '2021-01-17', null, null, 0, null, null);
