@@ -277,7 +277,7 @@ namespace MoneyExchangeWebApp.Controllers
                     TempData["MsgType"] = "danger";
                 }
             }
-            return RedirectToAction("AllAccounts");
+            return RedirectToAction("AccountIndex");
         }
 
         #endregion

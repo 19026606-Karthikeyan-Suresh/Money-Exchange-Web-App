@@ -33,7 +33,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize(Roles ="admin")]
         public IActionResult DeletedConvTransactions()
         {
-            List<ConvTransaction> tranList = DBUtl.GetList<ConvTransaction>("SELECT * FROM Transactions WHERE Deleted='True' ORDER BY TransactionDate DESC");
+            List<ConvTransaction> tranList = DBUtl.GetList<ConvTransaction>("SELECT * FROM ConvTransactions WHERE Deleted='True' ORDER BY TransactionDate DESC");
             return View(tranList);
 
         }
@@ -198,7 +198,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize]
         public IActionResult RecoverTransaction(int id)
         {
-            string sql = @"SELECT * FROM Transactions 
+            string sql = @"SELECT * FROM ConvTransactions 
                          WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
@@ -210,10 +210,10 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE Transactions SET Deleted='False', Deletedby='null' WHERE TransactionId={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE ConvTransactions SET Deleted='False', Deletedby='null' WHERE TransactionId={0}", id));
                 if (res == 1)
                 {
-                    TempData["Message"] = "Transaction Record Recovered";
+                    TempData["Message"] = "Conversion Transaction Record Recovered";
                     TempData["MsgType"] = "success";
                 }
                 else
