@@ -96,7 +96,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
         }
         [HttpPost]
-        public IActionResult EnquireReply(Enquiry ER)
+        public IActionResult EnquiryReply(Enquiry ER)
         {
             if (!ModelState.IsValid)
             {
@@ -107,7 +107,7 @@ namespace MoneyExchangeWebApp.Controllers
             else
             {
                 string sql = @"UPDATE Enquiries
-                              SET Status='replied', Answer='{1}' ,Answered_by='{2}' WHERE Enquiry_id={0} ";
+                              SET Status='replied', Answer='{1}' ,AnsweredBy='{2}' WHERE EnquiryId={0} ";
                 string update = String.Format(sql, ER.EnquiryId, ER.Answer, User.Identity.Name);
 
                 if (DBUtl.ExecSQL(update) == 1)
@@ -120,13 +120,10 @@ namespace MoneyExchangeWebApp.Controllers
                     TempData["Message"] = DBUtl.DB_Message;
                     TempData["MsgType"] = "danger";
                 }
-                return RedirectToAction("EnquiryList");
+                return RedirectToAction("EnquiryIndex");
             }
         }
-        public IActionResult SendEmail()
-        {
-            return View();
-        }
+
         [HttpPost]
         public IActionResult SendEmail(Email e)
         {
@@ -140,7 +137,7 @@ namespace MoneyExchangeWebApp.Controllers
             {
                 ViewData["Message"] = "Email Successfully Sent";
                 ViewData["MsgType"] = "success";
-                return RedirectToAction("AllEnquiries");
+                return RedirectToAction("EnquiryIndex");
             }
             else
             {

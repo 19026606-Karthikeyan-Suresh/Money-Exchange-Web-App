@@ -42,12 +42,12 @@
                                                 <td>@item.DeletedBy</td>
                                                 <td>@item.DeletedDate.ToShortDateString()</td>
                                                 <td>
-                                                    <a asp-controller="Transaction" 
+                                                    <a asp-controller="ConvTransaction" 
                                                     asp-action="RecoverTransaction" 
                                                     asp-route-id="@item.TransactionId"><i class="fas fa-plus-circle"></i> </a>
                                                     |
-                                                    <a asp-controller="Transaction" 
-                                                    asp-action="PermanentDelete"
+                                                    <a asp-controller="ConvTransaction" 
+                                                    asp-action="PermanentDeleteConvTransaction"
                                                     asp-route-id="@item.TransactionId"
                                                     onclick="return confirm('Delete Transaction [@item.TransactionId] Permanently')"> <i class="fas fa-trash-alt"></i></a>
                                                 </td>

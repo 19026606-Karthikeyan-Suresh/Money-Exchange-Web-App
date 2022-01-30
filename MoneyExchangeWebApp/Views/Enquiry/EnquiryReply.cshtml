@@ -2,7 +2,7 @@
 
 <form method="post" 
       asp-controller="Enquiry"
-      asp-action="EnquiryReply" 
+      asp-action="EnquireReply" 
       enctype="multipart/form-data">
       
 
@@ -60,7 +60,7 @@
 
    <div class="btn-group col-sm-12 ">
    <a asp-action="EnquiryIndex" class="btn btn-outline-secondary mx-2">Back to Index</a>
-   <input type="submit" value="Send Email" class="btn btn-outline-primary mx-2"/>
+   <input type="submit" value="Send Email" asp-action="SendEmail" class="btn btn-outline-primary mx-2"/>
    </div>
 
          <div class="form-group row">
