@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,7 +9,7 @@ namespace MoneyExchangeWebApp.Models
     {
         public int AccountId { get; set; }
         [Required(ErrorMessage = "Email Address field cannot be empty!")]
-        [Remote(action: "VerifyEmail", controller: )]
+        [Remote(action: "VerifyEmail", controller: "Account")]
         public string EmailAddress { get; set; }
         [Required(ErrorMessage = "You need to set a password to log in!")]
         public string Password { get; set; }
