@@ -17,5 +17,6 @@ namespace MoneyExchangeWebApp.Models
         public string Answer { get; set; }
         public string AnsweredBy { get; set; }
         public DateTime AnswerDate { get; set; }
+     
     }
 }
