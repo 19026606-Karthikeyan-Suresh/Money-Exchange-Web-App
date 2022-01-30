@@ -21,7 +21,7 @@ CREATE TABLE Accounts(
 	Address			VARCHAR(200)	NOT NULL,
 	PhoneNumber		INT				NOT NULL,
 	Gender			VARCHAR(20)		NOT NULL,
-	DOB				DATETIME		NOT NULL,
+	DOB				DATE		    NOT NULL,
 	Role 			VARCHAR(32) 	NOT NULL,
 	DateCreated		DATETIME		NOT NULL,
 	EditedBy		VARCHAR(200)	NULL,

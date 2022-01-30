@@ -1,83 +1,167 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Data;
 
 namespace MoneyExchangeWebApp.Controllers
 {
     public class ReportController : Controller
     {
-        // GET: ReportController
-        public ActionResult Index()
+        public IActionResult TradesDashboard()
         {
             return View();
         }
 
-        // GET: ReportController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult RedirectTrades()
+        {
+            IFormCollection form = HttpContext.Request.Form;
+
+            string bestorworst = form["BestOrWorst"].ToString().Trim();
+
+            if (bestorworst.Equals("Best"))
+            {
+                return RedirectToAction("Top5Currencies");
+            }
+
+            if (bestorworst.Equals("Worst"))
+            {
+                return RedirectToAction("Worst5Currencies");
+            }
+
+            return View();
+        }
+
+        public IActionResult Top5Currencies()
+        {
+            return View();
+        }
+        public IActionResult Worst5Currencies()
+        {
+            return View();
+        }
+        public IActionResult DisplayTopCurrencies()   //need to use TOP(5) as well
+        {
+
+            IFormCollection form = HttpContext.Request.Form;
+
+            string month = form["Month"].ToString().Trim();
+
+            int apple = Int32.Parse(month);
+
+            string sql = @"SELECT TOP(5) BaseCurrency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM ConvTransactions 
+                           WHERE MONTH(TransactionDate) = {0}
+                           GROUP BY BaseCurrency ORDER BY 'No. of Trades' DESC ";
+
+            string select = String.Format(sql, apple);
+
+
+            DataTable dt = DBUtl.GetTable(select);
+
+            return View(dt);
+        }
+
+        public IActionResult DisplayWorstCurrencies()  //need to use TOP(5) as well
+        {
+            IFormCollection form = HttpContext.Request.Form;
+
+            string month = form["Month"].ToString().Trim();
+
+            int apple = Int32.Parse(month);
+
+            string sql = @"SELECT TOP(5) BaseCurrency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM ConvTransactions 
+                           WHERE MONTH(TransactionDate) = {0}
+                           GROUP BY BaseCurrency ORDER BY 'No. of Trades' ASC ";
+
+            string select = String.Format(sql, apple);
+
+
+            DataTable dt = DBUtl.GetTable(select);
+
+            return View(dt);
+        }
+
+
+        //Top or Worst 5 Trading Days by Month
+
+        public IActionResult DaysDashboard()
         {
             return View();
         }
 
-        // GET: ReportController/Create
-        public ActionResult Create()
+        public IActionResult RedirectDays()
+        {
+            IFormCollection form = HttpContext.Request.Form;
+
+            string bestorworst = form["BestOrWorst"].ToString().Trim();
+
+            if (bestorworst.Equals("Best"))
+            {
+                return RedirectToAction("TopDays");
+            }
+
+            if (bestorworst.Equals("Worst"))
+            {
+                return RedirectToAction("WorstDays");
+            }
+
+            return View();
+        }
+
+        public IActionResult TopDays()
         {
             return View();
         }
 
-        // POST: ReportController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ReportController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult WorstDays()
         {
             return View();
         }
 
-        // POST: ReportController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult DisplayTopDays()
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            IFormCollection form = HttpContext.Request.Form;
+
+            string month = form["Month"].ToString().Trim();
+
+            int apple = Int32.Parse(month);
+
+            string sql = @"SELECT TOP(5) TransactionDate AS 'Day', COUNT(TransactionId) AS 'No. of Trades'
+                           FROM ConvTransactions
+                          WHERE MONTH(TransactionDate) = {0}
+                          GROUP BY TransactionDate ORDER BY 'No. of Trades' DESC";
+
+
+            string select = String.Format(sql, apple);
+
+
+            DataTable dt = DBUtl.GetTable(select);
+
+            return View(dt);
         }
 
-        // GET: ReportController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult DisplayWorstDays()
         {
-            return View();
+            IFormCollection form = HttpContext.Request.Form;
+
+            string month = form["Month"].ToString().Trim();
+
+            int apple = Int32.Parse(month);
+
+            string sql = @"SELECT TOP(5) TransactionDate AS 'Day', COUNT(TransactionId) AS 'No. of Trades'
+                           FROM ConvTransactions
+                          WHERE MONTH(TransactionDate) = {0}
+                          GROUP BY TransactionDate ORDER BY 'No. of Trades' ASC";
+
+
+            string select = String.Format(sql, apple);
+
+
+            DataTable dt = DBUtl.GetTable(select);
+
+            return View(dt);
         }
 
-        // POST: ReportController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+
+
     }
 }

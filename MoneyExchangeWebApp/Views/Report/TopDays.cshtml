@@ -5,17 +5,13 @@
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Worst 5 Currencies</h2>
+            <h2 class="text-primary">Top 5 Trading Days</h2>
         </div>
 
-        <form method="post" asp-controller="Currency" asp-action="DisplayWorstCurrencies">
+        <form method="post" asp-controller="Report" asp-action="DisplayTopDays">
 
-            <div class="col-sm-6">
-        @*<select class="form-control row mb-3" name="BestOrWorst" id="BestOrWorst">
-                <option value="">-- Select One</option>
-                <option value="Best">Top 5</option>
-                <option value="Worst">Worst 5</option>
-        </select>*@
+        <div class="col-sm-6">
+        
         <select class="form-control row mb-3" name="Month" id="Month">
                 <option value="">--Month--</option>
                 <option value=1>January</option>
@@ -33,7 +29,7 @@
         </select>
         <div class="col-sm-6">
            <input type="submit" id="btn" value="Submit" class="form-control row" 
-            asp-controller="Currency" asp-action="DisplayWorstCurrencies"/>
+            asp-controller="Report" asp-action="DisplayTopDays"/>
       </div>
       </div>
       

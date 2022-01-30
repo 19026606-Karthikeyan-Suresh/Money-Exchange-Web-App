@@ -422,7 +422,6 @@ namespace MoneyExchangeWebApp.Controllers
         }
         public IActionResult RegisterPost(Account A)
         {
-
             if (!ModelState.IsValid)
             {
                 ViewData["Message"] = "Invalid Input";
@@ -433,29 +432,34 @@ namespace MoneyExchangeWebApp.Controllers
             {
                 string sql = @"INSERT INTO Accounts (EmailAddress, Password, FirstName, LastName, Address, PhoneNumber,
                                Gender, DOB, Role, DateCreated, EditedBy, EditedDate, Deleted, DeletedBy, DateDeleted) 
-                               VALUES('{0}', HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', 
-                               '{9:yyyy-MM-dd}', '{10}', '{11:yyyy-MM-dd}', {12}, '{13}', '{14:yyyy-MM-dd}'";
-
+                               VALUES('{0}', HASHBYTES('SHA1', '{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', 
+                               '{9:yyyy-MM-dd hh:mm:ss}', '{10}', '{11:yyyy-MM-dd hh:mm:ss}', {12}, '{13}', '{14:yyyy-MM-dd hh:mm:ss}')";
 
 
                 string insert = String.Format(sql, A.EmailAddress.EscQuote(), A.Password.EscQuote(), A.FirstName.EscQuote(),
-                    A.LastName.EscQuote(), A.Address.EscQuote(), A.PhoneNumber, A.Gender.EscQuote(), A.DOB, "user", 
-                      A.DateCreated, null, null, 0, null, null);
+                    A.LastName.EscQuote(), A.Address.EscQuote(), A.PhoneNumber, A.Gender.EscQuote(), A.DOB, "user",
+                      DateTime.Now, null, null, 0, null, DBNull.Value);
 
 
                 if (DBUtl.ExecSQL(insert) == 1)
                 {
-                    TempData["Message"] = "Accounts Updated";
-                    TempData["MsgType"] = "success";
+                    ViewData["Message"] = "Account added!";
+                    ViewData["MsgType"] = "success";
                 }
                 else
                 {
-                    TempData["Message"] = DBUtl.DB_Message;
-                    TempData["MsgType"] = "danger";
+                    ViewData["Message"] = DBUtl.DB_Message;
+                    ViewData["MsgType"] = "danger";
                 }
-                return RedirectToAction("_Login");
+                return View("Register");
             }
-            #endregion
+        }
+        #endregion
+
+        #region Verify Email
+        public IActionResult VerifyEmail()
+        {
+            return View();
         }
     }
 }
