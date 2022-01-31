@@ -2,7 +2,7 @@
 
 <form method="post" 
       asp-controller="Enquiry"
-      asp-action="EnquireReply" 
+      asp-action="EnquiryReply" 
       enctype="multipart/form-data">
       
 
@@ -12,7 +12,7 @@
       </div>
       <hr />
 
-   <input type="text" asp-for="EnquiryId" hidden />
+   <input type="text" asp-for="EnquiryId" />
 
    <div class="row g-2 mb-3">
      <div class="col-md">
@@ -36,12 +36,12 @@
    </div>
 
    <div class="form-floating row g-2 mb-3">
-        <textarea readonly class="form-control" id="floatingTextarea1" asp-for="Question" style="height: 100px" disabled></textarea>
+        <textarea readonly class="form-control" id="floatingTextarea1" asp-for="Question" style="height: 100px" ></textarea>
         <label for="floatingTextarea2">Question</label>
    </div>
 
-    <input type="datetime" asp-for="EnquiryDate" hidden />
-    <input type="text" asp-for="Status" hidden/>
+    <input type="datetime" asp-for="EnquiryDate" />
+    <input type="text" asp-for="Status"/>
     <hr />
 
     <div>
@@ -54,13 +54,13 @@
         <span asp-validation-for="Answer" class="text-danger"></span>
    </div>
 
-    <input asp-for="AnsweredBy" value=@User.Identity.Name hidden />
-    <input asp-for="AnswerDate" value=@DateTime.Now hidden />
+    <input asp-for="AnsweredBy" value=@User.Identity.Name />
+    <input asp-for="AnswerDate" />
 
 
    <div class="btn-group col-sm-12 ">
    <a asp-action="EnquiryIndex" class="btn btn-outline-secondary mx-2">Back to Index</a>
-   <input type="submit" value="Send Email" asp-action="SendEmail" class="btn btn-outline-primary mx-2"/>
+   <input type="submit" value="Send Email" class="btn btn-outline-primary mx-2"/>
    </div>
 
          <div class="form-group row">
@@ -82,7 +82,7 @@
       </div>
 </form>
 
-@section Scripts{
+@*@section Scripts{
   <script>
     tinymce.init({
       selector: 'textarea',
@@ -98,4 +98,4 @@
       }
     });
   </script>
-}
+}*@
