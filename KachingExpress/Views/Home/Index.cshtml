@@ -1,0 +1,42 @@
+﻿    
+@{
+    if (User.IsInRole("admin"))
+    {
+    }
+    else
+    {
+     <!-- Guest Nav -->
+    <partial name="_GuestNav" />
+    <!-- Guest Nav -->
+
+    <!-- Banner -->
+    <partial name="_Banner" />
+    <!-- Banner -->
+
+    <!-- Features -->
+    <partial name="_Features" />
+    <!-- Features -->
+
+    <!-- Exchange Rates Table & Currency Converter -->
+    <partial name="ExchangeRates" />
+    <!-- Exchange Rates Table & Currency Converter -->
+
+    <!-- FAQ Slider -->
+    <partial name="_FAQ" />
+    <!-- FAQ Slider -->
+
+    <!-- Enquire Us -->
+    <partial name="_EnquireUs" />
+    <!-- Enquire Us -->
+
+    <!-- Comapny Details & Footer -->
+    <partial name="_Footer" />
+    <!-- Comapny Details & Footer -->
+    }
+}
+    
+
+@section Scripts{
+<script src="~/js/DatatablesJS/ExchangeRates.js"></script>
+<script src="~/js/LoadSlider.js"></script>
+}
