@@ -36,7 +36,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                
+
                 string insert =
                    @"INSERT INTO Enquiries(EmailAddress, Subject, Question, EnquiryDate, Status, Answer, AnsweredBy, AnswerDate) 
                  VALUES('{0}', '{1}', '{2}','{3:yyyy-MM-dd}', '{4}', '{5}', '{6}', '{7:yyyy-MM-dd}')";
@@ -123,10 +123,10 @@ namespace MoneyExchangeWebApp.Controllers
                 return RedirectToAction("EnquiryIndex");
             }
         }*/
-/*        public IActionResult EnquireReply()
-        {
-            return View();
-        }*/
+        /*        public IActionResult EnquireReply()
+                {
+                    return View();
+                }*/
         [HttpPost]
         public IActionResult EnquiryReply(Enquiry ER)
         {
@@ -137,14 +137,14 @@ namespace MoneyExchangeWebApp.Controllers
                 return View();
             }
             else
-            { 
+            {
                 string result;
-            
+
                 if (EmailUtl.SendEmail(ER.EmailAddress, ER.Subject, ER.Answer, out result))
                 {
                     ViewData["Message"] = "Email Successfully Sent";
                     ViewData["MsgType"] = "success";
-                    
+
                     string sql = @"UPDATE Enquiries
                               SET Status='replied', Answer='{1}' ,AnsweredBy='{2}', AnswerDate='{3:yyyy-MM-dd}' WHERE EnquiryId={0} ";
                     string update = String.Format(sql, ER.EnquiryId, ER.Answer.EscQuote(), ER.AnsweredBy.EscQuote(), ER.AnswerDate);
