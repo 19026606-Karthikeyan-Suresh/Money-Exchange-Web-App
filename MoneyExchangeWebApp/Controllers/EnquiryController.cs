@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyExchangeWebApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Mail;
+using System.Security.Claims;
 
 namespace MoneyExchangeWebApp.Controllers
 {
@@ -15,17 +17,20 @@ namespace MoneyExchangeWebApp.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult FAQ()
         {
             List<FAQ> faqList = DBUtl.GetList<FAQ>("SELECT * FROM FAQ");
             return View(faqList);
         }
 
+        [AllowAnonymous]
         public IActionResult Enquire()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Enquire(Enquiry newEnquiry)
         {
@@ -39,27 +44,28 @@ namespace MoneyExchangeWebApp.Controllers
 
                 string insert =
                    @"INSERT INTO Enquiries(EmailAddress, Subject, Question, EnquiryDate, Status, Answer, AnsweredBy, AnswerDate) 
-                 VALUES('{0}', '{1}', '{2}','{3:yyyy-MM-dd}', '{4}', '{5}', '{6}', '{7:yyyy-MM-dd}')";
+                 VALUES('{0}', '{1}', '{2}','{3:yyyy-MM-dd HH:mm:ss}', '{4}', '{5}', '{6}', '{7}')";
                 string final = String.Format(insert, newEnquiry.EmailAddress.EscQuote(), newEnquiry.Subject.EscQuote(), newEnquiry.Question.EscQuote()
-                    , DateTime.Now, "pending".EscQuote(), null, null, null);
+                    , DateTime.Now, "Pending".EscQuote(), null, null, null);
 
                 int result = DBUtl.ExecSQL(final);
 
                 if (result == 1)
                 {
-                    ViewData["Message"] = "Enquiry Submitted! We will reply to you soonest as possible! Thank You!";
-                    ViewData["MsgType"] = "success";
+                    TempData["Message"] = "Enquiry Submitted! We will reply to you soonest as possible! Thank You!";
+                    TempData["MsgType"] = "success";
                 }
                 else
                 {
-                    ViewData["Message"] = DBUtl.DB_Message;
-                    ViewData["MsgType"] = "danger";
-                    ViewData["sql"] = final;
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                    //ViewData["sql"] = final;
                 }
             }
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
         public IActionResult AllFaqs()
         {
             List<FAQ> faqList = DBUtl.GetList<FAQ>("SELECT * FROM FAQ");
@@ -72,12 +78,14 @@ namespace MoneyExchangeWebApp.Controllers
             return Json(new { data = enquiryList });
         }*/
 
+        [Authorize]
         public IActionResult EnquiryIndex()
         {
             List<Enquiry> enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
             return View(enquiryList);
         }
 
+        [Authorize]
         public IActionResult EnquiryReply(int id)
         {
             string sql = @"SELECT * FROM Enquiries WHERE EnquiryId={0}";
@@ -87,7 +95,7 @@ namespace MoneyExchangeWebApp.Controllers
             if (ERlist.Count == 1)
             {
                 Enquiry ER = ERlist[0];
-                if(ER.Status.Equals("Replied"))
+                if (ER.Status.Equals("Replied"))
                 {
                     ViewData["Status"] = "Replied";
                 }
@@ -136,6 +144,7 @@ namespace MoneyExchangeWebApp.Controllers
                 {
                     return View();
                 }*/
+        [Authorize]
         [HttpPost]
         public IActionResult EnquiryReply(Enquiry ER)
         {
@@ -147,36 +156,101 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                string result;
+                //string result;
 
-                if (EmailUtl.SendEmail(ER.EmailAddress, ER.Subject, ER.Answer, out result))
+                //ViewData["Email"] = ER.EmailAddress;
+                //ViewData["Subject"] = ER.Subject;
+                //ViewData["Answer"] = ER.Answer;
+                //ViewData["Status"] = "Pending";
+
+                //return View(ER);
+
+                //if (EmailUtl.SendEmail(ER.EmailAddress, ER.Subject, ER.Answer, out result))
+                //{
+                //    TempData["EmailSent"] = "Email Successfully Sent";
+
+                //    string sql = @"UPDATE Enquiries
+                //              SET Status='Replied', Answer='{1}' ,AnsweredBy='{2}', AnswerDate='{3:yyyy-MM-dd HH:mm:ss}' WHERE EnquiryId={0} ";
+                //    string update = String.Format(sql, ER.EnquiryId, ER.Answer.EscQuote(), ER.AnsweredBy.EscQuote(), DateTime.Now);
+
+                //    if (DBUtl.ExecSQL(update) == 1)
+                //    {
+                //        TempData["Message"] = "Enquiry Updated";
+                //        TempData["MsgType"] = "success";
+                //    }
+                //    else
+                //    {
+                //        TempData["Message"] = DBUtl.DB_Message;
+                //        TempData["MsgType"] = "danger";
+                //    }
+                //}
+                //else
+                //{
+                //    TempData["Message"] = result;
+                //    TempData["MsgType"] = "warning";
+
+                //}
+                //return RedirectToAction("EnquiryIndex");
+                Boolean result = SendMail(ER.EmailAddress, ER.Subject, ER.Answer);
+
+                if (result == true)
                 {
-                    ViewData["Message"] = "Email Successfully Sent";
-                    ViewData["MsgType"] = "success";
-
+                    TempData["EmailSent"] = "Email Successfully Sent";
                     string sql = @"UPDATE Enquiries
-                              SET Status='replied', Answer='{1}' ,AnsweredBy='{2}', AnswerDate='{3:yyyy-MM-dd}' WHERE EnquiryId={0} ";
-                    string update = String.Format(sql, ER.EnquiryId, ER.Answer.EscQuote(), ER.AnsweredBy.EscQuote(), ER.AnswerDate);
+                                  SET Status='Replied', Answer='{1}' ,AnsweredBy='{2}', AnswerDate='{3:yyyy-MM-dd HH:mm:ss}' WHERE EnquiryId={0} ";
+                    string update = String.Format(sql, ER.EnquiryId, ER.Answer.EscQuote(), User.FindFirstValue(ClaimTypes.NameIdentifier), DateTime.Now);
 
                     if (DBUtl.ExecSQL(update) == 1)
                     {
-                        ViewData["Message"] = "Enquiry Updated";
-                        ViewData["MsgType"] = "success";
+                        TempData["Message"] = "Enquiry Updated";
+                        TempData["MsgType"] = "success";
                     }
                     else
                     {
-                        ViewData["Message"] = DBUtl.DB_Message;
-                        ViewData["MsgType"] = "danger";
+                        TempData["Message"] = DBUtl.DB_Message;
+                        TempData["MsgType"] = "danger";
                     }
-                    return RedirectToAction("EnquiryIndex");
                 }
+
                 else
                 {
-                    ViewData["Message"] = result;
-                    ViewData["MsgType"] = "warning";
-                    return View();
-
+                    TempData["EmailSent"] = "Error Sending Email";
                 }
+                return RedirectToAction("EnquiryIndex");
+            }
+        }
+
+        private Boolean SendMail(string to, string subject, string msg)
+        {
+            string error = "";
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient smtp = new SmtpClient("smtp.outlook.com");
+
+                mail.From = new MailAddress("fypmoneyexchanger@outlook.com");
+                mail.To.Add(to);
+                mail.Subject = subject;
+                mail.Body = msg;
+
+                smtp.Port = 587;
+                smtp.Credentials = new System.Net.NetworkCredential("fypmoneyexchanger@outlook.com", "m0n3y3x!");
+                smtp.EnableSsl = true;
+
+                smtp.Send(mail);
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+
+            }
+            if (error == "")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

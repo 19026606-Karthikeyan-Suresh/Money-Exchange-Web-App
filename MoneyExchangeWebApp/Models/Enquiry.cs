@@ -12,11 +12,11 @@ namespace MoneyExchangeWebApp.Models
         public string Subject { get; set; }
         [Required(ErrorMessage = "You need to enter your question!")]
         public string Question { get; set; }
-        public DateTime EnquiryDate { get; set; } = DateTime.Now;
+        public DateTime EnquiryDate { get; set; }
         public string Status { get; set; }
         public string Answer { get; set; }
         public string AnsweredBy { get; set; }
         public DateTime AnswerDate { get; set; }
-     
+
     }
 }

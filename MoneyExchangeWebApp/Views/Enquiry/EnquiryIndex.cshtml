@@ -26,16 +26,21 @@
             { "type": "print", "buttonText": "Print me!" }
         ]
     } );
-      
+
     $( tableTools.fnContainer() ).insertAfter('div.info');
         });
     </script>
-
-    @if (TempData["Message"] != null)
+    @if (TempData["EmailSent"] != null)
 {
-   <div class="alert alert-@TempData["MsgType"]">
-      @TempData["Message"]
-   </div>
+            <div class="alert alert-success">
+        @TempData["EmailSent"]
+            </div>
+}
+@if (TempData["Message"] != null)
+{
+            <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+            </div>
 }
 
 
@@ -61,22 +66,33 @@
                             </thead>
 
                             <tbody>
-                                @foreach (Enquiry item in Model)
-                                {
-                                    <tr>
-                                        <td>@item.EnquiryId</td>
-                                        <td>@item.EmailAddress</td>
-                                        <td>@item.Subject</td>
-                                        <td>@item.Question</td>
-                                        <td>@item.EnquiryDate.ToShortDateString()</td>
-                                        <td>@item.Status</td>
-                                        <td>
-                                            <a asp-controller="Enquiry" 
+                            @foreach (Enquiry item in Model)
+                            {
+                                                <tr>
+                                                    <td>@item.EnquiryId</td>
+                                                    <td>@item.EmailAddress</td>
+                                                    <td>@item.Subject</td>
+                                                    <td>@item.Question</td>
+                                                    <td>@item.EnquiryDate.ToShortDateString()</td>
+                                                    <td>@item.Status</td>
+                                    @if (item.Status == "Replied")
+                                    {
+                                                <td>
+                                                            <a asp-controller="Enquiry" asp-action="EnquiryReply" asp-route-id="@item.EnquiryId">
+                                            <i class="bi bi-check-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="View Replied Enquiry"></i> </a>
+                                                        </td>
+                                    }
+                                    else
+                                    {
+                                                <td>
+                                                            <a asp-controller="Enquiry" 
                                             asp-action="EnquiryReply" 
                                             asp-route-id="@item.EnquiryId"><i class="bi bi-envelope-plus" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply To Enquiry"></i> </a>
-                                        </td>
-                                    </tr>
-                                }
+                                                        </td>
+                                    }
+
+                                                </tr>
+                            }
                             </tbody>
                         </table>
                         </div>
