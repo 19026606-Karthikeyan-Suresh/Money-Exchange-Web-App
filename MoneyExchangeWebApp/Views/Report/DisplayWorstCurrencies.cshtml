@@ -2,13 +2,9 @@
 @model DataTable;
 
 <div class="container">
+    <h3>Worst 5 Currencies</h3>
 
-    @if (TempData["BestorWorst"].Equals("best")) {
-        <h3>Top 5 Currencies</h3>
-    } 
-    else {
-        <h3>Worst 5 Currencies</h3>
-    }
+    
 
     @if (TempData["Message"] != null)
     {

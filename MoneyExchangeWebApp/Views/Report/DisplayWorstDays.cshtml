@@ -2,13 +2,9 @@
 @model DataTable;
 
 <div class="container">
+    <h3>Worst 5 Trading Days</h3>
 
-    @if (TempData["BestorWorst"].Equals("best")) {
-        <h3>Top 5 Days</h3>
-    } 
-    else {
-        <h3>Worst 5 Days</h3>
-    }
+    
 
     @if (TempData["Message"] != null)
     {
