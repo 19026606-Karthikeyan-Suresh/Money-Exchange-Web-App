@@ -95,8 +95,8 @@ namespace MoneyExchangeWebApp.Controllers
                 return RedirectToAction("EnquiryIndex");
             }
         }
-        /*[HttpPost]*/
-        /*public IActionResult EnquiryReply(Enquiry ER)
+        [HttpPost]
+        public IActionResult EnquiryReply(Enquiry ER)
         {
             if (!ModelState.IsValid)
             {
@@ -122,53 +122,34 @@ namespace MoneyExchangeWebApp.Controllers
                 }
                 return RedirectToAction("EnquiryIndex");
             }
-        }*/
-/*        public IActionResult EnquireReply()
+        }
+        public IActionResult EnquireReply()
         {
             return View();
-        }*/
+        }
         [HttpPost]
-        public IActionResult EnquiryReply(Enquiry ER)
+        public IActionResult EnquiryReply(Enquiry e)
         {
-            if (!ModelState.IsValid)
+
+          
+            
+            string result;
+            
+            if (EmailUtl.SendEmail(e.EmailAddress, e.Subject, e.Answer, out result))
             {
-                ViewData["Message"] = "Invalid Model";
-                ViewData["MsgType"] = "danger";
-                return View();
+                ViewData["Message"] = "Email Successfully Sent";
+                ViewData["MsgType"] = "success";
+                return RedirectToAction("EnquiryIndex");
             }
             else
-            { 
-                string result;
-            
-                if (EmailUtl.SendEmail(ER.EmailAddress, ER.Subject, ER.Answer, out result))
-                {
-                    ViewData["Message"] = "Email Successfully Sent";
-                    ViewData["MsgType"] = "success";
-                    
-                    string sql = @"UPDATE Enquiries
-                              SET Status='replied', Answer='{1}' ,AnsweredBy='{2}', AnswerDate='{3:yyyy-MM-dd}' WHERE EnquiryId={0} ";
-                    string update = String.Format(sql, ER.EnquiryId, ER.Answer.EscQuote(), ER.AnsweredBy.EscQuote(), ER.AnswerDate);
+            {
+                ViewData["Message"] = result;
+                ViewData["MsgType"] = "warning";
+                return View();
 
-                    if (DBUtl.ExecSQL(update) == 1)
-                    {
-                        ViewData["Message"] = "Enquiry Updated";
-                        ViewData["MsgType"] = "success";
-                    }
-                    else
-                    {
-                        ViewData["Message"] = DBUtl.DB_Message;
-                        ViewData["MsgType"] = "danger";
-                    }
-                    return RedirectToAction("EnquiryIndex");
-                }
-                else
-                {
-                    ViewData["Message"] = result;
-                    ViewData["MsgType"] = "warning";
-                    return View();
-
-                }
             }
+
         }
+
     }
 }
