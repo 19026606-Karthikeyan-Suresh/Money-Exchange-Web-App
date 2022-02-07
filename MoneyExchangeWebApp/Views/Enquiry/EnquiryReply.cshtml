@@ -13,7 +13,7 @@
       </div>
       <hr />
 
-   <input type="text" asp-for="EnquiryId" />
+   @*<input type="text" asp-for="EnquiryId" />*@
 
    <div class="row g-2 mb-3">
      <div class="col-md">
@@ -40,29 +40,57 @@
         <textarea readonly class="form-control" id="floatingTextarea1" asp-for="Question" style="height: 100px" ></textarea>
         <label for="floatingTextarea2">Question</label>
    </div>
-
-    <input type="datetime" asp-for="EnquiryDate" />
-    <input type="text" asp-for="Status"/>
     <hr />
 
     <div>
        <h4>Your Reply</h4>
    </div>
+   @if (ViewData["Status"].Equals("Replied"))
+   {
+       <div class="form-floating row g-2 mb-3">
+           <textarea readonly class="form-control" id="floatingTextarea2" asp-for="Answer" style="height: 100px"></textarea>
+           <label for="floatingTextarea2">Your Reply</label>
+       </div>
+       
+       <div class="row g-2 mb-3">
+           <div class="col-md">
+               <div class="form-floating">
+                   <input type="text" class="form-control" placeholder="Email Address" asp-for="AnsweredBy" readonly>
+                    <label asp-for="AnsweredBy">Answered By</label>
+               </div>
+           </div>
+           <div class="col-md">
+                <div class="form-floating">
+                    <input type="datetime" class="form-control" placeholder="Subject" asp-for="AnswerDate" readonly>
+                    <label asp-for="AnswerDate">Answer Date</label>
+                </div>
+           </div>
+       </div>
 
-   <div class="form-floating row g-2 mb-3">
+            <div class="btn-group col-sm-12 ">
+           <a asp-action="EnquiryIndex" class="btn btn-outline-secondary mx-2">Back to Index</a>
+                @{
+                    if (User.IsInRole("admin"))
+                    {
+                        <a href="mailto:" class="btn btn-outline-secondary">Send another mail</a>
+                    }
+                }
+       </div>
+    }
+    else
+    {
+        <div class="form-floating row g-2 mb-3">
         <textarea class="form-control" id="floatingTextarea2" asp-for="Answer" style="height: 100px"></textarea>
         <label for="floatingTextarea2">Your Reply</label>
         <span asp-validation-for="Answer" class="text-danger"></span>
-   </div>
+        </div>
 
-    <input asp-for="AnsweredBy" value=@User.Identity.Name />
-    <input asp-for="AnswerDate" />
-
-
-   <div class="btn-group col-sm-12 ">
-   <a asp-action="EnquiryIndex" class="btn btn-outline-secondary mx-2">Back to Index</a>
-   <input type="submit" value="Send Email" class="btn btn-outline-primary mx-2"/>
-   </div>
+       <div class="btn-group col-sm-12 ">
+           <a asp-action="EnquiryIndex" class="btn btn-outline-secondary mx-2">Back to Index</a>
+           <input type="submit" value="Send Email" class="btn btn-outline-primary mx-2"/>
+       </div>
+            
+    }
 
          <div class="form-group row">
       <div class="offset-sm-2 col-sm-6">
@@ -83,7 +111,7 @@
       </div>
 </form>
 
-@*@section Scripts{
+@section Scripts{
   <script>
     tinymce.init({
       selector: 'textarea',
@@ -99,4 +127,4 @@
       }
     });
   </script>
-}*@
+}

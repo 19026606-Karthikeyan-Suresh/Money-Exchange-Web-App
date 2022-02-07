@@ -12,20 +12,12 @@ namespace MoneyExchangeWebApp.Controllers
     public class ConvTransactionController : Controller
     {
         #region "View All ConvTransactions" - Karthik
-        [HttpGet]
-        [Authorize(Roles = "admin")]
-        public IActionResult GetAllConvTransactions()
-        {
-            string sql;
-            sql = @"SELECT * FROM ConvTransactions WHERE Deleted='False'";
-            var TRlist = DBUtl.GetList<ConvTransaction>(sql);
-            return Json(new { data = TRlist });
-        }
-
         [Authorize(Roles = "admin")]
         public IActionResult ConvTransactionIndex()
         {
-            return View();
+            string sql = @"SELECT * FROM ConvTransactions WHERE Deleted='False'";
+            List<ConvTransaction> CTRlist = DBUtl.GetList<ConvTransaction>(sql);
+            return View("ConvTransactionIndex", CTRlist);
         }
         #endregion
 

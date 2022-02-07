@@ -1,0 +1,41 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Dashboard"><b>Kaching</b>Xpress<i class="bi bi-currency-exchange"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+          <a class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dashboard
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" asp-controller="Report" asp-action="TradesDashboard"> Trades Dashboard</a></li>
+            <li><a class="dropdown-item" asp-controller="Report" asp-action="DaysDashboard"> Days Dashboard</a></li>
+          </ul>
+        </li>     
+        <li class="nav-item">
+              <a class="nav-link" asp-controller="Home" asp-action="ExchangeRates">Exchange Rates <i class="fas fa-percent"></i></a>
+        </li>
+        <li class="nav-item">
+              <a class="nav-link" asp-controller="ConvTransaction" asp-action="ConvTransactionIndex">Conversion Transactions<i class="fas fa-file-invoice-dollar"></i></a>
+        </li>
+        <li class="nav-item">
+              <a class="nav-link" asp-controller="Enquiry" asp-action="EnquiryIndex">Enquiries <i class="fas fa-inbox"></i></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav mr-auto">
+         <li class="text-white">
+               Welcome @User.Identity.Name
+         </li>
+      </ul>
+      <div class="d-flex">
+        <a class="nav-link" asp-controller="Account" asp-action="Logoff">
+                Logout
+               <i class="fas fa-sign-out-alt"></i>
+            </a>
+      </div>
+    </div>
+  </div>
+</nav>

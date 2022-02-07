@@ -1,68 +1,111 @@
-﻿    <!-- Exchange Rates -->
-    <section class="exchange-rates" id="scrollspyExchangeRates">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="exchange-rates-text-widget">
-                        <h1 class="display-4">Exchange Rates</h1>
-                        <p class="text-muted">Updated every 5 minutes</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row py-8">
-                <div class="col-sm-7 mx-auto">
-                    <div class="card rounded shadow border-0">
-                        <div class="card-body p-sm-8 bg-white rounded">
-                            <div class="table-responsive">
-                                <table id="EXtbl" class="table  table-hover table-responsive" style="text-align:left">
-                                    <thead>
-                                        <tr>
-                                            <th>Base Currency</th>
-                                            <th>Quote Currency</th>
-                                            <th>Rates (SGD$1)</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+﻿<script>
+    function Convert() {
+            var Amount = $("#Amount").val();
+            var fromCurr = $("#fromCurr").val();
+            var toCurr = $("#toCurr").val();
+            var apiUrl = "/api/HomeApi/Convert/" + fromCurr + "/" + toCurr + "/" + Amount;
+            var currConvertedAmt = $("#currConvertedAmt");
+            if (fromCurr == 0 || toCurr == 0){
+                alert("Please ensure you have picked the 2 currencies you wish to convert.");
+                return;
+            }
+            if (!$.isNumeric(Amount)){
+                alert("Please ensure Amount is a numeric number");
+                return;
+            }
+            else if (Amount < 0){
+                alert("Please ensure Amount is a positive number");
+                return;
+            }
+            else {
+                currConvertedAmt.html("");
+
+                $.getJSON(apiUrl, function (result) {
+                    currConvertedAmt.append("<h5> ≈ " + toCurr + result.toFixed(2) + "</h5>");
+                });
+            }
+
+        }
+
+        $(document).ready(function () {
+            $("#btnConvert").click(Convert);
+        })
+</script>
+<!-- Exchange Rates -->
+<section class="exchange-rates" id="scrollspyExchangeRates">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-6">
+                <div class="exchange-rates-text-widget">
+                    <h1 class="display-4">Exchange Rates</h1>
+                    <p class="text-muted">Updated every 5 minutes</p>
                 </div>
             </div>
         </div>
-    </section>
-    <!--Exchange Rates-->
-
-    <!--Currency Calculator-->
-    <section class="calculate" id="scrollspyCalc">
-        @{
-            var currList = DBUtl.GetList("SELECT QuoteCurrency FROM ExchangeRates ORDER BY QuoteCurrency");
-            ViewData["CurrencyList"] = new SelectList(currList, "QuoteCurrency", "QuoteCurrency");
-        }
         <div class="row py-8">
             <div class="col-sm-7 mx-auto">
                 <div class="card rounded shadow border-0">
                     <div class="card-body p-sm-8 bg-white rounded">
-                        <div class="container">
-                            <div class="row" style="text-align: center;">
-                                <h3 class="display-3">Currency Calculator</h3>
-                                <div class="form-group row">
-                                    <select class="form-control col-sm-3" asp-items="@((SelectList)ViewData["CurrencyList"])">
-                                        <option value="0" selected="selected"> -- SELECT --</option>
-                                    </select>
-                                    <p> to </p>
-                                    <select class="form-control col-sm-3" asp-items="@((SelectList)ViewData["CurrencyList"])">
-                                        <option value="0" selected="selected"> -- SELECT --</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="table-responsive">
+                            <table id="EXtbl" class="table  table-hover table-responsive" style="text-align:left">
+                                <thead>
+                                    <tr>
+                                        <th>Base Currency</th>
+                                        <th>Quote Currency</th>
+                                        <th>Rates (SGD$1)</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!--Currency Calculator-->
+    </div>
+</section>
+<!--Exchange Rates-->
 
+<!--Currency Calculator-->
+<section class="calculate" id="scrollspyCalc">
+    @{
+        var currList = DBUtl.GetList("SELECT QuoteCurrency FROM ExchangeRates ORDER BY QuoteCurrency");
+        ViewData["CurrencyList"] = new SelectList(currList, "QuoteCurrency", "QuoteCurrency");
+    }
+    <div class="row py-8">
+        <div class="col-sm-6 mx-auto">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-sm-8 bg-white rounded">
+                    <div class="container">
+                        <div class="row" style="text-align: center;">
+                            <h4 class="display-3">Currency Calculator</h4>
+                            <p class="text-muted">Amount follows "From" Currency, <b>NOT SGD</b></p>
+                            <br />
+                            <div class="form-group row offset-sm-3 col-sm-6">
+                                <h5 class="control-label">Amount</h5>
+                                <input class="form-control" style="text-align:center;" id="Amount" />
+                                <br />
+                                <h5> From </h5>
+                                <select class="form-control" asp-items="@((SelectList)ViewData["CurrencyList"])" style="text-align:center;" id="fromCurr">
+                                    <option value="0" selected="selected"> -- SELECT --</option>
+                                </select>
+                                <br />
+                                <h5> To </h5>
+                                <select class="form-control" asp-items="@((SelectList)ViewData["CurrencyList"])" style="text-align:center;" id="toCurr">
+                                    <option value="0" selected="selected"> -- SELECT --</option>
+                                </select>
+                                <br />
+                                <h5 id="currConvertedAmt"></h5>
+                                <button id="btnConvert" type="button" class="btn btn-primary">Convert</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Currency Calculator-->
 @section Scripts{
 <script src="~/js/DatatablesJS/ExchangeRates.js"></script>
 }
