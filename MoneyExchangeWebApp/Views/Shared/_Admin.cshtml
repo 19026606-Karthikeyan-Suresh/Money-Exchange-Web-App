@@ -39,8 +39,15 @@
         <li class="nav-item">
               <a class="nav-link" asp-controller="Enquiry" asp-action="EnquiryIndex">Enquiries <i class="fas fa-inbox"></i></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Stock" asp-action="ShowWallet">Stocks <i class="fas fa-wallet"></i></a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Stocks  <i class="fas fa-wallet"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+            <li><a class="dropdown-item" asp-controller="Stock" asp-action="ShowWallet">Stock Wallet</a></li>
+            <li><a class="dropdown-item" asp-controller="DepOrWith" asp-action="DepOrWithIndex">All Deposit/Withdrawals</a></li>
+            <li><a class="dropdown-item" asp-controller="DepOrWith" asp-action="DepOrWithIndex">Deleted Deposit/Withdrawals</a></li>
+          </ul>
         </li>
       </ul>
       <ul class="nav navbar-nav mr-auto">

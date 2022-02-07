@@ -38,7 +38,7 @@ namespace MoneyExchangeWebApp.Controllers
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult CreateConvTransaction(ConvTransaction TR)
         {

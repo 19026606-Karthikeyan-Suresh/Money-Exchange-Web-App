@@ -8,7 +8,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <form method="post" asp-controller="Wallet" asp-action="AddaCurrency">
+          <form method="post" asp-controller="Stock" asp-action="AddaCurrency">
 
           <div class="form-floating mb-3">
               <select class="form-select" asp-items="@(ViewData["Currencylist"]) as IEnumerable<SelectListItem>" asp-for="ISO">

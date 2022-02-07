@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MoneyExchangeWebApp.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MoneyExchangeWebApp.Models;
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 
 namespace MoneyExchangeWebApp.Controllers
 {
@@ -12,33 +12,14 @@ namespace MoneyExchangeWebApp.Controllers
     {
         #region Show Wallet - Karthik
         // GET: Wallet
-        [Authorize(Roles = "admin,user")]
+        [Authorize(Roles = "admin")]
         public ActionResult GetWallet()
         {
-            if (User.IsInRole("admin"))
-            {
-                var CurrenciesOwned = DBUtl.GetList<Stock>(string.Format(@"SELECT * FROM Stock WHERE AccountId=1"));
-                return Json(new { data = CurrenciesOwned });
-            }
-            else
-            {
-                string sql = @"SELECT * FROM Accounts WHERE EmailAddress='{0}'";
-                string email = User.Identity.Name;
-                List<Account> Acclist = DBUtl.GetList<Account>(string.Format(sql, email.EscQuote()));
-                if (Acclist.Count == 1)
-                {
-                    var CurrenciesOwned = DBUtl.GetList<Stock>(string.Format(@"SELECT * FROM Stock WHERE AccountId={0}", Acclist[0].AccountId));
-                    return Json(new { data = CurrenciesOwned });
-                }
-                else
-                {
-                    TempData["error"] = "You do not have a wallet!";
-                    return RedirectToAction("ExchangeRates", "Currency");
-                }
-            }
+            var CurrenciesOwned = DBUtl.GetList<Stock>(string.Format(@"SELECT * FROM Stock"));
+            return Json(new { data = CurrenciesOwned });
         }
 
-        [Authorize(Roles = "admin,user")]
+        [Authorize(Roles = "admin")]
         public IActionResult ShowWallet(int id)
         {
             var Clist = DBUtl.GetList("SELECT QuoteCurrency FROM ExchangeRates ORDER BY QuoteCurrency");
@@ -48,114 +29,70 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region Add a Currency - Karthik
-        [Authorize(Roles = "admin,user")]
+        [Authorize(Roles = "admin")]
         public IActionResult AddaCurrency(Stock s)
         {
             var Clist = DBUtl.GetList("SELECT QuoteCurrency FROM ExchangeRates ORDER BY QuoteCurrency");
             ViewData["Currencylist"] = new SelectList(Clist, "QuoteCurrency", "QuoteCurrency");
 
-            string StocksOwnedSql = @"SELECT * FROM Stock WHERE AccountId={0} AND ISO='{1}'";
+            string StocksOwnedSql = @"SELECT * FROM Stock WHERE ISO='{0}'";
             string updateSql = @"UPDATE Stock SET Amount={0} WHERE StockId={1}";
-            string InsertSql = @"INSERT INTO Stock(AccountId, ISO, Amount) VALUES({0}, '{1}', {2})";
-            if (User.IsInRole("admin"))
+            string InsertSql = @"INSERT INTO Stock(ISO, Amount) VALUES('{0}', {1})";
+            string AddIntoDep = @"INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, TransactionDate, Deleted) VALUES({0}, '{1}', 'Deposit', {2}, '{3: yyyy-MM-dd hh:mm:ss}', 0)";
+            List<Stock> Slist = DBUtl.GetList<Stock>(String.Format(StocksOwnedSql, s.ISO.EscQuote()));
+            if (Slist.Count == 1)
             {
-                List<Stock> Slist = DBUtl.GetList<Stock>(String.Format(StocksOwnedSql, 1, s.ISO.EscQuote()));
-                if (Slist.Count == 1)
+                Stock s1 = Slist[0];
+                double amt = s.Amount + s1.Amount;
+                int res = DBUtl.ExecSQL(String.Format(updateSql, amt, s1.StockId));
+                int res2 = DBUtl.ExecSQL(String.Format(AddIntoDep, s1.StockId, s1.ISO, s1.Amount, DateTime.Now));
+                if (res == 1 && res2 == 1)
                 {
-                    double amt = s.Amount + Slist[0].Amount;
-                    int res = DBUtl.ExecSQL(String.Format(updateSql, amt, Slist[0].StockId));
-                    if (res == 1)
-                    {
-                        ViewData["Message"] = "Amount has been Updated!";
-                        ViewData["MsgType"] = "success";
-                        return View("ShowWallet");
-                    }
-                    else
-                    {
-                        ViewData["Message"] = "Amount not updated in Database!";
-                        ViewData["MsgType"] = "danger";
-                        return View();
-                    }
+                    ViewData["Message"] = "Amount has been Updated!";
+                    ViewData["MsgType"] = "success";
+                    return View("ShowWallet");
                 }
                 else
                 {
-                    int res = DBUtl.ExecSQL(String.Format(InsertSql, 1, s.ISO.EscQuote(), s.Amount));
-                    if (res == 1)
+                    ViewData["Message"] = "Amount not updated in Database!";
+                    ViewData["MsgType"] = "danger";
+                    return View();
+                }
+            }
+            else
+            {
+                int res = DBUtl.ExecSQL(String.Format(InsertSql, s.ISO.EscQuote(), s.Amount));
+                if (res == 1)
+                {
+                    string sql = @"SELECT * FROM Stock WHERE ISO='{0}'";
+                    List<Stock> sl = DBUtl.GetList<Stock>(String.Format(sql, s.ISO.EscQuote()));
+                    if (sl.Count == 1)
                     {
+                        Stock s1 = sl[0];
+                        int res2 = DBUtl.ExecSQL(String.Format(AddIntoDep, s1.StockId, s1.ISO, s1.Amount, DateTime.Now));
                         ViewData["Message"] = "Currency Added!";
                         ViewData["MsgType"] = "success";
                         return View("ShowWallet");
                     }
                     else
                     {
-                        ViewData["Message"] = "Currency Not Added to Database!";
-                        ViewData["MsgType"] = "danger";
+                        ViewData["Message"] = DBUtl.DB_Message;
+                        ViewData["MsgType"] = "warning";
                         return View();
                     }
                 }
-            }
-            else
-            {
-                string email = User.Identity.Name;
-                if (string.IsNullOrEmpty(email))
-                {
-                    ViewData["Message"] = "You do not have a wallet!";
-                    ViewData["MsgType"] = "danger";
-                    return View("ShowWallet");
-                }
                 else
                 {
-                    List<Account> Alist = DBUtl.GetList<Account>(String.Format(@"SELECT * FROM Accounts WHERE EmailAddress='{0}'", email.EscQuote()));
-                    if (Alist.Count == 1)
-                    {
-                        int AccId = Alist[0].AccountId;
-                        List<Stock> Slist = DBUtl.GetList<Stock>(String.Format(StocksOwnedSql, AccId, s.ISO.EscQuote()));
-                        if (Slist.Count == 1)
-                        {
-                            double amt = s.Amount + Slist[0].Amount;
-                            int res = DBUtl.ExecSQL(String.Format(updateSql, amt, Slist[0].StockId));
-                            if (res == 1)
-                            {
-                                ViewData["Message"] = "Amount has been Updated!";
-                                ViewData["MsgType"] = "success";
-                                return View("ShowWallet");
-                            }
-                            else
-                            {
-                                ViewData["Message"] = "Amount not updated in Database!";
-                                ViewData["MsgType"] = "danger";
-                                return View();
-                            }
-                        }
-                        else
-                        {
-                            int res = DBUtl.ExecSQL(String.Format(InsertSql, AccId, s.ISO.EscQuote(), s.Amount));
-                            if (res == 1)
-                            {
-                                ViewData["Message"] = "Currency Added!";
-                                ViewData["MsgType"] = "success";
-                                return View("ShowWallet");
-                            }
-                            else
-                            {
-                                ViewData["Message"] = "Currency Not Added to Database!";
-                                ViewData["MsgType"] = "danger";
-                                return View();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        ViewData["Message"] = "Your Account does not exist!";
-                        ViewData["MsgType"] = "danger";
-                        return View("ShowWallet");
-                    }
+                    ViewData["Message"] = "Currency Not Added to Database!";
+                    ViewData["MsgType"] = "danger";
+                    return View();
                 }
             }
         }
         #endregion
 
         #region Deposit Currency - Karthik
+        [Authorize(Roles = "admin")]
         public IActionResult DepositIntoWallet(int id)
         {
             string sql = @"SELECT * FROM Stock WHERE StockId={0}";
@@ -173,6 +110,7 @@ namespace MoneyExchangeWebApp.Controllers
 
         }
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult DepositIntoWallet(Stock s)
         {
             if (!ModelState.IsValid)
@@ -193,20 +131,34 @@ namespace MoneyExchangeWebApp.Controllers
                     int res = DBUtl.ExecSQL(String.Format(updateSql, amt, s.StockId));
                     if (res == 1)
                     {
-                        ViewData["Message"] = "Amount has been successfully deposited!";
-                        ViewData["MsgType"] = "success";
-                        return View("ShowWallet");
+                        string AddIntoDep = @"INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, TransactionDate, Deleted) 
+                                            VALUES({0}, '{1}', 'Deposit', {2}, '{3: yyyy-MM-dd hh:mm:ss}', 0)";
+                        int res1 = DBUtl.ExecSQL(AddIntoDep, s.StockId, s.ISO, myDeposit, DateTime.Now);
+                        if (res1 == 1)
+                        {
+                            ViewData["Message"] = "Amount has been successfully deposited!";
+                            ViewData["MsgType"] = "success";
+                            return View("ShowWallet");
+                        }
+                        else
+                        {
+                            ViewData["Message"] = DBUtl.DB_Message;
+                            ViewData["MsgType"] = "danger";
+                            return View();
+                        }
                     }
                     else
                     {
-                        ViewData["Message"] = s.StockId;
+                        ViewData["Message"] = "Cannot update stock";
                         ViewData["MsgType"] = "danger";
                         return View();
                     }
                 }
                 else
                 {
-                    return NotFound();
+                    ViewData["Message"] = "You don't possses this stock";
+                    ViewData["MsgType"] = "warning";
+                    return View("ShowWallet");
                 }
 
             }
