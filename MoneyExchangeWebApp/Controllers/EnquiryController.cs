@@ -86,14 +86,6 @@ namespace MoneyExchangeWebApp.Controllers
             if (ERlist.Count == 1)
             {
                 Enquiry ER = ERlist[0];
-                if(ER.Status.Equals("Replied"))
-                {
-                    ViewData["Status"] = "Replied";
-                }
-                else
-                {
-                    ViewData["Status"] = "Pending";
-                }
                 return View(ER);
             }
             else
