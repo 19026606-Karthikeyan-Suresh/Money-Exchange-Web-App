@@ -95,8 +95,8 @@ namespace MoneyExchangeWebApp.Controllers
                 return RedirectToAction("EnquiryIndex");
             }
         }
-        [HttpPost]
-        public IActionResult EnquiryReply(Enquiry ER)
+        /*[HttpPost]*/
+        /*public IActionResult EnquiryReply(Enquiry ER)
         {
             if (!ModelState.IsValid)
             {
@@ -122,34 +122,53 @@ namespace MoneyExchangeWebApp.Controllers
                 }
                 return RedirectToAction("EnquiryIndex");
             }
-        }
-        public IActionResult EnquireReply()
+        }*/
+/*        public IActionResult EnquireReply()
         {
             return View();
-        }
+        }*/
         [HttpPost]
-        public IActionResult EnquiryReply(Enquiry e)
+        public IActionResult EnquiryReply(Enquiry ER)
         {
-
-          
-            
-            string result;
-            
-            if (EmailUtl.SendEmail(e.EmailAddress, e.Subject, e.Answer, out result))
+            if (!ModelState.IsValid)
             {
-                ViewData["Message"] = "Email Successfully Sent";
-                ViewData["MsgType"] = "success";
-                return RedirectToAction("EnquiryIndex");
+                ViewData["Message"] = "Invalid Model";
+                ViewData["MsgType"] = "danger";
+                return View();
             }
             else
-            {
-                ViewData["Message"] = result;
-                ViewData["MsgType"] = "warning";
-                return View();
+            { 
+                string result;
+            
+                if (EmailUtl.SendEmail(ER.EmailAddress, ER.Subject, ER.Answer, out result))
+                {
+                    ViewData["Message"] = "Email Successfully Sent";
+                    ViewData["MsgType"] = "success";
+                    
+                    string sql = @"UPDATE Enquiries
+                              SET Status='replied', Answer='{1}' ,AnsweredBy='{2}', AnswerDate='{3:yyyy-MM-dd}' WHERE EnquiryId={0} ";
+                    string update = String.Format(sql, ER.EnquiryId, ER.Answer.EscQuote(), ER.AnsweredBy.EscQuote(), ER.AnswerDate);
 
+                    if (DBUtl.ExecSQL(update) == 1)
+                    {
+                        ViewData["Message"] = "Enquiry Updated";
+                        ViewData["MsgType"] = "success";
+                    }
+                    else
+                    {
+                        ViewData["Message"] = DBUtl.DB_Message;
+                        ViewData["MsgType"] = "danger";
+                    }
+                    return RedirectToAction("EnquiryIndex");
+                }
+                else
+                {
+                    ViewData["Message"] = result;
+                    ViewData["MsgType"] = "warning";
+                    return View();
+
+                }
             }
-
         }
-
     }
 }
