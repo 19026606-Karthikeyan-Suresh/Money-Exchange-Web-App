@@ -1,78 +1,69 @@
 ﻿@model MoneyExchangeWebApp.Models.ConvTransaction;
-        @{
-            var currList = DBUtl.GetList("SELECT QuoteCurrency FROM ExchangeRates ORDER BY QuoteCurrency");
-            ViewData["CurrencyList"] = new SelectList(currList, "QuoteCurrency", "QuoteCurrency");
-        }
 
-      <div class="container-fluid">
-            <form action="" class="border border-dark p-3 mt-5">
-              <h1>Create Currency Transaction</h1>
-              <br>
-              <div class="row g-2 mb-3">
-                <div class="col-md col-sm">
-                    <div class="form-floating form-floating-sm">
-                         <select class="form-control col-sm-3" id="BaseCurrencyLabel" asp-items="@((SelectList)ViewData["CurrencyList"])">
-                            <option value="0" selected="selected"> -- SELECT --</option>
-                        </select>
-                        <label for="BaseCurrencyLabel">Base Currency</label>
-                    </div>
-                </div>
-                <div class="col-md col-sm">
-                    <div class="form-floating form-floating-sm">
-                        <input type="number" class="form-control" id="BaseValue" placeholder="100.00">
-                        <label for="BaseValue">Base Value</label>
-                    </div>
-                </div>
-             </div>
+<form method="post"
+      asp-controller="ConvTransaction"
+      asp-action ="CreateConvTransaction">
 
-             <div class="row g-2">
-                 <div class="col-md col-sm">
-                     <div class="form-floating form-floating-sm">
-                         <select class="form-control col-sm-3" id="QuoteCurrencyLabel" asp-items="@((SelectList)ViewData["CurrencyList"])">
-                            <option value="0" selected="selected"> -- SELECT --</option>
-                        </select>
-                        <label for="QuoteCurrencyLabel">Quote Currency</label>
-                        </div>
-                    </div>
-                    <div class="col-md col-sm">
-                        <div class="form-floating form-floating-sm">
-                            <input type="number" class="form-control text-white" id="QuoteValue" placeholder="100.00" value="1000"readonly style="background-color: rgb(196, 158, 158);">
-                            <label for="QuoteValue">Quote Value</label>
-                            <p class="text-muted" style="font-size: 12px;">Will be automatically populated once the input fields are selected</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                   <div class="col-md col-sm">
-                       <div class="form-floating form-floating-sm">
-                           <input type="number" class="form-control text-white" id="ExchangeRate" readonly style="background-color: rgb(196, 158, 158);">
-                           <label for="ExchangeRate">Exchange Rate</label>
-                           <p class="text-muted" style="font-size: 12px;">enter base currency, quote currency and base amount for exchange rate to appear</p>
-                       </div>
-                   </div>
-               </div>
-               <div class="row g-2">
-                    <div class="col-md col-sm">
-                        <div class="form-floating form-floating-sm">
-                            <input type="datetime" class="form-control text-white" id="DateTime" value="@DateTime.Now" style="background-color: rgb(196, 158, 158);">
-                            <label for="DateTime">Date</label>
-                            <p class="text-muted" style="font-size: 12px;">Cannot be changed</p>
-                        </div>
-                    </div>
-                    <div class="col-md col-sm">
-                       <div class="form-floating form-floating-sm">
-                           <input type="text" class="form-control text-white" id="UserIdentity" value=@User.Identity.Name  readonly style="background-color: rgb(196, 158, 158);">
-                           <label for="UserIdentity">Doneby</label>
-                           <p class="text-muted" style="font-size: 12px;">Person who is creating the transaction</p>
-                       </div>
-                   </div>
-               </div>
-               <div class="btn-group col-sm-12 ">
-                <a asp-action="ConvTransactionIndex" class="btn btn-outline-secondary mx-2">Back to Index</a>
-                <input type="submit" value="Create Transaction" class="btn btn-primary mx-2"/>
-              </div>
-            </form>
+   <div class="form-group row">
+      <div class="offset-sm-3 col-sm-6">
+         <h2>Create a Transaction</h2>
       </div>
+   </div>
+
+   <div class ="form-floating mb-3 row-cols-2">
+       <input type="text" class="form-control" id="SourceInput" placeholder="SGD" asp-for="BaseCurrency">
+       <label for="SourceInput">Base: </label>
+       <span asp-validation-for="BaseCurrency" class="text-danger"></span>
+   </div>
+
+   <div class="form-floating mb-3 row-cols-5">
+       <input type="text" class="form-control" id="SourceAmount" placeholder="SGD" asp-for="BaseAmount">
+       <label for="SourceInput">Source Amount</label>
+       <span asp-validation-for="BaseAmount" class="text-danger"></span>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="QuoteCurrency">Quote : </label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="QuoteCurrency" class="form-control" />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="ExchangeRate">Exchange Rate: </label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="ExchangeRate" class="form-control" />
+      </div>
+   </div>
+
+      <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="QuoteAmount">Converted Value: </label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="QuoteAmount" class="form-control" />
+      </div>
+   </div>
+
+  <div class="form-group row">
+      <label class="control-label offset-sm-1 col-sm-2" asp-for="TransactionDate">Transaction Date: </label>
+      <div class="col-sm-6">
+         <input type="text" asp-for="TransactionDate" class="form-control" placeholder="YYYY-MM-DD" />
+      </div>
+   </div>
+
+   <input asp-for="DoneBy" value=@User.Identity.Name hidden/>
+
+   <div class="form-group row">
+      <div class="offset-sm-3 col-sm-6">
+         <input type="submit" value="Create" class="btn btn-primary" />
+      </div>
+   </div>
+
+   <div class="form-group row">
+      <div class="offset-sm-2 col-sm-6">
+         <div asp-validation-summary="All" class="text-danger"></div>
+      </div>
+   </div>
+</form>
 
    @if (ViewData["Message"] != null)
    {
