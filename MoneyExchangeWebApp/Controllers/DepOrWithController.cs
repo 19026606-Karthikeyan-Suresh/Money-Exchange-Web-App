@@ -45,58 +45,96 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize(Roles ="admin")]
         public IActionResult SoftDeleteDepOrWith(int id)
         {
-            int res = DBUtl.ExecSQL(String.Format(@"UPDATE SET Deleted=1, DeletedDate='{1:yyyy-MM-dd hh:mm:ss}' WHERE TransactionId={0}", id, DateTime.Now));
-            if(res == 1)
+            string sql = @"SELECT * FROM DepWithTransactions WHERE TransactionId={0}";
+            string select = String.Format(sql, id);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count != 1)
             {
-                ViewData["Message"] = "Transaction successfully deleted";
-                ViewData["MsgType"] = "success";
-                return View();
+                TempData["Message"] = "Transaction Record does not exist";
+                TempData["MsgType"] = "warning";
+
             }
             else
             {
-                ViewData["Message"] = "Transaction could not be deleted";
-                ViewData["MsgType"] = "danger";
-                return View();
+                int res = DBUtl.ExecSQL(String.Format("UPDATE DepWithTransactions SET Deleted='True',DeletedDate='{1:yyyy-MM-dd}' WHERE TransactionId={0}", id, DateTime.Now));
+                if(res == 1)
+                {
+                    ViewData["Message"] = "Transaction successfully deleted";
+                    ViewData["MsgType"] = "success";
+                }
+                else
+                {
+                    ViewData["Message"] = "Transaction could not be deleted";
+                    ViewData["MsgType"] = "danger";
+                }
+
             }
-        
+            return RedirectToAction("DepOrWithIndex");
+
         }
         #endregion
 
         #region Recover Deleted DepOrWith Transaction - Karthik
         public IActionResult RecoverDepOrWith(int id)
         {
-            int res = DBUtl.ExecSQL(String.Format(@"UPDATE SET Deleted=0, DeletedDate=null WHERE TransactionId={0}", id));
-            if (res == 1)
+            string sql = @"SELECT * FROM DepWithTransactions WHERE TransactionId={0}";
+            string select = String.Format(sql, id);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count != 1)
             {
-                ViewData["Message"] = "Transaction successfully recovered";
-                ViewData["MsgType"] = "success";
-                return View();
+                TempData["Message"] = "Transaction Record does not exist";
+                TempData["MsgType"] = "warning";
+
             }
             else
             {
-                ViewData["Message"] = "Transaction could not be recovered";
-                ViewData["MsgType"] = "danger";
-                return View();
+                int res = DBUtl.ExecSQL(String.Format(@"UPDATE DepWithTransactions SET Deleted='False', DeletedDate=null WHERE TransactionId={0}", id));
+                if (res == 1)
+                {
+                    ViewData["Message"] = "Transaction successfully recovered";
+                    ViewData["MsgType"] = "success";
+                    return View();
+                }
+                else
+                {
+                    ViewData["Message"] = "Transaction could not be recovered";
+                    ViewData["MsgType"] = "danger";
+                    return View();
+                }
             }
+            return RedirectToAction("DeletedDepOrWithIndex");
         }
         #endregion
 
         #region Permanent Delete DepOrWith Transaction - Karthik
         public IActionResult PermanentDeleteDepOrWith(int id)
         {
-            int res = DBUtl.ExecSQL(String.Format(@"DELETE * FROM DepWithTransactions WHERE TransactionId={0}", id));
-            if (res == 1)
+            string sql = @"SELECT * FROM DepWithTransactions WHERE TransactionId={0}";
+            string select = String.Format(sql, id);
+            DataTable ds = DBUtl.GetTable(select);
+            if (ds.Rows.Count != 1)
             {
-                ViewData["Message"] = "Transaction successfully deleted permanently";
-                ViewData["MsgType"] = "success";
-                return View();
+                TempData["Message"] = "Transaction Record does not exist";
+                TempData["MsgType"] = "warning";
+
             }
             else
             {
-                ViewData["Message"] = "Transaction could not be deleted permanently";
-                ViewData["MsgType"] = "danger";
-                return View();
+                int res = DBUtl.ExecSQL(String.Format(@"DELETE * FROM DepWithTransactions WHERE TransactionId={0}", id));
+                if (res == 1)
+                {
+                    ViewData["Message"] = "Transaction successfully deleted permanently";
+                    ViewData["MsgType"] = "success";
+                    return View();
+                }
+                else
+                {
+                    ViewData["Message"] = "Transaction could not be deleted permanently";
+                    ViewData["MsgType"] = "danger";
+                    return View();
+                }
             }
+            return RedirectToAction("DeletedDepOrWithIndex");
         }
         #endregion
     }

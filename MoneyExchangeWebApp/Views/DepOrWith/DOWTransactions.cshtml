@@ -21,14 +21,9 @@
     <div class="container py-sm-5">
         <div class="row pt-4">
             <div class="col-6">
-                <h2 class="text-primary">Transaction List</h2>
+                <h2 class="text-dark text-center display-2">Transaction List</h2>
             </div>
-@*            <div class="col-6 text-end">
-                <a asp-action="CreateConvTransaction" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> &nbsp; Create new Transaction
-                </a>
-            </div>*@
-    </div>
+        </div>
     <br/><br/>
 
         <div class="row py-5">
@@ -56,6 +51,11 @@
                                         <td>@DWT.DepOrWith</td>
                                         <td>@DWT.Amount</td>
                                         <td>@DWT.TransactionDate.ToShortDateString()</td>
+                                        <td>
+                                            <a asp-controller="DepOrWith" 
+                                                asp-action="SoftDeleteDepOrWith" 
+                                                asp-route-id="@DWT.TransactionId"><i class="fas fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Soft Delete Transaction"></i></a>
+                                        </td>
                                     </tr>
                                     }
                                 </tbody>
@@ -66,3 +66,10 @@
             </div>
         </div>
     </div>
+
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+</script>

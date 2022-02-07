@@ -23,7 +23,7 @@
     <div class="container py-sm-5">
         <div class="row pt-4 justify-content-center" >
             <div>
-                <h2 class="text-dark display-1 text-center">All Deposit/Withdrawal Transactions</h2>
+                <h2 class="text-dark display-2 text-center">Deleted Deposit/Withdrawal Transactions</h2>
             </div>
     </div>
     <br/><br/>
@@ -59,6 +59,7 @@
                                                 <a asp-controller="DepOrWith" 
                                                     asp-action="PermanentDeleteDepOrWith" 
                                                     asp-route-id="@item.TransactionId"><i class="fas fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Transaction Permanently"></i></a>
+                                                    |
                                                     <a asp-controller="DepOrWith" 
                                                     asp-action="RecoverDepOrWith" 
                                                     asp-route-id="@item.TransactionId"><i class="fas fa-plus-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Recover Transaction"></i></a>

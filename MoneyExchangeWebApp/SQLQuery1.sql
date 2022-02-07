@@ -32,10 +32,10 @@ CREATE TABLE Accounts(
 );
 
 INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, PhoneNumber, Gender, DOB, Role, DateCreated, EditedBy, EditedDate, Deleted, DeletedBy, DateDeleted) VALUES 
-('k.artixc@gmail.com', HASHBYTES('SHA1', 'password3'), 'Karthikeyan', 'Suresh', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-06-14','admin','2015-05-04',null,null, 0, null, null),
-('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'), 'Kaiwen', 'Huang', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin','2013-05-02',null,null, 0, null, null),
-('Tengyik1763@gmail.com', HASHBYTES('SHA1', 'password3'), 'Yik', 'Teng', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-01-19', 'admin','2019-05-04',null,null,0 , null, null),
-('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'), 'Jasper', 'Mak Jun Wai', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','admin', '2019-05-04' ,null,null,0 , null, null),
+('k.artixc@gmail.com', HASHBYTES('SHA1', 'password3'),  'Karthikeyan', 'Suresh', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-06-14','admin','2015-05-04',null,null, 0, null, null),
+('kaiwen4399@gmail.com', HASHBYTES('SHA1', 'password2'),  'Kaiwen', 'Huang', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2000-01-15', 'admin','2013-05-02',null,null, 0, null, null),
+('Tengyik1763@gmail.com', HASHBYTES('SHA1', 'password3'),  'Yik', 'Teng', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','2002-01-19', 'admin','2019-05-04',null,null,0 , null, null),
+('19007578@myrp.edu.sg', HASHBYTES('SHA1', 'password4'),  'Jasper', 'Mak Jun Wai', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','admin', '2019-05-04' ,null,null,0 , null, null),
 ('john123@gmail.com', HASHBYTES('SHA1', 'password1'), 'John', 'gino', 'Blk 35 Mandalay Road # 13–37 Mandalay Towers Singapore 308215','87687908','Male','1999-01-12','staff', '2012-08-12',null,null,0, null, null),
 ('DummyUser1@myrp.edu.sg', HASHBYTES('SHA1', 'password5'), 'Jaden', ' Wai', '21C Tanjong Pagar International', '87689013', 'Male','1999-01-12', 'user','2022-01-03' ,null,null,0, null, null),
 ('DummyUser2@myrp.edu.sg', HASHBYTES('SHA1', 'password6'), 'Mark', ' Haedrig', '19D Tanjong Pagar International', '87680987', 'Male','2000-04-05', 'user', '2021-07-05' ,null,null,0, null, null),
@@ -67,15 +67,12 @@ CREATE TABLE FAQ(
 	FaqId			INT	 			IDENTITY PRIMARY KEY,
 	Question 		VARCHAR(200)	NOT NULL,
 	Answer			VARCHAR(200) 	NOT NULL,
-    CreatedBy		VARCHAR(32)  	NOT NULL,
-	Deleted			BIT				NOT NULL,
-    DeletedBy		VARCHAR(32)		NULL
 	);
  
-    INSERT INTO FAQ(Question, Answer, CreatedBy, Deleted, DeletedBy) VALUES
-    ('What is the maximum amount that we can exchange per transaction?', 'There is no fixed price!, but do note if we do not have enough, we will take 3 working days to get back to you', 'John Wick', 0, null),
-	('How many currencies do you have?', 'We hold a variety of currencies with their respective exchange rates. Most are from ASEAN countries only. We apologise for any inconvenience', 'John Wick', 1, 'John Wick'),
-	('Do you have an exchange rate fee?', 'Yes! It is only 3% per transaction', 'John Wick', 0, null);
+    INSERT INTO FAQ(Question, Answer) VALUES
+    ('What is the maximum amount that we can exchange per transaction?', 'There is no fixed price!, but do note if we do not have enough, we will take 3 working days to get back to you'),
+	('How many currencies do you have?', 'We hold a variety of currencies with their respective exchange rates. Most are from ASEAN countries only. We apologise for any inconvenience'),
+	('Do you have an exchange rate fee?', 'Yes! It is only 3% per transaction');
 
 CREATE TABLE ExchangeRates( 
 		BaseCurrency 	VARCHAR(5)      NOT NULL,
@@ -265,14 +262,14 @@ INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, QuoteAmoun
 ('GEL', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-23','k.artixc@gmail.com', null, null, 0, null, null),
 ('GEL', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-23','k.artixc@gmail.com', null, null, 0, null, null),
 
-('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
-('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
-('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
-('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
-('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
-('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
-('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
-('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
+('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
 ('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
 ('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
 ('HUF', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-20','k.artixc@gmail.com', null, null, 0, null, null),
@@ -331,55 +328,50 @@ INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, QuoteAmoun
 ('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-23','k.artixc@gmail.com', null, null, 0, null, null),
 ('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-23','k.artixc@gmail.com', null, null, 0, null, null),
 
-('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-25','k.artixc@gmail.com', null, null, 0, null, null),
-('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-25','k.artixc@gmail.com', null, null, 0, null, null),
-('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-25','k.artixc@gmail.com', null, null, 0, null, null),
-('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-25','k.artixc@gmail.com', null, null, 0, null, null),
-('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-25','k.artixc@gmail.com', null, null, 0, null, null),
-('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-25','k.artixc@gmail.com', null, null, 0, null, null),
-('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-25','k.artixc@gmail.com', null, null, 0, null, null),
+('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
+('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-02-08','k.artixc@gmail.com', null, null, 0, null, null),
 ('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-25','k.artixc@gmail.com', null, null, 0, null, null),
 ('JPY', 120.00, 'MMK', 156853.20, 1307.11, '2021-01-25','k.artixc@gmail.com', null, null, 0, null, null);
 
 CREATE TABLE Stock(
 	StockId		INT         	IDENTITY PRIMARY KEY,
-	AccountId	INT				NOT NULL,
 	ISO			VARCHAR(3)		NOT NULL,
 	Amount		Float			NOT NULL,
 
 );
-INSERT INTO Stock(AccountId, ISO, Amount) VALUES
-(1,'SGD', 100000),
-(1,'MMK', 112345),
-(1,'CNY', 12345),
-(1,'MYR', 98760),
-(2,'SGD', 1000000);
+INSERT INTO Stock(ISO, Amount) VALUES
+('SGD', 100000),
+('MMK', 112345),
+('CNY', 12345),
+('MYR', 98760),
+('SGD', 1000000);
 
 CREATE TABLE DepWithTransactions(
 	TransactionId	INT				IDENTITY PRIMARY KEY,
 	StockId			INT				NOT NULL,
 	ISO				VARCHAR(3)		NOT NULL,
 	DepOrWith		VARCHAR(30)		NOT NULL,
-	Amount			Float			NULL,
-	DoneBy			VARCHAR(200)	NOT NULL,
+	Amount			Float			NOT NULL,
 	TransactionDate	DATETIME		NOT NULL,
-	EditedBy		VARCHAR(200)	NULL,
-	EditedDate		DATETIME		NULL,
 	Deleted			BIT				NOT NULl,
-	DeletedBy		VARCHAR(200)	NULL,
 	DeletedDate		DATETIME		NULL,
 );
 
-INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, DoneBy, TransactionDate, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) VALUES
-(1, 'SGD', 'Deposit', 1000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(1, 'SGD', 'Deposit', 2000.00, 'k.artixc@gmail.com', '2022-01-03', null, null, 0, null, null),
-(1, 'SGD', 'Withdrawal', 3000.00, 'k.artixc@gmail.com', '2021-04-12', null, null, 0, null, null),
-(1, 'SGD', 'Deposit', 4000.00, 'k.artixc@gmail.com', '2021-03-14', null, null, 0, null, null),
-(1, 'SGD', 'Deposit', 1000.00, 'k.artixc@gmail.com', '2021-02-14', null, null, 0, null, null),
-(1, 'SGD', 'Deposit', 1000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(1, 'SGD', 'Withdrawal', 2000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(1, 'SGD', 'Deposit', 4000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(1, 'SGD', 'Withdrawal', 2000.00, 'k.artixc@gmail.com', '2021-01-14', null, null, 0, null, null),
-(2, 'MMK', 'Deposit', 34.00, 'k.artixc@gmail.com', '2021-01-15', null, null, 0, null, null),
-(3, 'CNY', 'Withdrawal', 4000.00, 'k.artixc@gmail.com', '2021-01-16', null, null, 0, null, null),
-(4, 'MYR', 'Deposit', 30000.00, 'k.artixc@gmail.com', '2021-01-17', null, null, 0, null, null);
+INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, TransactionDate, Deleted, DeletedDate) VALUES
+(1, 'SGD', 'Deposit', 1000.00, '2021-01-14', 0, null),
+(1, 'SGD', 'Deposit', 2000.00, '2022-01-03', 0, null),
+(1, 'SGD', 'Withdrawal', 3000.00, '2021-04-12', 0, null),
+(1, 'SGD', 'Deposit', 4000.00, '2021-03-14', 0, null),
+(1, 'SGD', 'Deposit', 1000.00, '2021-02-14', 0, null),
+(1, 'SGD', 'Deposit', 1000.00, '2021-01-14', 0, null),
+(1, 'SGD', 'Withdrawal', 2000.00, '2021-01-14', 0, null),
+(1, 'SGD', 'Deposit', 4000.00, '2021-01-14', 0, null),
+(1, 'SGD', 'Withdrawal', 2000.00, '2021-01-14', 0, null),
+(2, 'MMK', 'Deposit', 34.00, '2021-01-15', 0, null),
+(3, 'CNY', 'Withdrawal', 4000.00, '2021-01-16', 0, null),
+(4, 'MYR', 'Deposit', 30000.00, '2021-01-17', 0, null);
