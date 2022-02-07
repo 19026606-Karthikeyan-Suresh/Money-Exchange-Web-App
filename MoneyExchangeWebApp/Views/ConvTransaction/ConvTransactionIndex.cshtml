@@ -69,13 +69,9 @@
                                                     asp-action="ConvTransactionEdit" 
                                                     asp-route-id="@item.TransactionId"><i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Transaction"></i></a>
                                                 |
-                                                <a asp-controller="ConvTransaction" 
-                                                    asp-action="SoftDeleteConvTransaction" 
-                                                    asp-route-id="@item.TransactionId"><i class="fas fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Transaction"></i></a>
+                                                <a href="/ConvTransaction/SoftDeleteConvTransaction"><i class="fas fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Transaction"></i></a>
                                                 |
-                                                <a asp-controller="ConvTransaction" 
-                                                    asp-action="ConvTransactionDetails" 
-                                                    asp-route-id="@item.TransactionId"><i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="top" title="View Transaction Details"></i></a>
+                                                <a href="/ConvTransaction/ConvTransactionDetails"><i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="top" title="View Transaction Details"></i></a>
                                             </td>
                                         </tr>
                                     }
