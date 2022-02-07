@@ -68,13 +68,13 @@
        </div>
 
             <div class="btn-group col-sm-12 ">
-           <a asp-action="EnquiryIndex" class="btn btn-outline-secondary mx-2">Back to Index</a>
                 @{
                     if (User.IsInRole("admin"))
                     {
-                        <a href="mailto:" class="btn btn-outline-secondary">Send another mail</a>
+                        <a href="mailto:" class="btn btn-outline-secondary">Back to Index</a>
                     }
                 }
+           <a asp-action="EnquiryIndex" class="btn btn-outline-secondary">Back to Index</a>
        </div>
     }
     else

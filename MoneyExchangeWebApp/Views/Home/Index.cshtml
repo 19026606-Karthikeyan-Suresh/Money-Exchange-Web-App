@@ -30,15 +30,14 @@
             <div class="col-lg-3 col-md-3 mb-3">
                 <div class="list-group small">
                     <div class="list-group-item"><h6 class="display-6">Things to Do!</h6></div>
-                    <a asp-controller="Account" asp-action="AddAccount" class="list-group-item">Add an employee <i class="bi bi-people"></i></a>
-                    <a asp-controller="ConvTransaction" asp-action="CreateConvTransaction" class="list-group-item">Record a currency trade <i class="bi bi-receipt"></i></a>
+                    <a href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#AddEmployee">Add an employee <i class="bi bi-people"></i></a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#AddConvTransaction" class="list-group-item">Add a Conversion Transaction <i class="bi bi-receipt"></i></a>
                     <a asp-controller="Enquiry" asp-action="EnquiryIndex" class="list-group-item d-flex justify-content-between align-items-center">Pending enquiries 
                     <span class="badge bg-primary rounded-pill">
                         @ViewData["pending"]
                         </span></a>
-                    <a  asp-controller="Report" asp-action="TradesDashboard" class="list-group-item">Discover top 5 currencies traded by month <i class="bi bi-file-earmark-text"></i></a>
-                    <a  asp-controller="Report" asp-action="DaysDashboard" class="list-group-item">Discover top 5 currency trade days in a month <i class="bi bi-file-earmark-text"></i></a>
-                    <a  asp-controller="Stock" asp-action="ShowWallet" class="list-group-item">Deposit/Withdraw <i class="bi bi-currency-exchange"></i></a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#AddConvTransaction" class="list-group-item">Find top 5 currencies in the past <i class="bi bi-file-earmark-text"></i></a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#AddConvTransaction" class="list-group-item">Deposit/Withdraw <i class="bi bi-currency-exchange"></i></a>
                 </div>
             </div>
                 <div class="col-sm-4 mb-3">
