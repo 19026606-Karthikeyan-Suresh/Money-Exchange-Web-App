@@ -66,15 +66,16 @@ namespace MoneyExchangeWebApp.Controllers
             return View(faqList);
         }
 
-        public IActionResult GetAllEnquiries()
+        /*        public IActionResult GetAllEnquiries()
         {
             var enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
             return Json(new { data = enquiryList });
-        }
+        }*/
 
         public IActionResult EnquiryIndex()
         {
-            return View();
+            List<Enquiry> enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
+            return View(enquiryList);
         }
 
         public IActionResult EnquiryReply(int id)
