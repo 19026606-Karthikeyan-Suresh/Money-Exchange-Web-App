@@ -1,0 +1,15 @@
+﻿@model List<FAQ>
+<br />
+<h2 style="text-align: center;">Commonly Asked Questions</h2>
+<br />
+        @foreach (FAQ item in Model)
+{
+    <div>
+        <h4>@item.Question</h4>
+        <p>@item.Answer</p>
+    </div>
+}
+<div style="text-align: center">
+    <h5>Cannot find the answer to your question? Feel free to enquire us!</h5>
+    <a asp-controller="Enquiry" asp-action="Enquire" class="btn btn-primary">Enquire Us!</a>
+</div>

@@ -1,0 +1,35 @@
+﻿@using System.Data;
+@model DataTable;
+
+<div class="container">
+    <h3>Top 5 Trading Days</h3>
+
+    
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+        </div>
+    }
+
+    <table class='table'>
+        <tr>
+            @for (int col = 0; col < Model.Columns.Count; col++)
+            {
+                <th>@Model.Columns[col]</th>
+            }
+        </tr>
+
+
+    @for (int row = 0; row < Model.Rows.Count; row++)
+    {
+        <tr>
+            @for (int col = 0; col < Model.Columns.Count; col++)
+            {
+                <td>@Model.Rows[row][col]</td>
+            }
+        </tr>
+    }
+    </table>
+</div>
