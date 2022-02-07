@@ -1,0 +1,41 @@
+﻿@using KachingExpress.Models;
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Transaction list</h2>
+        </div>
+
+        <div class="col-sm-6">
+        <select id="role" name="Role" class="form-control">
+                <option value="">-- Select One</option>
+                <option value="Day">Days</option>
+                <option value="Month">Month</option>
+        </select>
+
+      </div>
+        
+    </div>
+</div>
+<br /><br />
+
+<table class="table table-bordered table-striped table-hover table-responsive" style="width:100%">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Currencies</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
