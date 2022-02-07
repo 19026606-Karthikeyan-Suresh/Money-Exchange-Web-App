@@ -1,19 +1,27 @@
-﻿using System;
-using System.Data;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+﻿using MoneyExchangeWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using MoneyExchangeWebApp.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Security.Claims;
-
-//using Newtonsoft.Json;
+using System.Diagnostics;
+using System;
 
 namespace MoneyExchangeWebApp.Controllers
 {
-    public class CurrencyController : Controller
+    public class HomeController : Controller
     {
+        #region Home Page - Karthik
+        public IActionResult Index()
+        {
+            return View();
+        }
+        #endregion
+
+        /*        #region Error Message
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        #endregion*/
+
         #region "Display ExchangeRates" - Jasper
         private string apiWebsite = "https://freecurrencyapi.net/api/v2/latest?apikey=d7ba8d40-5e88-11ec-b4e7-e7f7a5d589f5&base_currency=SGD";
         public IActionResult GetAllExchangeRates()
@@ -72,22 +80,9 @@ namespace MoneyExchangeWebApp.Controllers
         }
         #endregion
 
-        #region
         public IActionResult ExchangeRates()
         {
             return View();
         }
-        #endregion
-
-        #region "View Currencies" - Kaiwen
-        [Authorize]
-        public IActionResult CurrencyIndex()
-        {
-            List<Currency> curList = DBUtl.GetList<Currency>("SELECT * FROM Currency WHERE Deleted='False'");
-            return View(curList);
-        }
-        #endregion
-
-        
     }
 }

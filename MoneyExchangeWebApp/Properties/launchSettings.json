@@ -10,7 +10,7 @@
   "profiles": {
     "MoneyExchangeWebApp": {
       "commandName": "Project",
-      "launchUrl": "Currency/ExchangeRates",
+      "launchUrl": "Home/Index",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5165",

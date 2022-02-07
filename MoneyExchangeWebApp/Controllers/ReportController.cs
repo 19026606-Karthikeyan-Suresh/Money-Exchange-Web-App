@@ -160,8 +160,5 @@ namespace MoneyExchangeWebApp.Controllers
 
             return View(dt);
         }
-
-
-
     }
 }

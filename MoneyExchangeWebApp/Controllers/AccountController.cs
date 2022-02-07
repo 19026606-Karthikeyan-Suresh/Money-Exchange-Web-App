@@ -20,14 +20,14 @@ namespace MoneyExchangeWebApp.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             if (Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);
-            return RedirectToAction("ExchangeRates", "Currency");
+            return RedirectToAction("Index", "Home");
         }
 
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
             TempData["ReturnUrl"] = returnUrl;
-            return View("_Login");
+            return View("Login");
         }
 
         [AllowAnonymous]
@@ -53,7 +53,7 @@ namespace MoneyExchangeWebApp.Controllers
                         return Redirect(returnUrl);
                 }
 
-                return RedirectToAction("ExchangeRates", "Currency");
+                return RedirectToAction("Index", "Home");
             }
         }
         #endregion
@@ -84,26 +84,17 @@ namespace MoneyExchangeWebApp.Controllers
         }
         #endregion
 
-        #region "Get Account List" - Karthik
+        #region Get & Display All Accounts - Karthik
         [HttpGet]
-        [Authorize(Roles = "admin,staff")]
+        [Authorize(Roles = "admin")]
         public IActionResult GetAll()
         {
-            string sql;
-            if (User.IsInRole("staff"))
-            {
-                sql = @"SELECT * FROM Accounts WHERE Deleted='False' AND role='user'";
-
-            }
-            else
-            {
-                sql = @"SELECT * FROM Accounts WHERE Deleted='False' AND role!='admin'";
-            }
+            string sql = @"SELECT * FROM Accounts WHERE Deleted='False' AND role!='admin'";
             var AccountList = DBUtl.GetList<Account>(sql);
             return Json(new { data = AccountList });
         }
 
-        [Authorize(Roles = "admin,staff")]
+        [Authorize(Roles = "admin")]
         public IActionResult AccountIndex()
         {
             return View();
@@ -112,7 +103,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Display Deleted Accounts" - Teng Yik
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult DeletedAccounts()
         {
             List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE deleted='true'");
@@ -121,13 +112,13 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Add User Accounts" - Teng Yik
-        [Authorize(Roles = "staff, admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult AddAccount()
         {
             return View();
         }
 
-        [Authorize(Roles = "staff, admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AddAccount(Account AC)
         {
@@ -145,21 +136,9 @@ namespace MoneyExchangeWebApp.Controllers
                 Gender, DOB, Role, DateCreated, Deleted, DeletedBy, DateDeleted)
                 VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', '{9:yyyy-MM-dd}', '{10}', '{11}', '{12:yyyy-MM-dd}')";
 
-                string insert;
-                if (User.IsInRole("staff"))
-                {
-                    insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
-                    AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "user".EscQuote(),
-                    DateTime.Now, 0, null, null);
-
-                }
-                else
-                {
-                    insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
+                string insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
                     AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "staff".EscQuote(),
                     DateTime.Now, 0, null, null);
-                }
-
 
                 int count = DBUtl.ExecSQL(insert);
                 if (count == 1)
@@ -181,19 +160,10 @@ namespace MoneyExchangeWebApp.Controllers
 
         #region "Edit User Accounts" - Teng Yik
         //GET
-        [Authorize(Roles = "staff, admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult EditUsers(int id)
         {
-            //Filter types of Users
-            string sql;
-            if (User.IsInRole("staff"))
-            {
-                sql = @"SELECT * FROM Accounts WHERE AccountId={0} AND role='user'";
-            }
-            else
-            {
-                sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
-            }
+            string sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
 
             string select = String.Format(sql, id);
             List<Account> Alist = DBUtl.GetList<Account>(select);
@@ -212,7 +182,7 @@ namespace MoneyExchangeWebApp.Controllers
         }
 
         //POST
-        [Authorize(Roles = "staff,admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult EditUsers(Account A)
         {
@@ -247,7 +217,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Delete user Accounts" - Teng Yik
-        [Authorize(Roles = "staff, admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
             string sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
@@ -279,7 +249,6 @@ namespace MoneyExchangeWebApp.Controllers
             }
             return RedirectToAction("AccountIndex");
         }
-
         #endregion
 
         #region "Recover Deleted Account" - Teng Yik
