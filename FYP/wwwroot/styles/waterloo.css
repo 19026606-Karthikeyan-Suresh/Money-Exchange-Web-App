@@ -1,0 +1,38 @@
+﻿html {
+   font-family: sans-serif;
+}
+
+h2 {
+   margin-left: 170px;
+   color: blue;
+   font-size: 24px;
+   font-weight: bold;
+}
+
+div {
+   padding: 10px;
+}
+
+.control-label {
+   float: left;
+   width: 150px;
+   text-align: right;
+   margin-right: 10px;
+}
+
+.message {
+   margin-left: 170px;
+   color: red;
+}
+
+#Activity, #Postal, #Mobile {
+   width: 150px;
+}
+
+#ParentName {
+   width: 300px;
+}
+
+#btn {
+   margin-left: 170px;
+}

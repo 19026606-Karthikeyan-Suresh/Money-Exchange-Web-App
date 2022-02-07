@@ -1,0 +1,44 @@
+﻿@model DataRowCollection
+
+@if (TempData["Message"] != null)
+{
+   <div class="alert alert-@TempData["MsgType"]">
+      @TempData["Message"]
+   </div>
+}
+
+<table class="table table-condensed table-hover">
+   <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>City</th>
+      <th>Period</th>
+      <th style="text-align:right;">Days</th>
+      <th style="text-align:right;">Spending</th>
+      <th style="text-align:center;">Action</th>
+   </tr>
+   @foreach (DataRow row in Model)
+   {
+      <tr>
+         <td>@row["ID"]</td>
+         <td>@row["Title"]</td>
+         <td>@row["City"]</td>
+         <td>@String.Format("{0:yyyy MMM}", row["TripDate"])</td>
+         <td style="text-align:right;">
+             @row["Duration"] Days
+         </td>
+         <td style="text-align: right;">
+             @String.Format("{0:C}", row["Spending"])
+         </td>
+         <td style="text-align: center;">
+            <a asp-controller="Travel" 
+               asp-action="Details" 
+               asp-route-id="@row["ID"]">
+               <i class="fas fa-image"></i>
+            </a>
+         </td>
+      </tr>
+   }
+</table>
+
+

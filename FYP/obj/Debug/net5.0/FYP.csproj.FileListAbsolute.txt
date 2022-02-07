@@ -1,0 +1,86 @@
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\appsettings.json
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP.exe
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP.deps.json
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP.runtimeconfig.json
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP.runtimeconfig.dev.json
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\ref\FYP.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP.pdb
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP.Views.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\FYP.Views.pdb
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.csproj.AssemblyReference.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.AssemblyInfoInputs.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.AssemblyInfo.cs
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.csproj.CoreCompileInputs.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.RazorAssemblyInfo.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.RazorAssemblyInfo.cs
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\staticwebassets\FYP.StaticWebAssets.Manifest.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\staticwebassets\FYP.StaticWebAssets.xml
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\scopedcss\bundle\FYP.styles.css
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.TagHelpers.input.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.TagHelpers.output.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.RazorCoreGenerate.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\Razor\Views\Signup\Login.cshtml.g.cs
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\Razor\Views\Signup\Logout.cshtml.g.cs
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\Razor\Views\Signup\Thanks.cshtml.g.cs
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.RazorTargetAssemblyInfo.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.RazorTargetAssemblyInfo.cs
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.Views.pdb
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\ref\FYP.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.pdb
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.genruntimeconfig.cache
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\obj\Debug\net5.0\FYP.csproj.CopyComplete
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\libman.json
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\System.Data.SqlClient.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\runtimes\win-arm64\native\sni.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\runtimes\win-x64\native\sni.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\runtimes\win-x86\native\sni.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\19026606\Desktop\Year 3\Semester 2\C300\repos\Money-Exchange-Web-App-2\FYP\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.dll
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\ref\FYP.dll
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.pdb
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\appsettings.json
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\libman.json
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\FYP.StaticWebAssets.xml
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\FYP.exe
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\FYP.deps.json
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\FYP.runtimeconfig.json
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\FYP.runtimeconfig.dev.json
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\FYP.dll
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\ref\FYP.dll
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\FYP.pdb
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\FYP.Views.dll
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\FYP.Views.pdb
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\System.Data.SqlClient.dll
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\runtimes\win-arm64\native\sni.dll
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\runtimes\win-x64\native\sni.dll
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\runtimes\win-x86\native\sni.dll
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Jasper\Desktop\FYP\FYP\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.csproj.AssemblyReference.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.AssemblyInfoInputs.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.AssemblyInfo.cs
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.csproj.CoreCompileInputs.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.RazorAssemblyInfo.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.RazorAssemblyInfo.cs
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\scopedcss\bundle\FYP.styles.css
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\staticwebassets\FYP.StaticWebAssets.Manifest.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.TagHelpers.input.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.TagHelpers.output.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.RazorCoreGenerate.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\Razor\Views\Signup\Login.cshtml.g.cs
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\Razor\Views\Signup\Logout.cshtml.g.cs
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\Razor\Views\Signup\Thanks.cshtml.g.cs
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.RazorTargetAssemblyInfo.cache
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.RazorTargetAssemblyInfo.cs
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.Views.pdb
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.csproj.CopyComplete
+C:\Users\Jasper\Desktop\FYP\FYP\obj\Debug\net5.0\FYP.genruntimeconfig.cache
