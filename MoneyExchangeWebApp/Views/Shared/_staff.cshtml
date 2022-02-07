@@ -18,38 +18,17 @@
         <li class="nav-item">
               <a class="nav-link" asp-controller="Home" asp-action="ExchangeRates">Exchange Rates <i class="fas fa-percent"></i></a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Accounts  <i class="fas fa-users"></i>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <li><a class="dropdown-item" asp-controller="Account" asp-action="AccountIndex">Account List</a></li>
-            <li><a class="dropdown-item" asp-controller="Account" asp-action="DeletedAccounts">Deleted Accounts</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Transactions <i class="fas fa-file-invoice-dollar"></i>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <li><a class="dropdown-item" asp-controller="ConvTransaction" asp-action="ConvTransactionIndex">Conversion Transactions</a></li>
-            <li><a class="dropdown-item" asp-controller="ConvTransaction" asp-action="DeletedConvTransactions">Deleted Conversions</a></li>
-          </ul>
+        <li class="nav-item">
+              <a class="nav-link" asp-controller="ConvTransaction" asp-action="ConvTransactionIndex">Conversion Transactions<i class="fas fa-file-invoice-dollar"></i></a>
         </li>
         <li class="nav-item">
               <a class="nav-link" asp-controller="Enquiry" asp-action="EnquiryIndex">Enquiries <i class="fas fa-inbox"></i></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Stock" asp-action="ShowWallet">Stocks <i class="fas fa-wallet"></i></a>
         </li>
       </ul>
       <ul class="nav navbar-nav mr-auto">
          <li class="text-white">
                Welcome @User.Identity.Name
          </li>
-@*         <li>
-            &nbsp;&nbsp;&nbsp;
-         </li>*@
       </ul>
       <div class="d-flex">
         <a class="nav-link" asp-controller="Account" asp-action="Logoff">
