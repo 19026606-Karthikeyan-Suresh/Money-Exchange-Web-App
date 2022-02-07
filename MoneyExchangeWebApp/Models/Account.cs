@@ -10,7 +10,8 @@ namespace MoneyExchangeWebApp.Models
         public int AccountId { get; set; }
 
         [Required(ErrorMessage = "Email Address field cannot be empty!")]
-        [Remote(action: "VerifyEmail", controller: "Account", ErrorMessage = "Email already exists.")]
+        [EmailAddress(ErrorMessage = "Email does not have a valid format")]
+        [Remote(action: "VerifyEmail", controller: "Account")]
         public string EmailAddress { get; set; }
 
         [Required(ErrorMessage = "Password cannot be empty")]
@@ -31,6 +32,7 @@ namespace MoneyExchangeWebApp.Models
         [Required(ErrorMessage = "Phone number field cannot be empty!")]
        // [Phone(ErrorMessage = "This is not a valid phone number"!)]      
         [RegularExpression(@"[8-9][0-9]{7}", ErrorMessage = "Phone number can only have 8 digits and start with 8 or 9!")]
+        [Remote(action: "VerifyPhone", controller: "Account")]
         public int PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "You need to select a gender!")]
@@ -57,6 +59,9 @@ namespace MoneyExchangeWebApp.Models
         public string EmailAddress { get; set; }
 
         //[Required(ErrorMessage = "Password cannot be empty")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+            ErrorMessage = "Password must have minimum 8 characters, at least one uppercase and lowercase, " +
+            "one number and a special character")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "First Name field cannot be empty!")]
