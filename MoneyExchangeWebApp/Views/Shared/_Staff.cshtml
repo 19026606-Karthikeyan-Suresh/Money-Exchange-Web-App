@@ -1,36 +1,28 @@
-﻿<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-   <a class="navbar-brand" asp-controller="Enquiry" asp-action="EnquiryIndex">
-      Kaching<i class="bi bi-currency-exchange"></i>
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   <a class="navbar-brand" asp-controller="Currency" asp-action="ExchangeRates">
+       Kaching<i class="bi bi-currency-exchange"></i>
    </a>
 
    <!-- Hamburger Menu -->
    <button class="navbar-toggler" type="button"
            data-toggle="collapse" data-target="#navbarSupportedContent"
            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-           <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon"></span>
    </button>
+
    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-              <a class="nav-link" asp-controller="Report" asp-action="TradesDashboard"> Trades Dashboard</a>
-        </li>        
-        <li class="nav-item">
-              <a class="nav-link" asp-controller="Report" asp-action="DaysDashboard"> Days Dashboard</a>
-        </li>
         <li class="nav-item">
               <a class="nav-link" asp-controller="Currency" asp-action="ExchangeRates">Exchange Rates <i class="fas fa-percent"></i></a>
         </li>
         <li class="nav-item">
-              <a class="nav-link" asp-controller="Account" asp-action="AccountIndex">Accounts <i class="fas fa-users"></i></a>
+              <a class="nav-link" asp-controller="Account" asp-action="AccountIndex">Accounts <i class="fas fa-user-circle"></i></a>
         </li>
         <li class="nav-item">
-              <a class="nav-link" asp-controller="ConvTransaction" asp-action="ConvTransactionIndex">Transactions <i class="fas fa-file-invoice-dollar"></i></a>
+              <a class="nav-link" asp-controller="Transaction" asp-action="TransactionIndex">Transactions <i class="fas fa-file-invoice-dollar"></i></a>
         </li>
         <li class="nav-item">
               <a class="nav-link" asp-controller="Enquiry" asp-action="EnquiryIndex">Enquiries <i class="fas fa-inbox"></i></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Wallet" asp-action="ShowWallet">Wallet <i class="fas fa-wallet"></i></a>
         </li>
       </ul>
       <ul class="nav navbar-nav ms-auto">
@@ -41,8 +33,8 @@
          </li>
          <li>
             <a class="nav-link" asp-controller="Account" asp-action="Logoff">
-                Logout
-               <i class="fas fa-sign-out-alt"></i>
+               Logout
+               <i class="fa fa-sign-out"></i>
             </a>
          </li>
          <li>

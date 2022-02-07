@@ -1,0 +1,74 @@
+﻿@using MoneyExchangeWebApp.Models;
+@model List<ExchangeRates>;
+
+<div class="container py-sm-5">
+    <header class="text-center text-black">
+        <h1 class="display-4"><b>Exchange Rates (in SGD)</b></h1>
+        @if (ViewData["DatabaseUpdateError"] != null)
+        {
+            <div class="alert alert-danger">
+                <text>@ViewData["DatabaseUpdateError"]</text>
+            </div>
+        }
+    </header>
+    <div class="row py-8">
+        <div class="col-sm-7 mx-auto">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-sm-8 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="EXtbl" class="table table-hover table-responsive" style="text-align:left">
+                            <thead>
+                                <tr>
+                                    <th>Base Currency</th>
+                                    <th>Quote Currency</th>
+                                    <th>Rates (SGD$1)</th>
+                                </tr>
+                            </thead>
+
+                            @*DO NOT DELETE
+                                <tbody>
+                                @for (int i = 0; i < Model.Count(); i++)
+                                {
+                                string[] list = Model[i].Split(":");
+                                <tr>
+                                <td>SGD</td>
+                                <td>@list[0].Replace("\"", "")</td>
+                                <td>@list[1]</td>
+                                </tr>
+                                }
+                                </tbody>*@
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @if (ViewData["Currencies"] != null)
+    {
+        <p>@ViewData["Currencies"]</p>
+        <h5>@ViewData["DT"]</h5>
+    }
+</div>
+
+@section Scripts{
+<script src="~/js/ExchangeRates.js"></script>
+}
+
+<div>
+    @{
+            var currList = DBUtl.GetList("SELECT QuoteCurrency FROM ExchangeRates ORDER BY QuoteCurrency");
+            ViewData["CurrencyList"] = new SelectList(currList, "QuoteCurrency", "QuoteCurrency");
+    }
+    <h3>Currency Calculator</h3>
+    <div class="form-group row">
+    <select class="form-control col-sm-3" asp-items="@((SelectList)ViewData["CurrencyList"])">
+        <option value="0" selected="selected"> -- SELECT --</option>
+    </select>
+    <p> to </p>
+    <select class="form-control col-sm-3" asp-items="@((SelectList)ViewData["CurrencyList"])">
+        <option value="0" selected="selected"> -- SELECT --</option>
+    </select>
+    </div>
+</div>

@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MoneyExchangeWebApp.Models;
+using KachingExpress.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 
-namespace MoneyExchangeWebApp.Controllers
+namespace KachingExpress.Controllers
 {
     public class StockController : Controller
     {

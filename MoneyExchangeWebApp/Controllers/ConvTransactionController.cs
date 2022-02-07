@@ -30,7 +30,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "View Deleted Transactions" - Karthik
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles ="admin")]
         public IActionResult DeletedConvTransactions()
         {
             List<ConvTransaction> tranList = DBUtl.GetList<ConvTransaction>("SELECT * FROM ConvTransactions WHERE Deleted='True' ORDER BY TransactionDate DESC");
@@ -40,7 +40,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Create Transaction" - Karthik
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles ="admin")]
         public IActionResult CreateConvTransaction()
         {
             return View();
@@ -116,7 +116,7 @@ namespace MoneyExchangeWebApp.Controllers
                                   EditedBy='{7}', EditedDate='{8:yyyy-MM-dd}'
                               WHERE TransactionId={0}";
                 string update = String.Format(sql, TR.TransactionId, TR.BaseCurrency.EscQuote(), TR.BaseAmount,
-                    TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, TR.TransactionDate,
+                    TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, TR.TransactionDate, 
                     User.Identity.Name.EscQuote(), DateTime.Now);
 
                 if (DBUtl.ExecSQL(update) == 1)
@@ -134,7 +134,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Soft Delete Transaction" - Karthik
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles ="admin")]
         public IActionResult SoftDeleteConvTransaction(int id)
         {
             string sql = @"SELECT * FROM ConvTransactions 
@@ -231,7 +231,7 @@ namespace MoneyExchangeWebApp.Controllers
         {
             string sql = @"SELECT * FROM ConvTransactions WHERE TransactionId={0}";
             List<ConvTransaction> TRlist = DBUtl.GetList<ConvTransaction>(String.Format(sql, id));
-            if (TRlist.Count > 0)
+            if(TRlist.Count > 0)
             {
                 return View(TRlist[0]);
             }
