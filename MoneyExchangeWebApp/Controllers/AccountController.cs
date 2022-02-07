@@ -503,21 +503,29 @@ namespace MoneyExchangeWebApp.Controllers
 
         #endregion
 
-        public IActionResult AccountDetails(int id)
+        public IActionResult AccountDetails()
         {
-            List<Account> Alist = DBUtl.GetList<Account>(string.Format(@"SELECT * FROM Accounts WHERE AccountId={0}", id));
-            if(Alist.Count == 1)
+            return View();
+        }
+
+        /*public IActionResult Test()
+        {
+            Account a = new Account();
+            return View(a);
+        }
+
+        [HttpGet]
+        public JsonResult IsEmailExist(string Email)
+        {
+            bool isExist = false;
+            if (Email.Equals("abc.gmail.com"))
             {
-                Account AC = Alist[0];
-                return View(AC);
+                isExist = true;
             }
-            else
-            {
-                ViewData["Message"] = "Account not found";
-                ViewData["MsgType"] = "danger";
-                return View("AccountIndex");
-            }
-        }  
+
+            return Json(!isExist, JsonRequestBehavior.AllowGet);
+        }*/
+  
         
     }
 }
