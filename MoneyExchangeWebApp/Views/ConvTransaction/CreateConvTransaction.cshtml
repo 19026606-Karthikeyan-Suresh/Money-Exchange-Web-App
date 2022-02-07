@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-md col-sm">
                         <div class="form-floating form-floating-sm">
-                            <input type="number" class="form-control text-white" id="currConvertedAmt" style="background-color: rgb(196, 158, 158);">
+                            <input type="number" class="form-control text-white" asp-for="QuoteAmount" id="currConvertedAmt" style="background-color: rgb(196, 158, 158);">
                             <label asp-for="QuoteAmount">Quote Value</label>
                             <p class="text-muted" style="font-size: 12px;" id="currConvertedAmt">Will be populated once the input fields are selected</p>
                             <p id="currConvertedAmt"></p>
@@ -116,7 +116,7 @@
             currConvertedAmt.html("");
 
         $.getJSON(apiUrl, function (result) {
-            currConvertedAmt.append("<h5> ≈ " + toCurr + result.toFixed(2) + "</h5>");
+            currConvertedAmt.append("<h5> " + result.toFixed(2) + "</h5>");
              });
         }
     }
