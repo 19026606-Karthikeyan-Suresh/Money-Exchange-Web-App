@@ -20,12 +20,12 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                         <div class="w-75 btn-group" role="group">
-
                         <a href="/Stock/DepositIntoWallet/${data}" class="btn btn-outline-primary mx-2">
                         <i class="fas fa-donate"></i> Deposit</a>
 
                         <a href="/Stock/WithdrawFromWallet/${data}" class="btn btn-outline-primary mx-2">
-                        <i class="fas fa-hand-holding-usd"></i> Withdraw</a>
+                        <i class="fas fa-hand-holding-usd"></i> Withdraw</a> 
+
 
                         <a href="/DepOrWith/DOWTransactions/${data}" class="btn btn-outline-secondary mx-2">
                         <i class="fas fa-receipt"></i> Transactions</a>
