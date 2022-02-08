@@ -1,0 +1,58 @@
+﻿<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-dark">FAQ List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="FAQ" asp-action="CreateFAQ" class="btn btn-dark">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create new FAQ
+            </a>
+        </div>
+    </div>
+
+    <br/><br/>
+
+       @if (ViewData["Message"] != null)
+   {
+      <div class="form-group row">
+         <div class="offset-sm-2 col-sm-6">
+            <div class="alert alert-@ViewData["MsgType"]">
+               <text>@ViewData["Message"]</text>
+            </div>
+         </div>
+      </div>
+   }
+   @if (TempData["Message"] != null)
+{
+            <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+            </div>
+}
+
+
+
+   <div class="row py-2">
+        <div class="col-sm-12 mx-auto">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-sm-10 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="FAQData" class="table table-hover table-responsive" style="width:100%; font-size: 13px;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <td>Question</td>
+                                    <td>Answer</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+@section Scripts{
+    <script src="~/js/DatatablesJS/FAQ.js"></script>
+}

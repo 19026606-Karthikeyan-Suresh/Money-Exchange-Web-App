@@ -1,19 +1,56 @@
-﻿ @using MoneyExchangeWebApp.Models;   
+﻿ @using MoneyExchangeWebApp.Models;
  @{
-    string sql = @"SELECT TOP(5) BaseCurrency AS 'ISO', COUNT(*) AS 'No. of Trades' FROM ConvTransactions 
+
+    #region Best Today
+    string sqlToFindBestToday = @"SELECT TOP(5) QuoteCurrency AS 'ISO', COUNT(TransactionId) AS 'No. of Trades' FROM ConvTransactions
            WHERE TransactionDate = '{0: yyyy-MM-dd}'
-           GROUP BY BaseCurrency ORDER BY 'No. of Trades' DESC ";
+           GROUP BY QuoteCurrency ORDER BY 'No. of Trades' DESC ";
 
-    string select = String.Format(sql, DateTime.Now);
+    string selectBestToday = String.Format(sqlToFindBestToday, DateTime.Today);
 
-    List<ISOMonth> ISOMonthList = DBUtl.GetList<ISOMonth>(select);
+    List<ISOMonth> ISOBestTodayList = DBUtl.GetList<ISOMonth>(selectBestToday);
 
-    //DataTable dt = DBUtl.GetTable(select);
-    ViewData["BestToday"] = new List<ISOMonth>(ISOMonthList);
+    ViewData["BestToday"] = new List<ISOMonth>(ISOBestTodayList);
+    #endregion
+
+    #region Best this Month
+    string sqlToFindBestThisMonth = @"SELECT TOP(5) QuoteCurrency AS 'ISO', COUNT(TransactionId) AS 'No. of Trades' FROM ConvTransactions
+           WHERE MONTH(TransactionDate) = {0}
+           GROUP BY QuoteCurrency ORDER BY 'No. of Trades' DESC ";
+    string selectBestThisMonth = String.Format(sqlToFindBestThisMonth, DateTime.Today.Month);
+
+    List<ISOMonth> ISOBestThisMonthList = DBUtl.GetList<ISOMonth>(selectBestThisMonth);
+
+    ViewData["BestThisMonth"] = new List<ISOMonth>(ISOBestThisMonthList);
+    #endregion
+
+    #region Worst Today
+    string sqlToFindWorstToday = @"SELECT TOP(5) QuoteCurrency AS 'ISO', COUNT(TransactionId) AS 'No. of Trades' FROM ConvTransactions
+           WHERE TransactionDate = '{0: yyyy-MM-dd}'
+           GROUP BY QuoteCurrency ORDER BY 'No. of Trades' ASC ";
+
+    string selectWorstToday = String.Format(sqlToFindWorstToday, DateTime.Today);
+
+    List<ISOMonth> ISOWorstTodayList = DBUtl.GetList<ISOMonth>(selectWorstToday);
+
+    ViewData["WorstToday"] = new List<ISOMonth>(ISOWorstTodayList);
+    #endregion
+
+    #region Worst this Month
+    string sqlToFindWorstThisMonth = @"SELECT TOP(5) QuoteCurrency AS 'ISO', COUNT(TransactionId) AS 'No. of Trades' FROM ConvTransactions
+           WHERE MONTH(TransactionDate) = {0}
+           GROUP BY QuoteCurrency ORDER BY 'No. of Trades' DESC ";
+    string selectWorstThisMonth = String.Format(sqlToFindWorstThisMonth, DateTime.Today.Month);
+
+    List<ISOMonth> ISOWorstThisMonthList = DBUtl.GetList<ISOMonth>(selectWorstThisMonth);
+
+    ViewData["WorstThisMonth"] = new List<ISOMonth>(ISOWorstThisMonthList);
+    #endregion
+
 
     string sql1 = @"SELECT * FROM Enquiries WHERE Status='Pending'";
     List<Enquiry> Elist = DBUtl.GetList<Enquiry>(sql1);
-    if(Elist.Count == 0)
+    if (Elist.Count == 0)
     {
         ViewData["pending"] = 0;
     }
@@ -26,21 +63,34 @@
     if (User.IsInRole("admin") || User.IsInRole("staff"))
     {
         <div class="container-fluid">
-        <div class="row mt-5">
-            <div class="col-lg-3 col-md-3 mb-3">
-                <div class="list-group small">
-                    <div class="list-group-item"><h6 class="display-6">Things to Do!</h6></div>
-                    <a asp-controller="Account" asp-action="AddAccount" class="list-group-item">Add an employee <i class="bi bi-people"></i></a>
-                    <a asp-controller="ConvTransaction" asp-action="CreateConvTransaction" class="list-group-item">Record a currency trade <i class="bi bi-receipt"></i></a>
-                    <a asp-controller="Enquiry" asp-action="EnquiryIndex" class="list-group-item d-flex justify-content-between align-items-center">Pending enquiries 
-                    <span class="badge bg-primary rounded-pill">
-                        @ViewData["pending"]
-                        </span></a>
-                    <a  asp-controller="Report" asp-action="TradesDashboard" class="list-group-item">Discover top 5 currencies traded by month <i class="bi bi-file-earmark-text"></i></a>
-                    <a  asp-controller="Report" asp-action="DaysDashboard" class="list-group-item">Discover top 5 currency trade days in a month <i class="bi bi-file-earmark-text"></i></a>
-                    <a  asp-controller="Stock" asp-action="ShowWallet" class="list-group-item">Deposit/Withdraw <i class="bi bi-currency-exchange"></i></a>
+            <div class="row mt-5">
+                <div class="col-lg-3 col-md-3 mb-3">
+                    <div class="list-group small">
+                        <div class="list-group-item"><h6 class="display-6">Things to Do!</h6></div>
+                        @{
+                            if (User.IsInRole("admin"))
+                            {
+                                <a asp-controller="Account" asp-action="AddAccount" class="list-group-item">Add an employee <i class="bi bi-people"></i></a>
+                                <a asp-controller="Enquiry" asp-action="EnquiryIndex" class="list-group-item d-flex justify-content-between align-items-center">
+                                    Pending enquiries
+                                    <span class="badge bg-danger rounded-pill">@ViewData["pending"]</span>
+                                </a>
+                                <a asp-controller="Report" asp-action="TradesDashboard" class="list-group-item">Discover top 5 currencies traded by month <i class="bi bi-file-earmark-text"></i></a>
+                                <a asp-controller="Report" asp-action="DaysDashboard" class="list-group-item">Discover top 5 currency trade days in a month <i class="bi bi-file-earmark-text"></i></a>
+                                <a asp-controller="Stock" asp-action="ShowWallet" class="list-group-item">Deposit/Withdraw <i class="bi bi-currency-exchange"></i></a>
+                                <a asp-controller="ConvTransaction" asp-action="CreateConvTransaction" class="list-group-item">Record a currency trade <i class="bi bi-receipt"></i></a>
+                            }
+                            else
+                            {
+                                <a asp-controller="Enquiry" asp-action="EnquiryIndex" class="list-group-item d-flex justify-content-between align-items-center">
+                                    Pending enquiries
+                                    <span class="badge bg-danger rounded-pill">@ViewData["pending"]</span>
+                                </a>
+                                <a asp-controller="ConvTransaction" asp-action="CreateConvTransaction" class="list-group-item">Record a currency trade <i class="bi bi-receipt"></i></a>
+                            }
+                        }
+                    </div>
                 </div>
-            </div>
                 <div class="col-sm-4 mb-3">
                     <div class="card">
                         <div class="card-body">
@@ -53,45 +103,53 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @{
-                                    foreach(var item in ViewData["BestToday"] as List<ISOMonth>) 
-                                    {
-                                        <tr>
-                                            <td>@item.ISO</td>
-                                            <td>@item.Trades</td>
-                                        </tr>
-                                    }
+                                    @{
+                                        foreach (var item in ViewData["BestToday"] as List<ISOMonth>)
+                                        {
+                                            <tr>
+                                                <td>@item.ISO</td>
+                                                <td>@item.Trades</td>
+                                            </tr>
+                                        }
 
-                                }
+                                    }
 
                                 </tbody>
                             </table>
                         </div>
-                  </div>
+                    </div>
                 </div>
                 <div class="col-sm-5">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Top 5 best ISOs traded this month</h5>
-                      <table class="table ">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">ISO</th>
-                                <th scope="col">No. of Trades</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                      </table>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Top 5 best ISOs traded this month</h5>
+                            <table class="table ">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ISO</th>
+                                        <th scope="col">No. of Trades</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in ViewData["BestThisMonth"] as List<ISOMonth>)
+                                        {
+                                            <tr>
+                                                <td>@item.ISO</td>
+                                                <td>@item.Trades</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                  </div>
+                </div>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-lg-3 col-md-3 mb-3">
-            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 mb-3">
+                </div>
                 <div class="col-sm-4 mb-3">
                     <div class="card">
                         <div class="card-body">
@@ -99,93 +157,80 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
                                         <th scope="col">Currency</th>
                                         <th scope="col">No. of transactions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @{
+                                        foreach (var item in ViewData["WorstToday"] as List<ISOMonth>)
+                                        {
+                                            <tr>
+                                                <td>@item.ISO</td>
+                                                <td>@item.Trades</td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
-                  </div>
+                    </div>
                 </div>
                 <div class="col-sm-5">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Worst 5 currencies traded this month</h5>
-                      <table class="table ">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Currency</th>
-                                <th scope="col">No. of transactions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                            </tr>
-                        </tbody>
-                      </table>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Worst 5 currencies traded this month</h5>
+                            <table class="table ">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Currency</th>
+                                        <th scope="col">No. of transactions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in ViewData["WorstThisMonth"] as List<ISOMonth>)
+                                        {
+                                            <tr>
+                                                <td>@item.ISO</td>
+                                                <td>@item.Trades</td>
+                                            </tr>
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
-    </div>
     }
     else
     {
         <partial name="_GuestNav" />
 
-    <!-- Banner -->
-    <partial name="_Banner" />
-    <!-- Banner -->
-
-    <!-- Features -->
-    <partial name="_Features" />
-    <!-- Features -->
-
-    <!-- Exchange Rates Table & Currency Converter -->
-    <partial name="ExchangeRates" />
-    <!-- Exchange Rates Table & Currency Converter -->
-
-    <!-- FAQ Slider -->
-    <partial name="_FAQ" />
-    <!-- FAQ Slider -->
-
-    <!-- Enquire Us -->
-    <partial name="_EnquireUs" />
-    <!-- Enquire Us -->
-
-    <!-- Comapny Details & Footer -->
-    <partial name="_Footer" />
-    <!-- Comapny Details & Footer -->
+        <!-- Banner -->
+        <partial name="_Banner" />
+        <!-- Banner -->
+        <!-- Features -->
+        <partial name="_Features" />
+        <!-- Features -->
+        <!-- Exchange Rates Table & Currency Converter -->
+        <partial name="ExchangeRates" />
+        <!-- Exchange Rates Table & Currency Converter -->
+        <!-- FAQ Slider -->
+        <partial name="_FAQ" />
+        <!-- FAQ Slider -->
+        <!-- Enquire Us -->
+        <partial name="_EnquireUs" />
+        <!-- Enquire Us -->
+        <!-- Comapny Details & Footer -->
+        <partial name="_Footer" />
+        <!-- Comapny Details & Footer -->
     }
 }
-    
+
 
 @section Scripts{
 <script src="~/js/DatatablesJS/ExchangeRates.js"></script>

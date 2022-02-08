@@ -10,33 +10,43 @@
             </a>
         </div>
     </div>
-    <br/><br/>
+    <br /><br />
 
-<table id="AWalltbl" class="table table-bordered table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>ISO</th>
-            <th>Amount</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-</table>
+    <div class="row py-2">
+        <div class="col-sm-12 mx-auto">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-sm-10 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="AWalltbl" class="table table-hover table-responsive" style="width:100%; font-size: 15px;">
+                            <thead>
+                                <tr>
+                                    <th>ISO</th>
+                                    <th>Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @if (ViewData["Message"] != null)
-  {
-      <div class="form-group row">
-         <div class="offset-sm-2 col-sm-6">
+{
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
             <div class="alert alert-@ViewData["MsgType"]">
-               <text>@ViewData["Message"]</text>
+                <text>@ViewData["Message"]</text>
             </div>
-         </div>
-      </div>
-   }
+        </div>
+    </div>
+}
 
-   <partial name="AddaCurrency" />
+<partial name="AddaCurrency" />
 
 @section Scripts{
-    <script src="~/js/DatatablesJS/OwnerWallet.js"></script>
+<script src="~/js/DatatablesJS/OwnerWallet.js"></script>
 }
 

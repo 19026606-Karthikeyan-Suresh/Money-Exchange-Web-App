@@ -11,8 +11,8 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "faqId", "width": "5%" },
-            { "data": "Question", "width": "25%" },
-            { "data": "Answer", "width": "15%" },
+            { "data": "question", "width": "25%" },
+            { "data": "answer", "width": "15%" },
             {
                 "data": "faqId",
                 "render": function (data) {

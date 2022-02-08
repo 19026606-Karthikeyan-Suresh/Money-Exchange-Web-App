@@ -8,12 +8,14 @@ namespace MoneyExchangeWebApp.Controllers
     public class FAQController : Controller
     {
         #region FAQ index - Karthik
+		[Authorize(Roles ="admin")]
         public IActionResult FAQIndex()
 		{
 			List<FAQ> Flist = DBUtl.GetList<FAQ>(@"SELECT * FROM FAQ");
 			return View();
 		}
-        #endregion
+		#endregion
+		[Authorize(Roles = "admin")]
 		public IActionResult GetAllFAQs()
         {
 			var Flist = DBUtl.GetList<FAQ>(@"SELECT * FROM FAQ");

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Currency.Models;
+using MoneyExchangeWebApp.Models;
 using System;
 using System.Data;
 
