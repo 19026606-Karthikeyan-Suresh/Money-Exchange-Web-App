@@ -19,18 +19,20 @@
             });
         });
     </script>
+    <div class="offset-sm-4" style="text-align: center;align-items:center">
     @if (TempData["EmailSent"] != null)
 {
-            <div class="alert alert-success">
+            <div class="alert alert-success col-sm-6">
         @TempData["EmailSent"]
             </div>
 }
 @if (TempData["Message"] != null)
 {
-            <div class="alert alert-@TempData["MsgType"]">
+            <div class="alert alert-@TempData["MsgType"] col-sm-6">
         @TempData["Message"]
             </div>
 }
+</div>
     <header class="text-center text-black">
         <h1 class="display-2"><b>All Enquiries</b></h1>
     </header>

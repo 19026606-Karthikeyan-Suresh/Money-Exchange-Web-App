@@ -191,7 +191,18 @@ namespace MoneyExchangeWebApp.Controllers
 
                 //}
                 //return RedirectToAction("EnquiryIndex");
-                Boolean result = SendMail(ER.EmailAddress, ER.Subject, ER.Answer);
+                string template = @"To User with the Email {0},
+                               
+     Welcome to KachingXpress!
+
+     We have received your enquiry of: {1}
+     Our Team Member has attended to your enquiry and has given a reply of: {2}
+     *If you have anymore enquiries, please do submit another enquiry on our platform. Thank you for using KachingXpress
+                               
+     Replying Member: {3}
+     KachingXpress";
+                string message = String.Format(template, ER.EmailAddress, ER.Question, ER.Answer, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                Boolean result = SendMail(ER.EmailAddress, ER.Subject, message);
 
                 if (result == true)
                 {
