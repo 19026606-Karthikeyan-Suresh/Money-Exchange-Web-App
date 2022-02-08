@@ -75,6 +75,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region Recover Deleted DepOrWith Transaction - Karthik
+        [Authorize(Roles ="admin")]
         public IActionResult RecoverDepOrWith(int id)
         {
             string sql = @"SELECT * FROM DepWithTransactions WHERE TransactionId={0}";
@@ -107,6 +108,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region Permanent Delete DepOrWith Transaction - Karthik
+        [Authorize(Roles ="admin")]
         public IActionResult PermanentDeleteDepOrWith(int id)
         {
             string sql = @"SELECT * FROM DepWithTransactions WHERE TransactionId={0}";

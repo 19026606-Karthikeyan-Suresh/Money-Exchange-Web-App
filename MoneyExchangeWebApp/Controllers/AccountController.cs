@@ -56,7 +56,7 @@ namespace MoneyExchangeWebApp.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-#endregion
+        #endregion
 
         #region "Authenticate User" - Teng Yik
         private bool AuthenticateUser(string uid, string pw,
@@ -86,24 +86,16 @@ namespace MoneyExchangeWebApp.Controllers
 
         #region "Get Account List" - Karthik
         [HttpGet]
-        [Authorize(Roles = "admin,staff")]
+        [Authorize(Roles = "admin")]
         public IActionResult GetAll()
         {
-            string sql;
-            if (User.IsInRole("staff"))
-            {
-                sql = @"SELECT * FROM Accounts WHERE Deleted='False' AND role='user'";
+            string sql = @"SELECT * FROM Accounts WHERE Deleted='False' AND role!='admin'";
 
-            }
-            else
-            {
-                sql = @"SELECT * FROM Accounts WHERE Deleted='False' AND role!='admin'";
-            }
             var AccountList = DBUtl.GetList<Account>(sql);
             return Json(new { data = AccountList });
         }
 
-        [Authorize(Roles = "admin,staff")]
+        [Authorize(Roles = "admin")]
         public IActionResult AccountIndex()
         {
             return View();
@@ -117,18 +109,18 @@ namespace MoneyExchangeWebApp.Controllers
         {
             List<Account> accountList = DBUtl.GetList<Account>("SELECT * FROM Accounts WHERE deleted='true'");
             return View(accountList);
-            
+
         }
         #endregion
 
         #region "Add User Accounts" - Teng Yik
-        [Authorize(Roles = "staff, admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult AddAccount()
         {
             return View();
         }
 
-        [Authorize(Roles = "staff, admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AddAccount(Account AC)
         {
@@ -146,21 +138,9 @@ namespace MoneyExchangeWebApp.Controllers
                 Gender, DOB, Role, DateCreated, Deleted, DeletedBy, DateDeleted)
                 VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', '{9:yyyy-MM-dd}', '{10}', '{11}', '{12:yyyy-MM-dd}')";
 
-                string insert;
-                if (User.IsInRole("staff"))
-                {
-                    insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
-                    AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "user".EscQuote(),
-                    DateTime.Now, 0, null, null);
-
-                }
-                else
-                {
-                    insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
+                string insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
                     AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "staff".EscQuote(),
                     DateTime.Now, 0, null, null);
-                }
-
 
                 int count = DBUtl.ExecSQL(insert);
                 if (count == 1)
@@ -186,15 +166,7 @@ namespace MoneyExchangeWebApp.Controllers
         public IActionResult EditUsers(int id)
         {
             //Filter types of Users
-            string sql;
-            if (User.IsInRole("staff"))
-            {
-                sql = @"SELECT * FROM Accounts WHERE AccountId={0} AND role='user'";
-            }
-            else
-            {
-                sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
-            }
+            string sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
 
             string select = String.Format(sql, id);
             List<Account> Alist = DBUtl.GetList<Account>(select);
@@ -210,7 +182,7 @@ namespace MoneyExchangeWebApp.Controllers
                 TempData["MsgType"] = "warning";
                 return RedirectToAction("AccountIndex");
             }
-            
+
         }
 
         //POST
@@ -227,13 +199,14 @@ namespace MoneyExchangeWebApp.Controllers
             else
             {
                 string sql = @"UPDATE Accounts SET EmailAddress='{1}', FirstName='{2}', 
-                             LastName='{3}', Address='{4}', PhoneNumber={5}, Gender='{6}', DOB='{7:yyyy-MM-dd}' 
+                             LastName='{3}', Address='{4}', PhoneNumber={5}, Gender='{6}', DOB='{7:yyyy-MM-dd}' ,
+                             EditedBy='{8}', EditedDate='{9:yyyy-MM-dd}'
                              WHERE AccountId={0}";
 
 
-                string update = String.Format(sql, model.AccountId, model.EmailAddress.EscQuote(), 
-                                              model.FirstName.EscQuote(), model.LastName.EscQuote(), model.Address.EscQuote(), model.PhoneNumber, 
-                                              model.Gender.EscQuote(), model.DOB);
+                string update = String.Format(sql, model.AccountId, model.EmailAddress.EscQuote(),
+                                              model.FirstName.EscQuote(), model.LastName.EscQuote(), model.Address.EscQuote(), model.PhoneNumber,
+                                              model.Gender.EscQuote(), model.DOB, model.EditedBy, DateTime.Now);
 
                 if (DBUtl.ExecSQL(update) == 1)
                 {
@@ -353,29 +326,29 @@ namespace MoneyExchangeWebApp.Controllers
 
             return View();
         }
-            /*
-                        string sql = @"SELECT * FROM Accounts WHERE EmailAddress = '{0}'";
-                        string select = String.Format(sql, email);
-                        List<Account> AccList = DBUtl.GetList<Account>(select);
-                        int id = AccList[0].AccountId;
+        /*
+                    string sql = @"SELECT * FROM Accounts WHERE EmailAddress = '{0}'";
+                    string select = String.Format(sql, email);
+                    List<Account> AccList = DBUtl.GetList<Account>(select);
+                    int id = AccList[0].AccountId;
 
-                        if (AccList.Count != 1)
-                        {
-                            ViewData["Message"] = "Email does not exist in the database.";
-                            ViewData["MsgType"] = "danger";
-                            return View();
-                        }
-                        else
-                        {*/
-            /* ViewData["Message"] = "An email has been sent to you to reset your " +
-                                   "password";
-             ViewData["MsgType"] = "success";*/
+                    if (AccList.Count != 1)
+                    {
+                        ViewData["Message"] = "Email does not exist in the database.";
+                        ViewData["MsgType"] = "danger";
+                        return View();
+                    }
+                    else
+                    {*/
+        /* ViewData["Message"] = "An email has been sent to you to reset your " +
+                               "password";
+         ViewData["MsgType"] = "success";*/
 
-            /* string title = "reset password";
-             string template = @"Hi, '{0}', here's the link to reset your password.
-                              <a href='http://localhost:5165/Account/ResetPassword'> 
-                              Reset password </a>";*/
-            // string body = String.Format(template, AccList[0].FirstName.EscQuote());
+        /* string title = "reset password";
+         string template = @"Hi, '{0}', here's the link to reset your password.
+                          <a href='http://localhost:5165/Account/ResetPassword'> 
+                          Reset password </a>";*/
+        // string body = String.Format(template, AccList[0].FirstName.EscQuote());
 
 
         //  }
@@ -404,8 +377,6 @@ namespace MoneyExchangeWebApp.Controllers
                 List<Account> AccList = DBUtl.GetList<Account>(select);
 
                 int userid = AccList[0].AccountId;
-
-
 
                 if (AccList.Count == 0)
                 {
@@ -485,48 +456,35 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region Verify Email
+        [AllowAnonymous]
         public IActionResult VerifyEmail(string email)
         {
-            string sql = @"SELECT EmailAddress FROM Accounts WHERE EmailAddress = '{0}'";
-
-            string select = String.Format(sql, email.EscQuote());
-
-            DataTable dt = DBUtl.GetTable(select);
-
-            if (dt.Rows.Count == 1)
+            string sql = $"SELECT * FROM Accounts WHERE EmailAddress = '{email}'";
+            if (DBUtl.GetTable(sql).Rows.Count > 0)
             {
-                return Json($"Email {email} is already in use.");
-            } 
-          
+                return Json($"[{email}] already in use");
+            }
             return Json(true);
         }
-
         #endregion
 
-        public IActionResult AccountDetails()
+        [Authorize(Roles = "admin")]
+        public IActionResult AccountDetails(int id)
         {
-            return View();
-        }
-
-        /*public IActionResult Test()
-        {
-            Account a = new Account();
-            return View(a);
-        }
-
-        [HttpGet]
-        public JsonResult IsEmailExist(string Email)
-        {
-            bool isExist = false;
-            if (Email.Equals("abc.gmail.com"))
+            List<Account> Alist = DBUtl.GetList<Account>(string.Format(@"SELECT * FROM Accounts WHERE AccountId={0}", id));
+            if (Alist.Count == 1)
             {
-                isExist = true;
+                Account AC = Alist[0];
+                return View(AC);
             }
+            else
+            {
+                ViewData["Message"] = "Account not found";
+                ViewData["MsgType"] = "danger";
+                return View("AccountIndex");
+            }
+        }
 
-            return Json(!isExist, JsonRequestBehavior.AllowGet);
-        }*/
-  
-        
     }
 }
 

@@ -22,9 +22,7 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Username</th>
-                                            <th>Password</th>
                                             <th>Name</th>
-                                            <th>Role</th>
                                             <th>Date Created</th>
                                             <th>Deleted By</th>
                                             <th>Actions</th>
@@ -37,10 +35,7 @@
                                             <tr>
                                                 <td>@item.AccountId</td>
                                                 <td>@item.EmailAddress</td>
-                                                <td>@item.Password</td>
-                                                <td>@item.FirstName</td>
-                                                <td>@item.LastName</td>
-                                                <td>@item.Address</td>
+                                                <td>@item.FirstName @item.LastName</td>
                                                 <td>@item.PhoneNumber</td>
                                                 <td>@item.Gender</td>
                                                 <td>@item.DOB.ToShortDateString()</td>

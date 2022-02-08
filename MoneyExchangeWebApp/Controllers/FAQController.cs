@@ -11,9 +11,14 @@ namespace MoneyExchangeWebApp.Controllers
         public IActionResult FAQIndex()
 		{
 			List<FAQ> Flist = DBUtl.GetList<FAQ>(@"SELECT * FROM FAQ");
-			return View(Flist);
+			return View();
 		}
         #endregion
+		public IActionResult GetAllFAQs()
+        {
+			var Flist = DBUtl.GetList<FAQ>(@"SELECT * FROM FAQ");
+			return Json(new { data = Flist });
+		}
 
         #region Create FAQ - Karthik
         [Authorize(Roles = "admin")]
@@ -99,20 +104,21 @@ namespace MoneyExchangeWebApp.Controllers
 
         #region Delete FAQ - Karthik
         [Authorize(Roles = "admin")]
+		[HttpDelete]
 		public IActionResult FAQDelete(int id)
         {
 			string sql = @"DELETE * FROM FAQ WHERE FaqId={0}";
 			int res = DBUtl.ExecSQL(sql, id);
 			if(res ==1)
             {
-				ViewData["Message"] = "FAQ Deleted!";
-				ViewData["MsgType"] = "success";
+				TempData["Message"] = "FAQ Deleted!";
+				TempData["MsgType"] = "success";
 				return View();
             }
             else
             {
-				ViewData["Message"] = "Delete unsuccessful";
-				ViewData["MsgType"] = "danger";
+				TempData["Message"] = "Delete unsuccessful";
+				TempData["MsgType"] = "danger";
 				return View();
 			}
         }

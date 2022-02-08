@@ -50,15 +50,16 @@ namespace MoneyExchangeWebApp.Controllers
             else
             {
                 string sql = @"INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, 
-                QuoteAmount, ExchangeRate, TransactionDate, DoneBy, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) 
-                VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd}', '{6}', '{7}', '{8:yyyy-MM-dd}', {9}, '{10}', '{11:yyyy-MM-dd}')";
+                QuoteAmount, ExchangeRate, TransactionDate, DoneBy, Deleted) 
+                VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd hh:mm:ss}', '{6}', 'false')";
 
                 string insert = String.Format(sql, TR.BaseCurrency.EscQuote(), TR.BaseAmount,
-                    TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, TR.TransactionDate, TR.DoneBy, null, null, 0, null, null);
+                    TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, DateTime.Now, User.Identity.Name.EscQuote()) ;
 
                 if (DBUtl.ExecSQL(insert) == 1)
                 {
-                    TempData["success"] = "Transaction Successfully Added.";
+                    ViewData["Message"] = "Currency Trade Successfully Added.";
+                    ViewData["MsgType"] = "success";
                     return RedirectToAction("ConvTransactionIndex");
                 }
                 else
@@ -91,7 +92,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles ="admin")]
         [HttpPost]
         public IActionResult ConvTransactionEdit(ConvTransaction TR)
         {
@@ -155,7 +156,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Permanently Delete Transaction" - Karthik
-        [Authorize]
+        [Authorize(Roles ="admin")]
         public IActionResult PermanentDeleteConvTransaction(int id)
         {
             string sql = @"SELECT * FROM ConvTransactions 
@@ -187,7 +188,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Recover Deleted Transaction" - Karthik
-        [Authorize]
+        [Authorize(Roles ="admin")]
         public IActionResult RecoverTransaction(int id)
         {
             string sql = @"SELECT * FROM ConvTransactions 
@@ -219,6 +220,7 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region"Conversion Transaction Details" - Karthik
+        [Authorize(Roles ="admin")]
         public IActionResult ConvTransactionDetails(int id)
         {
             string sql = @"SELECT * FROM ConvTransactions WHERE TransactionId={0}";
