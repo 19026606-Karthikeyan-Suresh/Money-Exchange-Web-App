@@ -44,28 +44,62 @@ namespace MoneyExchangeWebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["error"] = "Invalid Input";
+                TempData["Message"] = "Invalid Input";
+                TempData["MsgType"] = "warning";
                 return View("CreateConvTransaction");
             }
             else
             {
-                string sql = @"INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, 
-                QuoteAmount, ExchangeRate, TransactionDate, DoneBy, Deleted) 
-                VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd hh:mm:ss}', '{6}', 'false')";
+                string findAmt = @"SELECT * FROM Stock WHERE ISO='{0}'";
+                string combine1 = String.Format(findAmt, TR.QuoteCurrency.EscQuote());
 
-                string insert = String.Format(sql, TR.BaseCurrency.EscQuote(), TR.BaseAmount,
-                    TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, DateTime.Now, User.Identity.Name.EscQuote()) ;
-
-                if (DBUtl.ExecSQL(insert) == 1)
+                List<Stock> sList = DBUtl.GetList<Stock>(combine1);
+                if(sList.Count == 1)
                 {
-                    ViewData["Message"] = "Currency Trade Successfully Added.";
-                    ViewData["MsgType"] = "success";
-                    return RedirectToAction("ConvTransactionIndex");
+                    if(sList[0].Amount >= TR.QuoteAmount)
+                    {
+                        string updateMoney = @"UPDATE Stock SET Amount={0} WHERE StockId={1}";
+                        int res = DBUtl.ExecSQL(updateMoney, sList[0].Amount - TR.QuoteAmount, sList[0].StockId);
+                        if(res == 1)
+                        {
+                            string sql = @"INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, 
+                            QuoteAmount, ExchangeRate, TransactionDate, DoneBy, Deleted) 
+                            VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd hh:mm:ss}', '{6}', 'false')";
+
+                            string insert = String.Format(sql, TR.BaseCurrency.EscQuote(), TR.BaseAmount,
+                                TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, DateTime.Now, User.Identity.Name.EscQuote());
+
+                            if (DBUtl.ExecSQL(insert) == 1)
+                            {
+                                ViewData["Message"] = "Currency Trade Successfully Added.";
+                                ViewData["MsgType"] = "success";
+                                return RedirectToAction("ConvTransactionIndex");
+                            }
+                            else
+                            {
+                                ViewData["Message"] = DBUtl.DB_Message;
+                                ViewData["MsgType"] = "danger";
+                                return View("CreateConvTransaction");
+                            }
+                        }
+                        else
+                        {
+                            ViewData["Message"] = DBUtl.DB_Message;
+                            ViewData["MsgType"] = "danger";
+                            return View("CreateConvTransaction");
+                        }
+                    }
+                    else
+                    {
+                        ViewData["Message"] = "We have insufficient balance to go through with this exchange";
+                        ViewData["MsgType"] = "warning";
+                        return View("CreateConvTransaction");
+                    }
                 }
                 else
                 {
-                    ViewData["Message"] = DBUtl.DB_Message;
-                    ViewData["MsgType"] = "danger";
+                    ViewData["Message"] = "Selected Stock Does not exist" + TR.QuoteCurrency;
+                    ViewData["MsgType"] = "warning";
                     return View("CreateConvTransaction");
                 }
             }

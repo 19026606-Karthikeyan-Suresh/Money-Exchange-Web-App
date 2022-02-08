@@ -14,13 +14,13 @@ namespace MoneyExchangeWebApp.Models
         [Required]
         public string BaseCurrency { get; set; }
         [Required]
-        public decimal BaseAmount { get; set; }
+        public double BaseAmount { get; set; }
         [Required]
         public string QuoteCurrency { get; set; }
         [Required]
-        public decimal QuoteAmount { get; set; }
+        public double QuoteAmount { get; set; }
         [Required]
-        public decimal ExchangeRate { get; set; }
+        public double ExchangeRate { get; set; }
         [Required]
         public DateTime TransactionDate { get; set; }
         public string DoneBy { get; set; }

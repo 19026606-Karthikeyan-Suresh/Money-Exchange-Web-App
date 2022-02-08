@@ -14,7 +14,7 @@ namespace MoneyExchangeWebApp.Models
         public string EmailAddress { get; set; }
 
         [Required(ErrorMessage = "Password cannot be empty")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$",
+        [RegularExpression(@"^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$",
             ErrorMessage = "Password must have minimum 8 characters, at least one uppercase and lowercase, " +
             "one number and a special character")]
         public string Password { get; set; }

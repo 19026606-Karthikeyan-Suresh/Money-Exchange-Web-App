@@ -83,10 +83,10 @@ CREATE TABLE ExchangeRates(
 CREATE TABLE ConvTransactions(
 	TransactionId 	      INT 	    	IDENTITY PRIMARY KEY,
 	BaseCurrency	      VARCHAR(5)    NOT NULL,
-	BaseAmount	 	      DECIMAL(9,2)  NOT NULL,
+	BaseAmount	 	      float		    NOT NULL,
 	QuoteCurrency		  VARCHAR(5)	NOT NULL,
-	QuoteAmount			  DECIMAL(9,2)  NOT NULL,
-	ExchangeRate		  DECIMAL(9,2)  NOT NULL,
+	QuoteAmount			  float		    NOT NULL,
+	ExchangeRate		  float		    NOT NULL,
 	TransactionDate		  DATETIME		NOT NULL,
 	DoneBy				  VARCHAR(200)  NOT NULL,
 	EditedBy			  VARCHAR(200)  NULL,
@@ -345,7 +345,6 @@ CREATE TABLE Stock(
 
 );
 INSERT INTO Stock(ISO, Amount) VALUES
-('SGD', 100000),
 ('MMK', 112345),
 ('CNY', 12345),
 ('MYR', 98760),
