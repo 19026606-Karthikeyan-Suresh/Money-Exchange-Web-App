@@ -207,24 +207,48 @@ namespace MoneyExchangeWebApp.Controllers
                 double myWithdrawal = Double.Parse(withdraw);
                 if (s != null)
                 {
-                    double amt = s.Amount - myWithdrawal;
-                    int res = DBUtl.ExecSQL(String.Format(updateSql, amt, s.StockId));
-                    if (res == 1)
+                    if(s.Amount < myWithdrawal)
                     {
-                        ViewData["Message"] = "Amount has been successfully withdrawn!";
-                        ViewData["MsgType"] = "success";
+                        ViewData["Message"] = "Cannot Withdraw as insufficient balance";
+                        ViewData["MsgType"] = "warning";
                         return View("ShowWallet");
                     }
                     else
                     {
-                        ViewData["Message"] = s.StockId;
-                        ViewData["MsgType"] = "danger";
-                        return View();
+                        double amt = s.Amount - myWithdrawal;
+                        int res = DBUtl.ExecSQL(String.Format(updateSql, amt, s.StockId));
+                        if (res == 1)
+                        {
+                            string AddIntoDep = @"INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, TransactionDate, Deleted) 
+                                            VALUES({0}, '{1}', 'Withdrawal', {2}, '{3: yyyy-MM-dd hh:mm:ss}', 0)";
+                            int res1 = DBUtl.ExecSQL(AddIntoDep, s.StockId, s.ISO, myWithdrawal, DateTime.Now);
+                            if (res1 == 1)
+                            {
+                                ViewData["Message"] = "Amount has been successfully Withdrawn!";
+                                ViewData["MsgType"] = "success";
+                                return View("ShowWallet");
+                            }
+                            else
+                            {
+                                ViewData["Message"] = DBUtl.DB_Message;
+                                ViewData["MsgType"] = "danger";
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            ViewData["Message"] = "Cannot update stock";
+                            ViewData["MsgType"] = "danger";
+                            return View();
+                        }
                     }
+                    
                 }
                 else
                 {
-                    return NotFound();
+                    ViewData["Message"] = "You don't possses this stock";
+                    ViewData["MsgType"] = "warning";
+                    return View("ShowWallet");
                 }
 
             }

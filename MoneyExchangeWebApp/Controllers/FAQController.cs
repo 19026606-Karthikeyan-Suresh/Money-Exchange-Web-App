@@ -12,7 +12,7 @@ namespace MoneyExchangeWebApp.Controllers
         public IActionResult FAQIndex()
 		{
 			List<FAQ> Flist = DBUtl.GetList<FAQ>(@"SELECT * FROM FAQ");
-			return View();
+			return View(Flist);
 		}
 		#endregion
 		[Authorize(Roles = "admin")]
