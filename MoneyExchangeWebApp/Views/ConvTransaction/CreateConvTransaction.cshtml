@@ -48,7 +48,7 @@
                 <div class="col-md col-sm">
                     <div class="form-floating form-floating-sm" style="border-radius:0px !important;">
                          <select class="form-control col-sm-3" asp-for="BaseCurrency" asp-items="@((SelectList)ViewData["CurrencyList"])" id="fromCurr">
-                            <option value="0" selected="selected"> -- SELECT --</option>
+                            <option value="0" selected="selected" disabled> -- SELECT --</option>
                         </select>
                         <label asp-for="BaseCurrency">Base Currency</label>
                         <span asp-validation-for="BaseCurrency" class="text-danger"></span>
@@ -67,7 +67,7 @@
                  <div class="col-md col-sm">
                      <div class="form-floating form-floating-sm">
                          <select class="form-control col-sm-3" asp-for="QuoteCurrency" asp-items="@((SelectList)ViewData["CurrencyList"])" id="toCurr">
-                            <option value="0" selected="selected"> -- SELECT --</option>
+                            <option value="0" selected="selected" disabled> -- SELECT --</option>
                         </select>
                         <label asp-for="QuoteCurrency">Quote Currency</label>
                         <span asp-validation-for="QuoteCurrency" class="text-danger"></span>
@@ -100,7 +100,7 @@
                <div class="row g-2">
                     <div class="col-md col-sm">
                         <div class="form-floating form-floating-sm">
-                            <input type="datetime" class="form-control text-white" id="DateTime" value=@DateTime.Now style="background-color: rgb(196, 158, 158);">
+                            <input type="datetime" class="form-control text-white" id="DateTime" value=@DateTime.Now style="background-color: rgb(196, 158, 158);" readonly>
                             <label for="DateTime">Date</label>
                             <p class="text-muted" style="font-size: 12px;">Cannot be changed</p>
                         </div>

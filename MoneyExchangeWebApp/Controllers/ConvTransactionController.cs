@@ -64,15 +64,15 @@ namespace MoneyExchangeWebApp.Controllers
                         {
                             string sql = @"INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, 
                             QuoteAmount, ExchangeRate, TransactionDate, DoneBy, Deleted) 
-                            VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd hh:mm:ss}', '{6}', 'false')";
+                            VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd HH:mm:ss}', '{6}', 'false')";
 
                             string insert = String.Format(sql, TR.BaseCurrency.EscQuote(), TR.BaseAmount,
                                 TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, DateTime.Now, User.Identity.Name.EscQuote());
 
                             if (DBUtl.ExecSQL(insert) == 1)
                             {
-                                ViewData["Message"] = "Currency Trade Successfully Added.";
-                                ViewData["MsgType"] = "success";
+                                TempData["Message"] = "Currency Trade Successfully Added.";
+                                TempData["MsgType"] = "success";
                                 return RedirectToAction("ConvTransactionIndex");
                             }
                             else
@@ -98,7 +98,7 @@ namespace MoneyExchangeWebApp.Controllers
                 }
                 else
                 {
-                    ViewData["Message"] = "Selected Stock Does not exist" + TR.QuoteCurrency;
+                    ViewData["Message"] = "Selected Stock Does not exist " + TR.QuoteCurrency;
                     ViewData["MsgType"] = "warning";
                     return View("CreateConvTransaction");
                 }
@@ -175,7 +175,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE ConvTransactions SET Deleted='True',DeletedBy='{1}' WHERE TransactionId={0}", id, User.Identity.Name.EscQuote()));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE ConvTransactions SET Deleted='True',DeletedBy='{1}',DeletedDate='{2: yyyy-MM-dd HH:mm:ss}' WHERE TransactionId={0}", id, User.Identity.Name.EscQuote()));
                 if (res == 1)
                 {
                     TempData["success"] = "Transaction Record Deleted";
