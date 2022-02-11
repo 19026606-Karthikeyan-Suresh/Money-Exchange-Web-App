@@ -175,7 +175,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE ConvTransactions SET Deleted='True',DeletedBy='{1}',DeletedDate='{2: yyyy-MM-dd HH:mm:ss}' WHERE TransactionId={0}", id, User.Identity.Name.EscQuote()));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE ConvTransactions SET Deleted='True',DeletedBy='{1}', WHERE TransactionId={0}", id, User.Identity.Name.EscQuote()));
                 if (res == 1)
                 {
                     TempData["success"] = "Transaction Record Deleted";
