@@ -224,6 +224,11 @@
         <!-- FAQ Slider -->
         <!-- Enquire Us -->
         <partial name="_EnquireUs" />
+        @if (TempData["Message"] != null){
+            <div class="alert alert-@TempData["MsgType"]" style="text-align: center;align-items:center">
+        @TempData["Message"]
+            </div>
+    }
         <!-- Enquire Us -->
         <!-- Comapny Details & Footer -->
         <partial name="_Footer" />

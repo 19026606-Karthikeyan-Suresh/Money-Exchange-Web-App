@@ -41,27 +41,6 @@ namespace MoneyExchangeWebApp.Controllers
             {
                 string[] currNRate = list[i].Split(":");
 
-                //DO NOT DELETE THESE COMMENTED CODES FIRST
-                //    List<CurrencyExchange> curExList = DBUtl.GetList<CurrencyExchange>($"SELECT * FROM ExchangeRates WHERE Target_currency = '{currNRate[0].Replace("\"", "").Trim()}'");
-                //    ViewData["Check"] = $"SELECT * FROM ExchangeRates WHERE Target_currency = '{currNRate[0].Replace("\"","").Trim()}'";
-
-                //    if (curExList.Count == 0)
-                //    {
-                //        string sql = @"INSERT INTO ExchangeRates VALUES ('SGD', '{0}', {1})";
-                //        if(DBUtl.ExecSQL(sql, currNRate[0], currNRate[1]) == 1)
-                //        {
-
-                //        }
-                //        else                       
-                //            ViewData["DatabaseUpdateError"] = DBUtl.DB_Message;               
-                //}
-                //    else
-                //    {
-                //        string sql = @"UPDATE ExchangeRates SET Exchange_rate = {0} WHERE Target_currency = '{1}'";
-                //        int success = DBUtl.ExecSQL(sql, currNRate[1], currNRate[0]);
-                //        if (success == 0)
-                //            ViewData["DatabaseUpdateError"] = "There was an error updating the database. Please contact the Administrator if you see this message";                  
-                //    }
                 string sql = @"INSERT INTO ExchangeRates VALUES ('SGD', '{0}', {1})";
                 if (DBUtl.ExecSQL(sql, currNRate[0].Replace("\"", "").Trim(), Convert.ToDouble(currNRate[1])) != 1)
                 {
