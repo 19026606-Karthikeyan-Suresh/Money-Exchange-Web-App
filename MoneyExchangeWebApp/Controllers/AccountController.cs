@@ -199,14 +199,14 @@ namespace MoneyExchangeWebApp.Controllers
             else
             {
                 string sql = @"UPDATE Accounts SET EmailAddress='{1}', FirstName='{2}', 
-                             LastName='{3}', Address='{4}', PhoneNumber={5}, Gender='{6}', DOB='{7:yyyy-MM-dd}' ,
+                             LastName='{3}', Address='{4}', PhoneNumber={5}, Gender='{6}', DOB='{7:yyyy-MM-dd}',
                              EditedBy='{8}', EditedDate='{9:yyyy-MM-dd}'
                              WHERE AccountId={0}";
 
 
                 string update = String.Format(sql, model.AccountId, model.EmailAddress.EscQuote(),
                                               model.FirstName.EscQuote(), model.LastName.EscQuote(), model.Address.EscQuote(), model.PhoneNumber,
-                                              model.Gender.EscQuote(), model.DOB, model.EditedBy, DateTime.Now);
+                                              model.Gender.EscQuote(), model.DOB, User.Identity.Name.EscQuote(), DateTime.Now);
 
                 if (DBUtl.ExecSQL(update) == 1)
                 {
