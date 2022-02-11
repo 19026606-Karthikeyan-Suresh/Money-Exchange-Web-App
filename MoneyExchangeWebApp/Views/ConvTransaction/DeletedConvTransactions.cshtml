@@ -3,6 +3,12 @@
     <script type="text/javascript" src="~/Datatables/datatables.min.js"></script>
 }
 
+@if (TempData["Message"] != null){
+    <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+        </div>
+}
+
 
 @using MoneyExchangeWebApp.Models;
 @model List<ConvTransaction>;
