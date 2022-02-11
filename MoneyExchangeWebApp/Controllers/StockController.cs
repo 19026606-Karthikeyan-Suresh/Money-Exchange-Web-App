@@ -220,7 +220,7 @@ namespace MoneyExchangeWebApp.Controllers
                         if (res == 1)
                         {
                             string AddIntoDep = @"INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, TransactionDate, Deleted) 
-                                            VALUES({0}, '{1}', 'Withdrawal', {2}, '{3: yyyy-MM-dd hh:mm:ss}', 0)";
+                                            VALUES({0}, '{1}', 'Withdrawal', {2}, '{3: yyyy-MM-dd HH:mm:ss}', 0)";
                             int res1 = DBUtl.ExecSQL(AddIntoDep, s.StockId, s.ISO, myWithdrawal, DateTime.Now);
                             if (res1 == 1)
                             {
