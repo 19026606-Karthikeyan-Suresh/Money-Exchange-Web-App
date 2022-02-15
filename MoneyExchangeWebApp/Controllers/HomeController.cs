@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System;
+using System.Collections.Generic;
 
 namespace MoneyExchangeWebApp.Controllers
 {
@@ -15,8 +16,8 @@ namespace MoneyExchangeWebApp.Controllers
         #endregion
 
         #region "Display ExchangeRates" - Jasper
-        private string apiWebsite = "https://freecurrencyapi.net/api/v2/latest?apikey=d7ba8d40-5e88-11ec-b4e7-e7f7a5d589f5&base_currency=SGD";
-        public IActionResult GetAllExchangeRates()
+        private string apiWebsite = "https://freecurrencyapi.net/api/v2/latest?apikey=364830c0-5907-11ec-ad52-3b41478b07db&base_currency=SGD";
+        public IActionResult ExchangeRates()
         {
             dynamic data = WebUtl.CallWebApi(apiWebsite);
             dynamic result = new
@@ -42,18 +43,13 @@ namespace MoneyExchangeWebApp.Controllers
 
             }
 
-            var curExList = DBUtl.GetList<ExchangeRates>("SELECT * FROM ExchangeRates ORDER BY QuoteCurrency");
+            List<ExchangeRates> curExList = DBUtl.GetList<ExchangeRates>("SELECT * FROM ExchangeRates ORDER BY QuoteCurrency");
 
 
 
-            return Json(new { data = curExList });
+            return View(curExList);
 
         }
         #endregion
-
-        public IActionResult ExchangeRates()
-        {
-            return View();
-        }
     }
 }

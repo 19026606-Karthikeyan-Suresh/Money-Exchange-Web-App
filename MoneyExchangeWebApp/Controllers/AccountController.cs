@@ -87,18 +87,12 @@ namespace MoneyExchangeWebApp.Controllers
         #region "Get Account List" - Karthik
         [HttpGet]
         [Authorize(Roles = "admin")]
-        public IActionResult GetAll()
-        {
-            string sql = @"SELECT * FROM Accounts WHERE Deleted='False' AND role!='admin'";
-
-            var AccountList = DBUtl.GetList<Account>(sql);
-            return Json(new { data = AccountList });
-        }
-
-        [Authorize(Roles = "admin")]
         public IActionResult AccountIndex()
         {
-            return View();
+            string sql = @"SELECT * FROM Accounts WHERE Deleted='False'";
+
+            List<Account> AccountList = DBUtl.GetList<Account>(sql);
+            return View(AccountList);
         }
 
         #endregion
@@ -136,7 +130,7 @@ namespace MoneyExchangeWebApp.Controllers
                 string sql =
               @"INSERT INTO Accounts(EmailAddress, Password, FirstName, LastName, Address, PhoneNumber, 
                 Gender, DOB, Role, DateCreated, Deleted, DeletedBy, DateDeleted)
-                VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', '{9:yyyy-MM-dd}', '{10}', '{11}', '{12:yyyy-MM-dd}')";
+                VALUES('{0}',HASHBYTES('SHA1','{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', '{9:yyyy-MM-dd HH:mm:ss}', '{10}', '{11}', '{12:yyyy-MM-dd}')";
 
                 string insert = String.Format(sql, AC.EmailAddress.EscQuote(), AC.Password.EscQuote(), AC.FirstName.EscQuote(),
                     AC.LastName.EscQuote(), AC.Address.EscQuote(), AC.PhoneNumber, AC.Gender.EscQuote(), AC.DOB, "staff".EscQuote(),
@@ -160,10 +154,10 @@ namespace MoneyExchangeWebApp.Controllers
 
         #endregion
 
-        #region "Edit User Accounts" - Teng Yik
+        #region "Edit a User Account" - Teng Yik
         //GET
         [Authorize(Roles = "admin")]
-        public IActionResult EditUsers(int id)
+        public IActionResult EditAccount(int id)
         {
             //Filter types of Users
             string sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
@@ -188,13 +182,13 @@ namespace MoneyExchangeWebApp.Controllers
         //POST
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult EditUsers(UpdateViewView model)
+        public IActionResult EditAccount(UpdateViewView model)
         {
             if (!ModelState.IsValid)
             {
                 ViewData["Message"] = "Invalid Input";
                 ViewData["MsgType"] = "danger";
-                return View("EditUsers", model);
+                return View("EditAccount", model);
             }
             else
             {
@@ -225,7 +219,7 @@ namespace MoneyExchangeWebApp.Controllers
 
         #region "Delete user Accounts" - Teng Yik
         [Authorize(Roles = "admin")]
-        public IActionResult Delete(int id)
+        public IActionResult SoftDeleteAccount(int id)
         {
             string sql = @"SELECT * FROM Accounts WHERE AccountId={0}";
             string select = String.Format(sql, id);
@@ -404,57 +398,6 @@ namespace MoneyExchangeWebApp.Controllers
         }
         #endregion
 
-        #region Register - Teng Yik
-        public IActionResult Register()
-        {
-            return View();
-        }
-        public IActionResult RegisterPost(Account A)
-        {
-            if (!ModelState.IsValid)
-            {
-                ViewData["Message"] = "Invalid Input";
-                ViewData["MsgType"] = "danger";
-                return View("Register", A);
-            }
-            else
-            {
-                /*tring sql = @"INSERT INTO Accounts (EmailAddress, Password, FirstName, LastName, Address, PhoneNumber,
-                               Gender, DOB, Role, DateCreated, EditedBy, EditedDate, Deleted, DeletedBy, DateDeleted) 
-                               VALUES('{0}', HASHBYTES('SHA1', '{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', 
-                               '{9:yyyy-MM-dd hh:mm:ss}', '{10}', '{11:yyyy-MM-dd hh:mm:ss}', {12}, '{13}', '{14:yyyy-MM-dd hh:mm:ss}')";
-
-
-                string insert = String.Format(sql, A.EmailAddress.EscQuote(), A.Password.EscQuote(), A.FirstName.EscQuote(),
-                    A.LastName.EscQuote(), A.Address.EscQuote(), A.PhoneNumber, A.Gender.EscQuote(), A.DOB, "user",
-                      DateTime.Now, null, 0, null, DBNull.Value);*/
-
-                string sql = @"INSERT INTO Accounts (EmailAddress, Password, FirstName, LastName, Address, PhoneNumber,
-                               Gender, DOB, Role, DateCreated, EditedBy, Deleted, DeletedBy) 
-                               VALUES('{0}', HASHBYTES('SHA1', '{1}'), '{2}', '{3}', '{4}', {5}, '{6}', '{7:yyyy-MM-dd}', '{8}', 
-                               '{9:yyyy-MM-dd}','{10}', {11}, '{12}')";
-
-
-                string insert = String.Format(sql, A.EmailAddress.EscQuote(), A.Password.EscQuote(), A.FirstName.EscQuote(),
-                    A.LastName.EscQuote(), A.Address.EscQuote(), A.PhoneNumber, A.Gender.EscQuote(), A.DOB, "user",
-                      DateTime.Now, null, 0, null);
-
-
-                if (DBUtl.ExecSQL(insert) == 1)
-                {
-                    ViewData["Message"] = "Account added!";
-                    ViewData["MsgType"] = "success";
-                }
-                else
-                {
-                    ViewData["Message"] = DBUtl.DB_Message;
-                    ViewData["MsgType"] = "danger";
-                }
-                return View("Register");
-            }
-        }
-        #endregion
-
         #region Verify Email
         [AllowAnonymous]
         public IActionResult VerifyEmail(string email)
@@ -468,6 +411,7 @@ namespace MoneyExchangeWebApp.Controllers
         }
         #endregion
 
+        #region View Account Details - Karthik
         [Authorize(Roles = "admin")]
         public IActionResult AccountDetails(int id)
         {
@@ -484,6 +428,7 @@ namespace MoneyExchangeWebApp.Controllers
                 return View("AccountIndex");
             }
         }
+        #endregion
 
     }
 }
