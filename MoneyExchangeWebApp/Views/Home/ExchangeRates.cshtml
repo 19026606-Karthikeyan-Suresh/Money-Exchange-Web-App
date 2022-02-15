@@ -30,7 +30,15 @@
 
         $(document).ready(function () {
             $("#btnConvert").click(Convert);
-        })
+            $('#EXtbl').DataTable({
+            ordering: true,
+            paging: true,
+            searching: true,
+            info: true,
+            lengthChange: true,
+            pageLength: 10
+        });
+        });
 </script>
 <!-- Exchange Rates -->
 <section class="exchange-rates" id="scrollspyExchangeRates">
@@ -116,15 +124,3 @@
     </div>
 </section>
 <!--Currency Calculator-->
-<script>
-    $(document).ready(function () {
-        $('#EXtbl').DataTable({
-            ordering: true,
-            paging: true,
-            searching: true,
-            info: true,
-            lengthChange: true,
-            pageLength: 10
-        });
-    });
-</script>

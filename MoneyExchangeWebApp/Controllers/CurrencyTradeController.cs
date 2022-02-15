@@ -15,7 +15,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult CurrencyTradeIndex()
         {
-            string sql = @"SELECT * FROM CurrenyTrades WHERE Deleted='False'";
+            string sql = @"SELECT * FROM CurrencyTrades WHERE Deleted='False'";
             List<CurrencyTrade> CTRlist = DBUtl.GetList<CurrencyTrade>(sql);
             return View("CurrencyTradeIndex", CTRlist);
         }
@@ -25,7 +25,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult DeletedCurrencyTrades()
         {
-            List<CurrencyTrade> tranList = DBUtl.GetList<CurrencyTrade>("SELECT * FROM ConvTransactions WHERE Deleted='True' ORDER BY TransactionDate DESC");
+            List<CurrencyTrade> tranList = DBUtl.GetList<CurrencyTrade>("SELECT * FROM CurrencyTrades WHERE Deleted='True' ORDER BY TransactionDate DESC");
             return View(tranList);
 
         }

@@ -111,9 +111,7 @@
                                                 <td>@item.Trades</td>
                                             </tr>
                                         }
-
                                     }
-
                                 </tbody>
                             </table>
                         </div>
@@ -196,7 +194,6 @@
                                                 <td>@item.Trades</td>
                                             </tr>
                                         }
-
                                     }
                                 </tbody>
                             </table>
@@ -238,7 +235,16 @@
 }
 
 
-@section Scripts{
-<script src="~/js/DatatablesJS/ExchangeRates.js"></script>
-<script src="~/js/LoadSlider.js"></script>
-}
+
+<script>
+    $(document).ready(function () {
+        $('#EXtbl').DataTable({
+            ordering: true,
+            paging: true,
+            searching: true,
+            info: true,
+            lengthChange: true,
+            pageLength: 10
+        });
+    });
+</script>
