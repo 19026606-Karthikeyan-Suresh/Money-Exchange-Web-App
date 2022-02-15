@@ -1,48 +1,47 @@
 ﻿@model UserLogin;
 <body style="background-color: rgb(139, 114, 114);background-image: url(../images/money.jpg);">
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-sm-12">
-                    <div class="row justify-content-center mt-5">
-                        <div class="card col-4 col-sm-4" style="background-color: rgba(0,0,0,0.2); margin: 0rem; height:500px; backdrop-filter: blur(14px); ">
-                            <div class="card-body">
-                                <div class="container-fluid">
-                                    <form method="post" asp-controller="Account" asp-action="Login">
-                                        <div class="rounded-circle" style="background-color: white; text-align: center;">
-                                            <i class="bi bi-currency-exchange fa-4x"></i>
-                                        </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-12">
+                <div class="row justify-content-center mt-5">
+                    <div class="card col-4 col-sm-4" style="background-color: rgba(0,0,0,0.2); margin: 0rem; height:500px; backdrop-filter: blur(14px); ">
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                <form method="post" asp-controller="Account" asp-action="Login">
+                                    <div class="rounded-circle" style="background-color: white; text-align: center;">
+                                        <i class="bi bi-currency-exchange fa-4x"></i>
+                                    </div>
 
-                                        <!--Break Line-->
-                                        <br>
+                                    <!--Break Line-->
+                                    <br>
 
-                                        <!--Email Address(aka UserID)-->
-                                        <h6 class="text-white text-start">Login</h6>
-                                        <div class="form-floating mb-3">
-                                            <input type="email" class="form-control border border-2" style="border-radius: 0 !important;" id="floatingInput" placeholder="name@example.com" asp-for="UserID">
-                                            <label for="floatingInput">Email address</label>
-                                            <span class="text-danger" asp-validation-for="UserID"></span>
-                                        </div>
-                                        <!--Email Address(aka UserID)-->
+                                    <!--Email Address(aka UserID)-->
+                                    <h6 class="text-white text-start">Login</h6>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control border border-2" style="border-radius: 0 !important;" id="floatingInput" placeholder="name@example.com" asp-for="UserID">
+                                        <label for="floatingInput">Email address</label>
+                                        <span class="text-danger" asp-validation-for="UserID"></span>
+                                    </div>
+                                    <!--Email Address(aka UserID)-->
+                                    <!--Password-->
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control border border-2" style="border-radius: 0 !important;" id="floatingPassword" placeholder="Password" asp-for="Password">
+                                        <label for="floatingPassword">Password</label>
+                                        <span class="text-danger" asp-validation-for="Password"></span>
+                                    </div>
+                                    <!--Password-->
 
-                                        <!--Password-->
-                                        <div class="form-floating mb-3">
-                                            <input type="password" class="form-control border border-2" style="border-radius: 0 !important;" id="floatingPassword" placeholder="Password" asp-for="Password">
-                                            <label for="floatingPassword">Password</label>
-                                            <span class="text-danger" asp-validation-for="Password"></span>   
-                                        </div>
-                                        <!--Password-->
-
-                                        <div class="d-grid g-2 mt-3">
-                                            <input type="submit" class="btn btn-outline-light text-outline-light" value="Login">
-                                            <a type="button" style="margin-top: 5px;" class="btn btn-dark text-light" asp-controller="Home" asp-action="Index">Back to Home</a>
-                                        </div>
-                                        <p class="text-end text-sm mt-1 text-light" style="font-size: 13px;"><a href="~/Account/ForgotPassword">Forgot your password?</a></p>
-                                    </form>
-                                </div>
+                                    <div class="d-grid g-2 mt-3">
+                                        <input type="submit" class="btn btn-outline-light text-outline-light" value="Login">
+                                        <a type="button" style="margin-top: 5px;" class="btn btn-dark text-light" asp-controller="Home" asp-action="Index">Back to Home</a>
+                                    </div>
+                                    <p class="text-end text-sm mt-1 text-light" style="font-size: 13px;"><a href="~/Account/ForgotPassword">Forgot your password?</a></p>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>

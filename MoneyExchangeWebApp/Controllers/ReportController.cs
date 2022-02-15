@@ -14,7 +14,7 @@ namespace MoneyExchangeWebApp.Controllers
             return View();
         }
 
-        public IActionResult DisplayCurrencies()   
+        public IActionResult DisplayCurrencies()
         {
 
             IFormCollection form = HttpContext.Request.Form;
@@ -61,7 +61,7 @@ namespace MoneyExchangeWebApp.Controllers
 
         public IActionResult DisplayDays()
         {
-            
+
             IFormCollection form = HttpContext.Request.Form;
 
             string bestorworst = form["BestOrWorst"].ToString().Trim();

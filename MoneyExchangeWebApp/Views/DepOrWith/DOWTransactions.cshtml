@@ -1,50 +1,50 @@
 ﻿@using MoneyExchangeWebApp.Models
 @section MoreScripts {
-   <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
-   <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+<link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
 
-   <script>
-      $(document).ready(function () {
-         $('#tDOWtable')DataTable({
-            ordering: false,
-            paging: true,
-            searching: false,
-            info: false, 
-            lengthChange: false,
-            pageLength: 5
-         });
-      });
-   </script>
+<script>
+    $(document).ready(function () {
+       $('#tDOWtable')DataTable({
+          ordering: false,
+          paging: true,
+          searching: false,
+          info: false,
+          lengthChange: false,
+          pageLength: 5
+       });
+    });
+</script>
 }
 @model List<DepWithTransactions>
 
-    <div class="container py-sm-5">
-        <div class="row pt-4">
-            <div class="col-6">
-                <h2 class="text-dark text-center display-2">Transaction List</h2>
-            </div>
+<div class="container py-sm-5">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-dark text-center display-2">Transaction List</h2>
         </div>
-    <br/><br/>
+    </div>
+    <br /><br />
 
-        <div class="row py-5">
-            <div class="col-sm-15 mx-auto">
-                <div class="card rounded shadow border-0">
-                    <div class="card-body p-sm-10 bg-white rounded">
-                        <div class="table-responsive">
-                            <table id="tDOWtable"  class="table table-hover table-responsive" style="text-align:center">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>ISO</th>
-                                        <th>Transaction Type</th>
-                                        <th>Amount</th>
-                                        <th>Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach(DepWithTransactions DWT in Model)
-                                    {
+    <div class="row py-5">
+        <div class="col-sm-15 mx-auto">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-sm-10 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="tDOWtable" class="table table-hover table-responsive" style="text-align:center">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ISO</th>
+                                    <th>Transaction Type</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (DepWithTransactions DWT in Model)
+                                {
                                     <tr>
                                         <td>@DWT.TransactionId</td>
                                         <td>@DWT.ISO</td>
@@ -52,24 +52,24 @@
                                         <td>@DWT.Amount</td>
                                         <td>@DWT.TransactionDate.ToShortDateString()</td>
                                         <td>
-                                            <a asp-controller="DepOrWith" 
-                                                asp-action="SoftDeleteDepOrWith" 
-                                                asp-route-id="@DWT.TransactionId"><i class="fas fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Soft Delete Transaction"></i></a>
+                                            <a asp-controller="DepOrWith"
+                                           asp-action="SoftDeleteDepOrWith"
+                                           asp-route-id="@DWT.TransactionId"><i class="fas fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Soft Delete Transaction"></i></a>
                                         </td>
                                     </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
 </script>

@@ -14,14 +14,6 @@ namespace MoneyExchangeWebApp.Controllers
         }
         #endregion
 
-        /*        #region Error Message
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        #endregion*/
-
         #region "Display ExchangeRates" - Jasper
         private string apiWebsite = "https://freecurrencyapi.net/api/v2/latest?apikey=d7ba8d40-5e88-11ec-b4e7-e7f7a5d589f5&base_currency=SGD";
         public IActionResult GetAllExchangeRates()

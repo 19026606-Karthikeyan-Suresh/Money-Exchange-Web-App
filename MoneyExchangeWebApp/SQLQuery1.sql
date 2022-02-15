@@ -80,7 +80,7 @@ CREATE TABLE ExchangeRates(
     	ExchangeRate   	Float 			NOT NULL
 );
 
-CREATE TABLE ConvTransactions(
+CREATE TABLE CurrencyTrades(
 	TransactionId 	      INT 	    	IDENTITY PRIMARY KEY,
 	BaseCurrency	      VARCHAR(5)    NOT NULL,
 	BaseAmount	 	      float		    NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE ConvTransactions(
 	DeletedDate			  DATETIME		NULL
 );
 
-INSERT INTO ConvTransactions(BaseCurrency, BaseAmount, QuoteCurrency, QuoteAmount, ExchangeRate, TransactionDate, DoneBy, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) VALUES
+INSERT INTO CurrencyTrades(BaseCurrency, BaseAmount, QuoteCurrency, QuoteAmount, ExchangeRate, TransactionDate, DoneBy, EditedBy, EditedDate, Deleted, DeletedBy, DeletedDate) VALUES
 ('SGD', 10.00, 'MYR', 30.77, 3.08, '2021-11-16','john123@gmail.com', null, null, 0, null, null),
 ('SGD', 1200000.00, 'CNY', 5662411.20, 4.72, '2021-11-15','k.artixc@gmail.com' , null, null, 0, null, null), 
 ('SGD', 123.00, 'MMK', 160774.14, 1307.11, '2021-11-14','k.artixc@gmail.com', null, null, 0, null, null),

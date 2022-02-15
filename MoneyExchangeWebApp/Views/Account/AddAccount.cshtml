@@ -4,105 +4,105 @@
 
 <form method="post"
       asp-controller="Account"
-      asp-action ="AddAccount"
+      asp-action="AddAccount"
       enctype="multipart/form-data">
 
-   <div class="border p-3 mt-4">
-      <div class="row pb-2">
-         <h2 class="text-primary">Add a User</h2>
-      </div>
-      <hr />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Add a User</h2>
+        </div>
+        <hr />
 
-   <div class="form-floating mb-3">
-      <input type="email" class="form-control" place-holder="Email Address" asp-for="EmailAddress">
-      <label asp-for="EmailAddress">Email</label>
-      <span asp-validation-for="EmailAddress" class="text-danger"></span>
-   </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" place-holder="Email Address" asp-for="EmailAddress">
+            <label asp-for="EmailAddress">Email</label>
+            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+        </div>
 
-   <div class="form-floating mb-3">
-       <input type="password" class="form-control" placeholder="Password" asp-for="Password">
-       <label asp-for="Password">Password</label>
-       <span asp-validation-for="Password" class="text-danger"></span>
-   </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" placeholder="Password" asp-for="Password">
+            <label asp-for="Password">Password</label>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
 
-   <div class=" row g-2 mb-3">
-     <div class="col-md">
-       <div class="form-floating">
-        <input type="text" class="form-control" placeholder="First Name" asp-for="FirstName">
-        <label asp-for="FirstName">First Name</label>
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-      </div>
-     </div>
-     <div class="col-md">
-       <div class="form-floating">
-         <input type="text" class="form-control" placeholder="Last Name" asp-for="LastName">
-         <label asp-for="LastName">Last Name</label>
-         <span asp-validation-for="LastName" class="text-danger"></span>
-       </div>
-     </div>
-   </div>
-
-   <div class="form-floating mb-3">
-       <input type="text" class="form-control" placeholder="Address" asp-for="Address">
-       <label asp-for="Address">Address</label>
-       <span asp-validation-for="Address" class="text-danger"></span>
-   </div>
-
-   <div class="form-floating mb-3">
-       <input type="text" class="form-control" placeholder="Phone Number" asp-for="PhoneNumber">
-       <label asp-for="PhoneNumber">Phone Number</label>
-       <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-   </div>
-
-   <div class="form-floating mb-3">
-      <select class="form-select" asp-for="Gender">
-        <option selected>----</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Unspecified">Unspecified</option>
-      </select>
-      <label asp-for="Gender">Gender</label>
-      <span asp-validation-for="Gender" class="text-danger"></span>
-   </div>
-
-   <div class="form-floating mb-3">
-       <input type="date" class="form-control" asp-for="DOB">
-       <label asp-for="DOB">Date Of Birth</label>
-       <span asp-validation-for="DOB" class="text-danger"></span>
-   </div>
-
-   <div class="form-group row">
-      <div class="d-grid col-12 ms-auto mb-3">
-         <input type="submit" value="Add User" class="btn-lg btn-outline-primary" />
-      </div>
-   </div>
-
-   @if (ViewData["Message"] != null)
-   {
-      <div class="form-group row">
-         <div class=" col-6 ml-auto mb-3">
-            <div class="alert alert-@ViewData["MsgType"]">
-               <text>@ViewData["Message"]</text>
+        <div class=" row g-2 mb-3">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="First Name" asp-for="FirstName">
+                    <label asp-for="FirstName">First Name</label>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
             </div>
-         </div>
-      </div>
-   }
-</div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="Last Name" asp-for="LastName">
+                    <label asp-for="LastName">Last Name</label>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" placeholder="Address" asp-for="Address">
+            <label asp-for="Address">Address</label>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" placeholder="Phone Number" asp-for="PhoneNumber">
+            <label asp-for="PhoneNumber">Phone Number</label>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select class="form-select" asp-for="Gender">
+                <option selected>----</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Unspecified">Unspecified</option>
+            </select>
+            <label asp-for="Gender">Gender</label>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" asp-for="DOB">
+            <label asp-for="DOB">Date Of Birth</label>
+            <span asp-validation-for="DOB" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="d-grid col-12 ms-auto mb-3">
+                <input type="submit" value="Add User" class="btn-lg btn-outline-primary" />
+            </div>
+        </div>
+
+        @if (ViewData["Message"] != null)
+        {
+            <div class="form-group row">
+                <div class=" col-6 ml-auto mb-3">
+                    <div class="alert alert-@ViewData["MsgType"]">
+                        <text>@ViewData["Message"]</text>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </form>
 
 @*DO NOT DELETE SECTION SCRIPTS - Karthik*@
 @*@section Scripts{
     <script>
-        function ValidateInput() {
-            if(document.getElementById("PhoneNumber").value==""){
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Please Enter Phone Number!'
-                });
-                return false;
-            }
-            return true;
-        }
+    function ValidateInput() {
+    if(document.getElementById("PhoneNumber").value==""){
+    Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Please Enter Phone Number!'
+    });
+    return false;
+    }
+    return true;
+    }
     </script>
-}*@
+    }*@

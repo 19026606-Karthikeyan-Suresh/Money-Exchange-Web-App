@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\FYP_Project\\MoneyExchangeWebApp\\MoneyExchangeWebApp.csproj": {}
+    "C:\\Users\\19026606\\Desktop\\Web-Development-Projects\\Money-Exchange-Web-App\\MoneyExchangeWebApp\\MoneyExchangeWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\FYP_Project\\MoneyExchangeWebApp\\MoneyExchangeWebApp.csproj": {
+    "C:\\Users\\19026606\\Desktop\\Web-Development-Projects\\Money-Exchange-Web-App\\MoneyExchangeWebApp\\MoneyExchangeWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\FYP_Project\\MoneyExchangeWebApp\\MoneyExchangeWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\19026606\\Desktop\\Web-Development-Projects\\Money-Exchange-Web-App\\MoneyExchangeWebApp\\MoneyExchangeWebApp.csproj",
         "projectName": "MoneyExchangeWebApp",
-        "projectPath": "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\FYP_Project\\MoneyExchangeWebApp\\MoneyExchangeWebApp.csproj",
+        "projectPath": "C:\\Users\\19026606\\Desktop\\Web-Development-Projects\\Money-Exchange-Web-App\\MoneyExchangeWebApp\\MoneyExchangeWebApp.csproj",
         "packagesPath": "C:\\Users\\19026606\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\19026606\\Desktop\\Year 3\\Semester 2\\C300\\FYP_Project\\MoneyExchangeWebApp\\obj\\",
+        "outputPath": "C:\\Users\\19026606\\Desktop\\Web-Development-Projects\\Money-Exchange-Web-App\\MoneyExchangeWebApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\19026606\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,36 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.11, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "Newtonsoft.Json.Schema": {
+              "target": "Package",
+              "version": "[3.0.13, )"
+            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.2, )"
@@ -63,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

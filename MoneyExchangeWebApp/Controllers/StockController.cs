@@ -207,7 +207,7 @@ namespace MoneyExchangeWebApp.Controllers
                 double myWithdrawal = Double.Parse(withdraw);
                 if (s != null)
                 {
-                    if(s.Amount < myWithdrawal)
+                    if (s.Amount < myWithdrawal)
                     {
                         ViewData["Message"] = "Cannot Withdraw as insufficient balance";
                         ViewData["MsgType"] = "warning";
@@ -242,7 +242,7 @@ namespace MoneyExchangeWebApp.Controllers
                             return View();
                         }
                     }
-                    
+
                 }
                 else
                 {

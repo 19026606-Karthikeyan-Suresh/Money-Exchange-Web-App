@@ -1,0 +1,106 @@
+﻿@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+    </div>
+}
+
+
+@using MoneyExchangeWebApp.Models;
+@model List<CurrencyTrade>;
+
+<script>
+    $(document).ready(function () {
+        $('#DCTRtable').DataTable({
+            ordering: true,
+            paging: true,
+            searching: true,
+            info: true,
+            lengthChange: true,
+            pageLength: 10
+        });
+    });
+</script>
+
+<div class="container py-sm-5">
+    <header class="text-center text-black">
+        <h1 class="display-2"><b>Deleted Currency Trades</b></h1>
+    </header>
+    <div class="row py-5">
+        <div class="col-sm-12 mx-auto">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-sm-10 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="DCTRtable" class="table table-hover table-responsive" style="text-align:center; font-size:12px">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Base</th>
+                                    <th>Base Amount</th>
+                                    <th>Quote</th>
+                                    <th>Quote Amount</th>
+                                    <th>Exchange Rate</th>
+                                    <th>Transaction Date</th>
+                                    <th>Created By</th>
+                                    <th>Deleted By</th>
+                                    <th>Deleted Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (CurrencyTrade item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.TransactionId</td>
+                                        <td>@item.BaseCurrency</td>
+                                        <td>@item.BaseAmount</td>
+                                        <td>@item.QuoteCurrency</td>
+                                        <td>@item.QuoteAmount</td>
+                                        <td>@item.ExchangeRate</td>
+                                        <td>@item.TransactionDate.ToShortDateString()</td>
+                                        <td>@item.DoneBy</td>
+                                        <td>@item.DeletedBy</td>
+                                        <td>@item.DeletedDate.ToShortDateString()</td>
+                                        <td>
+                                            <a asp-controller="ConvTransaction"
+                                           asp-action="RecoverTransaction"
+                                           asp-route-id="@item.TransactionId"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Recover Currency Trade" class="fas fa-plus-circle"></i> </a>
+                                            |
+                                            <a asp-controller="ConvTransaction"
+                                           asp-action="PermanentDeleteConvTransaction"
+                                           asp-route-id="@item.TransactionId"
+                                           onclick="return confirm('Delete Transaction [@item.TransactionId] Permanently')"> <i data-bs-toggle="tooltip" data-bs-placement="top" title="Permanantly Delete Currency Trade" class="fas fa-trash-alt"></i></a>
+                                            |
+                                            <a asp-controller="ConvTransaction"
+                                           asp-action="ConvTransactionDetails"
+                                           asp-route-id="@item.TransactionId"><i data-bs-toggle="tooltip" data-bs-placement="top" title="View Currecy Trade Details" class="fas fa-eye"></i> </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+            <div class="alert alert-@ViewData["MsgType"]">
+                <text>@ViewData["Message"]</text>
+            </div>
+        </div>
+    </div>
+}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
