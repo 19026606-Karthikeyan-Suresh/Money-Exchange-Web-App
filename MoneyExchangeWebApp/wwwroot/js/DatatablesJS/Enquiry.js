@@ -25,6 +25,20 @@ function loadDataTable() {
                 },
                 "width": "10%"
             }
-        ]
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            'copy',
+            'pdf',
+            'docs',
+            'excel',
+            'print'
+        ],
+        ordering: true,
+        paging: true,
+        searching: true,
+        info: true,
+        lengthChange: true,
+        pageLength: 10
     });
 }

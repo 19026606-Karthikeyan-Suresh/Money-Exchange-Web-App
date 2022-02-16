@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\MoneyExchangeWebApp"
+    "\\MoneyExchangeWebApp",
+    "\\MoneyExchangeWebApp\\Views",
+    "\\MoneyExchangeWebApp\\Views\\CurrencyTrade",
+    "\\MoneyExchangeWebApp\\Views\\Home"
   ],
   "SelectedNode": "\\MoneyExchangeWebApp\\MoneyExchangeWebApp.sln",
   "PreviewInSolutionExplorer": false

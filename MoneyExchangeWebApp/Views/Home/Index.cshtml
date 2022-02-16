@@ -1,53 +1,6 @@
 ﻿ @using MoneyExchangeWebApp.Models;
+ @model List<ExchangeRates>
  @{
-
-    #region Best Today
-    string sqlToFindBestToday = @"SELECT TOP(5) QuoteCurrency AS 'ISO', COUNT(TransactionId) AS 'No. of Trades' FROM ConvTransactions
-           WHERE TransactionDate = '{0: yyyy-MM-dd}'
-           GROUP BY QuoteCurrency ORDER BY 'No. of Trades' DESC ";
-
-    string selectBestToday = String.Format(sqlToFindBestToday, DateTime.Today);
-
-    List<ISOMonth> ISOBestTodayList = DBUtl.GetList<ISOMonth>(selectBestToday);
-
-    ViewData["BestToday"] = new List<ISOMonth>(ISOBestTodayList);
-    #endregion
-
-    #region Best this Month
-    string sqlToFindBestThisMonth = @"SELECT TOP(5) QuoteCurrency AS 'ISO', COUNT(TransactionId) AS 'No. of Trades' FROM ConvTransactions
-           WHERE MONTH(TransactionDate) = {0}
-           GROUP BY QuoteCurrency ORDER BY 'No. of Trades' DESC ";
-    string selectBestThisMonth = String.Format(sqlToFindBestThisMonth, DateTime.Today.Month);
-
-    List<ISOMonth> ISOBestThisMonthList = DBUtl.GetList<ISOMonth>(selectBestThisMonth);
-
-    ViewData["BestThisMonth"] = new List<ISOMonth>(ISOBestThisMonthList);
-    #endregion
-
-    #region Worst Today
-    string sqlToFindWorstToday = @"SELECT TOP(5) QuoteCurrency AS 'ISO', COUNT(TransactionId) AS 'No. of Trades' FROM ConvTransactions
-           WHERE TransactionDate = '{0: yyyy-MM-dd}'
-           GROUP BY QuoteCurrency ORDER BY 'No. of Trades' ASC ";
-
-    string selectWorstToday = String.Format(sqlToFindWorstToday, DateTime.Today);
-
-    List<ISOMonth> ISOWorstTodayList = DBUtl.GetList<ISOMonth>(selectWorstToday);
-
-    ViewData["WorstToday"] = new List<ISOMonth>(ISOWorstTodayList);
-    #endregion
-
-    #region Worst this Month
-    string sqlToFindWorstThisMonth = @"SELECT TOP(5) QuoteCurrency AS 'ISO', COUNT(TransactionId) AS 'No. of Trades' FROM ConvTransactions
-           WHERE MONTH(TransactionDate) = {0}
-           GROUP BY QuoteCurrency ORDER BY 'No. of Trades' DESC ";
-    string selectWorstThisMonth = String.Format(sqlToFindWorstThisMonth, DateTime.Today.Month);
-
-    List<ISOMonth> ISOWorstThisMonthList = DBUtl.GetList<ISOMonth>(selectWorstThisMonth);
-
-    ViewData["WorstThisMonth"] = new List<ISOMonth>(ISOWorstThisMonthList);
-    #endregion
-
-
     string sql1 = @"SELECT * FROM Enquiries WHERE Status='Pending'";
     List<Enquiry> Elist = DBUtl.GetList<Enquiry>(sql1);
     if (Elist.Count == 0)
@@ -91,116 +44,8 @@
                         }
                     </div>
                 </div>
-                <div class="col-sm-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Top 5 best ISOs traded today</h5>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ISO</th>
-                                        <th scope="col">No. of Trades</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        foreach (var item in ViewData["BestToday"] as List<ISOMonth>)
-                                        {
-                                            <tr>
-                                                <td>@item.ISO</td>
-                                                <td>@item.Trades</td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Top 5 best ISOs traded this month</h5>
-                            <table class="table ">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ISO</th>
-                                        <th scope="col">No. of Trades</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        foreach (var item in ViewData["BestThisMonth"] as List<ISOMonth>)
-                                        {
-                                            <tr>
-                                                <td>@item.ISO</td>
-                                                <td>@item.Trades</td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
             </div>
             <br>
-            <div class="row">
-                <div class="col-lg-3 col-md-3 mb-3">
-                </div>
-                <div class="col-sm-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Worst 5 traded today</h5>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Currency</th>
-                                        <th scope="col">No. of transactions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        foreach (var item in ViewData["WorstToday"] as List<ISOMonth>)
-                                        {
-                                            <tr>
-                                                <td>@item.ISO</td>
-                                                <td>@item.Trades</td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Worst 5 currencies traded this month</h5>
-                            <table class="table ">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Currency</th>
-                                        <th scope="col">No. of transactions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        foreach (var item in ViewData["WorstThisMonth"] as List<ISOMonth>)
-                                        {
-                                            <tr>
-                                                <td>@item.ISO</td>
-                                                <td>@item.Trades</td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     }
     else
@@ -235,16 +80,7 @@
 }
 
 
-
-<script>
-    $(document).ready(function () {
-        $('#EXtbl').DataTable({
-            ordering: true,
-            paging: true,
-            searching: true,
-            info: true,
-            lengthChange: true,
-            pageLength: 10
-        });
-    });
-</script>
+@section Scripts{
+<script src="~/js/DatatablesJS/ExchangeRates.js"></script>
+<script src="~/js/LoadSlider.js"></script>
+}

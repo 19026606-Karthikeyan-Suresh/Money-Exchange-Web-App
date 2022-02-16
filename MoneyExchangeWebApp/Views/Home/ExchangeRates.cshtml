@@ -1,5 +1,4 @@
-﻿@model List<ExchangeRates>
-<script>
+﻿<script>
     function Convert() {
             var Amount = $("#Amount").val();
             var fromCurr = $("#fromCurr").val();
@@ -30,15 +29,7 @@
 
         $(document).ready(function () {
             $("#btnConvert").click(Convert);
-            $('#EXtbl').DataTable({
-            ordering: true,
-            paging: true,
-            searching: true,
-            info: true,
-            lengthChange: true,
-            pageLength: 10
-        });
-        });
+        })
 </script>
 <!-- Exchange Rates -->
 <section class="exchange-rates" id="scrollspyExchangeRates">
@@ -64,16 +55,6 @@
                                         <th>Rates (SGD$1)</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (ExchangeRates ER in Model)
-                                    {
-                                        <tr>
-                                            <td>@ER.BaseCurrency</td>
-                                            <td>@ER.QuoteCurrency</td>
-                                            <td>@ER.ExchangeRate</td>
-                                        </tr>
-                                    }
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -124,3 +105,6 @@
     </div>
 </section>
 <!--Currency Calculator-->
+@section Scripts{
+<script src="~/js/DatatablesJS/ExchangeRates.js"></script>
+}
