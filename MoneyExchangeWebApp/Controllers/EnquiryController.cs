@@ -12,23 +12,31 @@ namespace MoneyExchangeWebApp.Controllers
 {
     public class EnquiryController : Controller
     {
-        public IActionResult Index()
+        #region View All Enquiries - Jasper
+        [Authorize(Roles = "staff,admin")]
+        public IActionResult EnquiryIndex()
         {
-            return View();
+            List<Enquiry> enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
+            return View(enquiryList);
         }
+        #endregion
 
+        #region View all FAQs (Not operational) - Karthik
         [AllowAnonymous]
         public IActionResult FAQ()
         {
             List<FAQ> faqList = DBUtl.GetList<FAQ>("SELECT * FROM FAQ");
             return View(faqList);
         }
+        #endregion
 
+        #region Send an enquiry - Jasper
         [AllowAnonymous]
         public IActionResult Enquire()
         {
             return View();
         }
+
 
         [AllowAnonymous]
         [HttpPost]
@@ -59,33 +67,14 @@ namespace MoneyExchangeWebApp.Controllers
                 {
                     TempData["Message"] = DBUtl.DB_Message;
                     TempData["MsgType"] = "danger";
-                    //ViewData["sql"] = final;
                 }
             }
             return RedirectToAction("Index", "Home");
         }
+        #endregion
 
-        [AllowAnonymous]
-        public IActionResult AllFaqs()
-        {
-            List<FAQ> faqList = DBUtl.GetList<FAQ>("SELECT * FROM FAQ");
-            return View(faqList);
-        }
-
-        /*        public IActionResult GetAllEnquiries()
-        {
-            var enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
-            return Json(new { data = enquiryList });
-        }*/
-
-        [Authorize]
-        public IActionResult EnquiryIndex()
-        {
-            List<Enquiry> enquiryList = DBUtl.GetList<Enquiry>("SELECT * FROM Enquiries");
-            return View(enquiryList);
-        }
-
-        [Authorize]
+        #region Reply to an enquiry - Jasper
+        [Authorize(Roles = "staff,admin")]
         public IActionResult EnquiryReply(int id)
         {
             string sql = @"SELECT * FROM Enquiries WHERE EnquiryId={0}";
@@ -112,39 +101,8 @@ namespace MoneyExchangeWebApp.Controllers
                 return RedirectToAction("EnquiryIndex");
             }
         }
-        /*[HttpPost]*/
-        /*public IActionResult EnquiryReply(Enquiry ER)
-        {
-            if (!ModelState.IsValid)
-            {
-                ViewData["Message"] = "Invalid Input";
-                ViewData["MsgType"] = "danger";
-                return View("EnquiryReply", ER);
-            }
-            else
-            {
-                string sql = @"UPDATE Enquiries
-                              SET Status='replied', Answer='{1}' ,AnsweredBy='{2}' WHERE EnquiryId={0} ";
-                string update = String.Format(sql, ER.EnquiryId, ER.Answer, User.Identity.Name);
 
-                if (DBUtl.ExecSQL(update) == 1)
-                {
-                    TempData["Message"] = "Enquiry Updated";
-                    TempData["MsgType"] = "success";
-                }
-                else
-                {
-                    TempData["Message"] = DBUtl.DB_Message;
-                    TempData["MsgType"] = "danger";
-                }
-                return RedirectToAction("EnquiryIndex");
-            }
-        }*/
-        /*        public IActionResult EnquireReply()
-                {
-                    return View();
-                }*/
-        [Authorize]
+        [Authorize(Roles = "staff,admin")]
         [HttpPost]
         public IActionResult EnquiryReply(Enquiry ER)
         {
@@ -156,51 +114,17 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                //string result;
-
-                //ViewData["Email"] = ER.EmailAddress;
-                //ViewData["Subject"] = ER.Subject;
-                //ViewData["Answer"] = ER.Answer;
-                //ViewData["Status"] = "Pending";
-
-                //return View(ER);
-
-                //if (EmailUtl.SendEmail(ER.EmailAddress, ER.Subject, ER.Answer, out result))
-                //{
-                //    TempData["EmailSent"] = "Email Successfully Sent";
-
-                //    string sql = @"UPDATE Enquiries
-                //              SET Status='Replied', Answer='{1}' ,AnsweredBy='{2}', AnswerDate='{3:yyyy-MM-dd HH:mm:ss}' WHERE EnquiryId={0} ";
-                //    string update = String.Format(sql, ER.EnquiryId, ER.Answer.EscQuote(), ER.AnsweredBy.EscQuote(), DateTime.Now);
-
-                //    if (DBUtl.ExecSQL(update) == 1)
-                //    {
-                //        TempData["Message"] = "Enquiry Updated";
-                //        TempData["MsgType"] = "success";
-                //    }
-                //    else
-                //    {
-                //        TempData["Message"] = DBUtl.DB_Message;
-                //        TempData["MsgType"] = "danger";
-                //    }
-                //}
-                //else
-                //{
-                //    TempData["Message"] = result;
-                //    TempData["MsgType"] = "warning";
-
-                //}
-                //return RedirectToAction("EnquiryIndex");
                 string template = @"To User with the Email {0},
                                
-     Welcome to KachingXpress!
+                 Welcome to KachingXpress!
 
-     We have received your enquiry of: {1}
-     Our Team Member has attended to your enquiry and has given a reply of: {2}
-     *If you have anymore enquiries, please do submit another enquiry on our platform. Thank you for using KachingXpress
+                 We have received your enquiry of: {1}
+                 Our Team Member has attended to your enquiry and has given a reply of: {2}
+                 *If you have anymore enquiries, please do submit another enquiry on our platform. Thank you for using KachingXpress
                                
-     Replying Member: {3}
-     KachingXpress";
+                 Replying Member: {3}
+                 KachingXpress";
+
                 string message = String.Format(template, ER.EmailAddress, ER.Question, ER.Answer, User.FindFirstValue(ClaimTypes.NameIdentifier));
                 Boolean result = SendMail(ER.EmailAddress, ER.Subject, message);
 
@@ -230,7 +154,9 @@ namespace MoneyExchangeWebApp.Controllers
                 return RedirectToAction("EnquiryIndex");
             }
         }
+        #endregion
 
+        #region Send Email Method used to reply to enquiries - Jasper
         private Boolean SendMail(string to, string subject, string msg)
         {
             string error = "";
@@ -239,13 +165,13 @@ namespace MoneyExchangeWebApp.Controllers
                 MailMessage mail = new MailMessage();
                 SmtpClient smtp = new SmtpClient("smtp.outlook.com");
 
-                mail.From = new MailAddress("fypmoneyexchanger@outlook.com");
+                mail.From = new MailAddress("kachingexchange@outlook.com");
                 mail.To.Add(to);
                 mail.Subject = subject;
                 mail.Body = msg;
 
                 smtp.Port = 587;
-                smtp.Credentials = new System.Net.NetworkCredential("fypmoneyexchanger@outlook.com", "m0n3y3x!");
+                smtp.Credentials = new System.Net.NetworkCredential("kachingexchange@outlook.com", "m0n3y3x!");
                 smtp.EnableSsl = true;
 
                 smtp.Send(mail);
@@ -264,5 +190,6 @@ namespace MoneyExchangeWebApp.Controllers
                 return false;
             }
         }
+        #endregion
     }
 }

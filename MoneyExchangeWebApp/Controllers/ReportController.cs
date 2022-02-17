@@ -8,7 +8,7 @@ namespace MoneyExchangeWebApp.Controllers
     public class ReportController : Controller
     {
 
-        //Top or Worst 5 Currencies
+        #region Top or Worst 5 Currencies by days in a month - Teng Yik
         public IActionResult TradesDashboard()
         {
             return View();
@@ -51,9 +51,9 @@ namespace MoneyExchangeWebApp.Controllers
 
             return View(dt);
         }
+        #endregion
 
-        //Top or Worst 5 Trading Days by Month
-
+        #region Top or Worst 5 Trading Days by Month - Teng Yik
         public IActionResult DaysDashboard()
         {
             return View();
@@ -98,5 +98,6 @@ namespace MoneyExchangeWebApp.Controllers
 
             return View(dt);
         }
+        #endregion
     }
 }

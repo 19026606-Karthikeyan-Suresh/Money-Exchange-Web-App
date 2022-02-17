@@ -30,6 +30,7 @@ C:\Users\19026606\Desktop\Year 3\Semester 2\C300\FYP_Project\MoneyExchangeWebApp
 C:\Users\19026606\Desktop\Year 3\Semester 2\C300\FYP_Project\MoneyExchangeWebApp\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\19026606\Desktop\Year 3\Semester 2\C300\FYP_Project\MoneyExchangeWebApp\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\19026606\Desktop\Year 3\Semester 2\C300\FYP_Project\MoneyExchangeWebApp\obj\Debug\net6.0\MoneyExchangeWebApp.csproj.CopyComplete
+C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\MoneyExchangeWebApp.dll
 C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\appsettings.json
 C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\libman.json
@@ -37,7 +38,6 @@ C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyE
 C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\MoneyExchangeWebApp.exe
 C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\MoneyExchangeWebApp.deps.json
 C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\MoneyExchangeWebApp.runtimeconfig.json
-C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\MoneyExchangeWebApp.dll
 C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\ref\MoneyExchangeWebApp.dll
 C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\MoneyExchangeWebApp.pdb
 C:\Users\19026606\Desktop\Web-Development-Projects\Money-Exchange-Web-App\MoneyExchangeWebApp\bin\Debug\net6.0\Humanizer.dll

@@ -50,11 +50,12 @@ namespace MoneyExchangeWebApp.Controllers
             return Json (new {data = curExList});
 
         }
-        #endregion
+        
 
         public IActionResult ExchangeRates()
         {
             return View();
         }
+        #endregion
     }
 }

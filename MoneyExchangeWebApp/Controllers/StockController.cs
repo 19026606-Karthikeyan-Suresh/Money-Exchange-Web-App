@@ -38,7 +38,7 @@ namespace MoneyExchangeWebApp.Controllers
             string StocksOwnedSql = @"SELECT * FROM Stock WHERE ISO='{0}'";
             string updateSql = @"UPDATE Stock SET Amount={0} WHERE StockId={1}";
             string InsertSql = @"INSERT INTO Stock(ISO, Amount) VALUES('{0}', {1})";
-            string AddIntoDep = @"INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, TransactionDate, Deleted) VALUES({0}, '{1}', 'Deposit', {2}, '{3: yyyy-MM-dd hh:mm:ss}', 0)";
+            string AddIntoDep = @"INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, TransactionDate, Deleted) VALUES({0}, '{1}', 'Deposit', {2}, '{3: yyyy-MM-dd HH:mm:ss}', 0)";
             List<Stock> Slist = DBUtl.GetList<Stock>(String.Format(StocksOwnedSql, s.ISO.EscQuote()));
             if (Slist.Count == 1)
             {
@@ -132,7 +132,7 @@ namespace MoneyExchangeWebApp.Controllers
                     if (res == 1)
                     {
                         string AddIntoDep = @"INSERT INTO DepWithTransactions(StockId, ISO, DepOrWith, Amount, TransactionDate, Deleted) 
-                                            VALUES({0}, '{1}', 'Deposit', {2}, '{3: yyyy-MM-dd hh:mm:ss}', 0)";
+                                            VALUES({0}, '{1}', 'Deposit', {2}, '{3: yyyy-MM-dd HH:mm:ss}', 0)";
                         int res1 = DBUtl.ExecSQL(AddIntoDep, s.StockId, s.ISO, myDeposit, DateTime.Now);
                         if (res1 == 1)
                         {

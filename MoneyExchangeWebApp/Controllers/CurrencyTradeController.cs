@@ -69,7 +69,7 @@ namespace MoneyExchangeWebApp.Controllers
                         int res = DBUtl.ExecSQL(updateMoney, sList[0].Amount - TR.QuoteAmount, sList[0].StockId);
                         if (res == 1)
                         {
-                            string sql = @"INSERT INTO CurrencyTrade(BaseCurrency, BaseAmount, QuoteCurrency, 
+                            string sql = @"INSERT INTO CurrencyTrades(BaseCurrency, BaseAmount, QuoteCurrency, 
                             QuoteAmount, ExchangeRate, TransactionDate, DoneBy, Deleted) 
                             VALUES('{0}', {1}, '{2}', {3}, {4}, '{5:yyyy-MM-dd HH:mm:ss}', '{6}', 'false')";
 
@@ -117,7 +117,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult CurrencyTradeEdit(int id)
         {
-            string sql = @"SELECT * FROM CurrencyTrade WHERE TransactionId={0}";
+            string sql = @"SELECT * FROM CurrencyTrades WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
             List<CurrencyTrade> TRlist = DBUtl.GetList<CurrencyTrade>(select);
@@ -146,10 +146,10 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                string sql = @"UPDATE CurrencyTrade  
+                string sql = @"UPDATE CurrencyTrades  
                               SET BaseCurrency='{1}', BaseAmount={2}, QuoteCurrency='{3}',
                                   QuoteAmount={4}, ExchangeRate={5}, TransactionDate='{6:yyyy-MM-dd}',
-                                  EditedBy='{7}', EditedDate='{8:yyyy-MM-dd}'
+                                  EditedBy='{7}', EditedDate='{8:yyyy-MM-dd HH:mm:ss}'
                               WHERE TransactionId={0}";
                 string update = String.Format(sql, TR.TransactionId, TR.BaseCurrency.EscQuote(), TR.BaseAmount,
                     TR.QuoteCurrency.EscQuote(), TR.QuoteAmount, TR.ExchangeRate, TR.TransactionDate,
@@ -174,7 +174,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult SoftDeleteCurrencyTrade(int id)
         {
-            string sql = @"SELECT * FROM CurrencyTrade 
+            string sql = @"SELECT * FROM CurrencyTrades 
                          WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
@@ -186,7 +186,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE CurrencyTrade SET Deleted='True',DeletedBy='{1}' WHERE TransactionId={0}", id, User.Identity.Name.EscQuote()));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE CurrencyTrades SET Deleted='True',DeletedBy='{1}',DeletedDate='{2:yyyy-MM-dd HH:mm:ss}' WHERE TransactionId={0}", id, User.Identity.Name.EscQuote(), DateTime.Now));
                 if (res == 1)
                 {
                     TempData["Message"] = "Transaction Record Deleted";
@@ -206,7 +206,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult PermanentDeleteCurrencyTrade(int id)
         {
-            string sql = @"SELECT * FROM CurrencyTrade 
+            string sql = @"SELECT * FROM CurrencyTrades 
                          WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
@@ -218,7 +218,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("DELETE FROM CurrencyTrade WHERE TransactionId={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("DELETE FROM CurrencyTrades WHERE TransactionId={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Currency Trade Record Deleted Permanently";
@@ -238,7 +238,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult RecoverCurrencyTrade(int id)
         {
-            string sql = @"SELECT * FROM CurrencyTrade 
+            string sql = @"SELECT * FROM CurrencyTrades 
                          WHERE TransactionId={0}";
 
             string select = String.Format(sql, id);
@@ -250,7 +250,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE CurrencyTrade SET Deleted='False', Deletedby='null' WHERE TransactionId={0}", id));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE CurrencyTrades SET Deleted='False', Deletedby='null', DeletedDate='null' WHERE TransactionId={0}", id));
                 if (res == 1)
                 {
                     TempData["Message"] = "Currency Trade Record Recovered";
@@ -270,7 +270,7 @@ namespace MoneyExchangeWebApp.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult CurrencyTradeDetails(int id)
         {
-            string sql = @"SELECT * FROM CurrencyTrade WHERE TransactionId={0}";
+            string sql = @"SELECT * FROM CurrencyTrades WHERE TransactionId={0}";
             List<CurrencyTrade> TRlist = DBUtl.GetList<CurrencyTrade>(String.Format(sql, id));
             if (TRlist.Count > 0)
             {

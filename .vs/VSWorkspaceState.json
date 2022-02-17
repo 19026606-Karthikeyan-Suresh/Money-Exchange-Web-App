@@ -4,8 +4,11 @@
     "\\MoneyExchangeWebApp",
     "\\MoneyExchangeWebApp\\Views",
     "\\MoneyExchangeWebApp\\Views\\CurrencyTrade",
-    "\\MoneyExchangeWebApp\\Views\\Home"
+    "\\MoneyExchangeWebApp\\Views\\Home",
+    "\\MoneyExchangeWebApp\\wwwroot",
+    "\\MoneyExchangeWebApp\\wwwroot\\js",
+    "\\MoneyExchangeWebApp\\wwwroot\\js\\DatatablesJS"
   ],
-  "SelectedNode": "\\MoneyExchangeWebApp\\MoneyExchangeWebApp.sln",
+  "SelectedNode": "\\MoneyExchangeWebApp\\wwwroot\\js\\DatatablesJS\\ExchangeRates.js",
   "PreviewInSolutionExplorer": false
 }

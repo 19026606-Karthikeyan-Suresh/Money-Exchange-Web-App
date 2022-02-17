@@ -56,7 +56,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format("UPDATE DepWithTransactions SET Deleted='True',DeletedDate='{1:yyyy-MM-dd}' WHERE TransactionId={0}", id, DateTime.Now));
+                int res = DBUtl.ExecSQL(String.Format("UPDATE DepWithTransactions SET Deleted='True',DeletedDate='{1:yyyy-MM-dd HH:mm:ss}' WHERE TransactionId={0}", id, DateTime.Now));
                 if(res == 1)
                 {
                     ViewData["Message"] = "Transaction successfully deleted";
@@ -89,7 +89,7 @@ namespace MoneyExchangeWebApp.Controllers
             }
             else
             {
-                int res = DBUtl.ExecSQL(String.Format(@"UPDATE DepWithTransactions SET Deleted='False', DeletedDate=null WHERE TransactionId={0}", id));
+                int res = DBUtl.ExecSQL(String.Format(@"UPDATE DepWithTransactions SET Deleted='False', DeletedDate='null' WHERE TransactionId={0}", id));
                 if (res == 1)
                 {
                     ViewData["Message"] = "Transaction successfully recovered";

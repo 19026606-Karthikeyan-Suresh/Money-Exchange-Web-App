@@ -14,7 +14,7 @@ namespace MoneyExchangeWebApp.Controllers
             List<FAQ> Flist = DBUtl.GetList<FAQ>(@"SELECT * FROM FAQ");
             return View(Flist);
         }
-        #endregion
+        
 
         [Authorize(Roles = "admin")]
         public IActionResult GetAllFAQs()
@@ -22,6 +22,7 @@ namespace MoneyExchangeWebApp.Controllers
             var Flist = DBUtl.GetList<FAQ>(@"SELECT * FROM FAQ");
             return Json(new { data = Flist });
         }
+        #endregion
 
         #region Create FAQ - Karthik
         [Authorize(Roles = "admin")]
@@ -31,6 +32,7 @@ namespace MoneyExchangeWebApp.Controllers
         }
 
         [Authorize(Roles = "admin")]
+        [HttpPost]
         public IActionResult CreateFAQ(FAQ f)
         {
             if (!ModelState.IsValid)

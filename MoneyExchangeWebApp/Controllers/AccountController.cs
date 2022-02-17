@@ -194,7 +194,7 @@ namespace MoneyExchangeWebApp.Controllers
             {
                 string sql = @"UPDATE Accounts SET EmailAddress='{1}', FirstName='{2}', 
                              LastName='{3}', Address='{4}', PhoneNumber={5}, Gender='{6}', DOB='{7:yyyy-MM-dd}',
-                             EditedBy='{8}', EditedDate='{9:yyyy-MM-dd}'
+                             EditedBy='{8}', EditedDate='{9:yyyy-MM-dd HH:mm:ss}'
                              WHERE AccountId={0}";
 
 
@@ -232,7 +232,7 @@ namespace MoneyExchangeWebApp.Controllers
             else
             {
                 string sql1 = @"UPDATE Accounts  
-                              SET Deleted='True', DeletedBy='{1}', DateDeleted='{2:yyyy-MM-dd}' WHERE AccountId={0}";
+                              SET Deleted='True', DeletedBy='{1}', DateDeleted='{2:yyyy-MM-dd HH:mm:ss}' WHERE AccountId={0}";
 
                 string userid = User.Identity.Name;
 
