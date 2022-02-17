@@ -17,7 +17,7 @@ namespace MoneyExchangeWebApp.Controllers
 
         #region "Display ExchangeRates" - Jasper
         private string apiWebsite = "https://freecurrencyapi.net/api/v2/latest?apikey=364830c0-5907-11ec-ad52-3b41478b07db&base_currency=SGD";
-        public IActionResult ExchangeRates()
+        public IActionResult GetAllExchangeRates()
         {
             dynamic data = WebUtl.CallWebApi(apiWebsite);
             dynamic result = new
@@ -51,5 +51,10 @@ namespace MoneyExchangeWebApp.Controllers
 
         }
         #endregion
+
+        public IActionResult ExchangeRates()
+        {
+            return View();
+        }
     }
 }

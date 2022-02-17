@@ -8,7 +8,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#EXtbl').DataTable({
         "ajax": {
-            "url": "/Home/ExchangeRates"
+            "url": "/Home/GetAllExchangeRates"
         },
         "columns": [
             { "data": "baseCurrency", "width": "5%" },

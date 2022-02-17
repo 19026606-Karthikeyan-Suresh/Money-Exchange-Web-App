@@ -17,7 +17,14 @@ namespace MoneyExchangeWebApp.Controllers
         {
             string sql = @"SELECT * FROM CurrencyTrades WHERE Deleted='False'";
             List<CurrencyTrade> CTRlist = DBUtl.GetList<CurrencyTrade>(sql);
-            return View("CurrencyTradeIndex", CTRlist);
+            return View(CTRlist);
+        }
+        [Authorize(Roles = "admin")]
+        public IActionResult GetAllCurrencyTrades()
+        {
+            string sql = @"SELECT * FROM CurrencyTrades WHERE Deleted='False'";
+            var CTRlist = DBUtl.GetList<CurrencyTrade>(sql);
+            return Json ( new {data = CTRlist});
         }
         #endregion
 
